@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Booking
+    </ui:define>
+    <ui:define name="content" >
+        <p:messages id="growl" showDetail="false"/>
+        <h:form id="form" >
+            <p:panel header="Flat Details" >
+                <h:panelGrid columns="2" cellpadding="5" >
+
+                    <h:panelGrid id="flatspecification" columns="2" cellpadding="5" >
+                        <h:outputLabel value="Project Name " for="projectname"></h:outputLabel>
+                        <h:inputText id="projectname" value="#{graphicalSearchBean.fbsProject.projName}" size="10" readonly="true"/>
+                        <h:outputLabel value="Block Name " for="blockname"></h:outputLabel>
+                        <h:inputText id="blockname" value="#{graphicalSearchBean.fbsBlock.blockName}" size="10" readonly="true"/>
+                        <h:outputLabel value="Floor No. " for="floorno"></h:outputLabel>
+                        <h:inputText id="floorno" value="#{graphicalSearchBean.floorNo}" size="10" readonly="true"/>
+                        <h:outputLabel value="Flat No. " for="flatno"></h:outputLabel>
+                        <h:inputText id="flatno" value="#{graphicalSearchBean.flatNo}" size="10" readonly="true"/>
+                    </h:panelGrid>
+                    <p:dataTable id="flatSpecification1" var="f" value="#{graphicalSearchBean.fbsFlatType}" >
+
+                        <p:column  headerText="Project Code" >
+                            <h:outputLabel id="projectcode" value="#{graphicalSearchBean.fbsProject.projCode}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Flat Type">
+                            <h:outputText id="flattype" value="#{f.flatSpecification}"/>
+                        </p:column>
+                        <p:column headerText="Flat SBA">
+                            <h:outputText id="flatsba" value="#{f.flatSba}"/>
+                        </p:column>
+                        <p:column headerText="Flat BA">
+                            <h:outputText id="flatba" value="#{f.flatBa}"/>
+                        </p:column>
+                        <p:column headerText="Flat CA">
+                            <h:outputText id="flatca" value="#{f.flatCa}"/>
+                        </p:column>
+                        <p:column headerText="Flat BSP">
+                            <h:outputText id="flatbsp" value="#{f.flatBsp}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Other Details">
+                <h:panelGrid columns="5" cellpadding="5" >
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="Booking Date " for="bookingdt"></h:outputLabel>
+
+                        <p:calendar id="bookingdt" value="#{graphicalSearchBean.fbsBooking.bookingDt}" size="10">
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></p:calendar>
+
+                        <h:outputLabel value="Select Payment Plan " for="selectpayplan"></h:outputLabel>
+                        <h:selectOneMenu id="selectpayplan" value="#{graphicalSearchBean.fbsBooking.planId}" >
+                            <f:selectItem itemValue="Select Plan" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.plannameList}"/>
+                            <p:ajax update="form"  process="selectpayplan" event="change"  />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Discount Type " for="discounttype"></h:outputLabel>
+                        <h:selectOneMenu id="discounttype" value="#{graphicalSearchBean.fbsDiscount.discountType}" >
+                            <f:selectItem itemValue="Select Discount" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.discountList}"/>
+                            <p:ajax update="form"  process="discounttype" event="change" listener="#{graphicalSearchBean.setDiscount()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Payable Amount " for="payableamount"></h:outputLabel>
+                        <h:inputText id="payableamount" value="#{graphicalSearchBean.payableAmount}" size="10" readonly="true" />
+
+
+                    </h:panelGrid>
+                    <p:dataTable id="flatplc" var="plccharge" value="#{graphicalSearchBean.fbsPlcinfo}">
+                        <p:column  headerText="PLC Name">
+                            <h:outputLabel value="#{plccharge.plcName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Rs./seq.ft.">
+                            <h:outputText  id="id_PlcCharge" value="#{plccharge.plcCharge}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:dataTable id="flatcharges" var="charge" value="#{graphicalSearchBean.fbsChargeList}">
+                        <p:column  headerText="Charge Name">
+                            <h:outputLabel value="#{charge.chargeName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Charge Value">
+                            <h:outputText  id="id_#{charge.chargeName}" value="#{charge.amount}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Broker Details">
+
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <h:outputLabel value="Select Broker " for="selectbroker"></h:outputLabel>
+                    <h:selectOneMenu id="selectbroker" value="#{graphicalSearchBean.fbsBroker.brokerId}" >
+                        <f:selectItem itemValue="Select Broker" noSelectionOption="true"/>
+                        <f:selectItems value="#{graphicalSearchBean.brokerList}"/>
+                        <p:ajax update="form"  process="selectbroker" event="change" listener="#{graphicalSearchBean.populateBrokerName()}" />
+                    </h:selectOneMenu>
+
+                    <p:dataTable id="brokerdetails" var="broker" value="#{graphicalSearchBean.fbsBroker}">
+                        <p:column  headerText="Broker Name" >
+                            <h:outputLabel id="brokername" value="#{broker.brName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Broker Commission">
+                            <h:outputText id="brokercomision" value="#{graphicalSearchBean.commission()}"/>
+                        </p:column>
+                    </p:dataTable>
+
+
+                </h:panelGrid>
+
+
+            </p:panel>
+            <p:panel header="Parking Details" >
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="No. Of Parking " for="noofparking"></h:outputLabel>
+                        <h:selectOneMenu id="noofparking" value="#{graphicalSearchBean.noOfParking}" >
+                            <f:selectItem itemValue="Select No" noSelectionOption="true"/>
+                            <f:selectItem itemValue="0"/>
+                            <f:selectItem itemValue="1"/>
+                            <f:selectItem itemValue="2"/>
+                            <f:selectItem itemValue="3"/>
+                            <f:selectItem itemValue="4"/>
+                            <f:selectItem itemValue="5"/>
+                            <p:ajax update="form"  process="noofparking" event="change" listener="#{graphicalSearchBean.renderParking()}" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="4" cellpadding="5" >
+                        <h:outputLabel value= "Paking Type 1 " for="paking1" rendered="#{graphicalSearchBean.render1}"></h:outputLabel>
+                        <h:selectOneMenu id="paking1" value="#{graphicalSearchBean.parkingType1}" rendered="#{graphicalSearchBean.render1}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.parkingTypeList}"/>
+
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 2 " for="paking2" rendered="#{graphicalSearchBean.render2}"></h:outputLabel>
+                        <h:selectOneMenu id="paking2" value="#{graphicalSearchBean.parkingType2}" rendered="#{graphicalSearchBean.render2}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 3 " for="paking3" rendered="#{graphicalSearchBean.render3}"></h:outputLabel>
+                        <h:selectOneMenu id="paking3" value="#{graphicalSearchBean.parkingType3}" rendered="#{graphicalSearchBean.render3}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 4 " for="paking4" rendered="#{graphicalSearchBean.render4}"></h:outputLabel>
+                        <h:selectOneMenu id="paking4" value="#{graphicalSearchBean.parkingType4}" rendered="#{graphicalSearchBean.render4}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 5 " for="paking5" rendered="#{graphicalSearchBean.render5}"></h:outputLabel>
+                        <h:selectOneMenu id="paking5" value="#{graphicalSearchBean.parkingType5}" rendered="#{graphicalSearchBean.render5}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{graphicalSearchBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <p:dataTable id="pakings" var="parking" value="#{graphicalSearchBean.parkingInfoList}">
+                        <p:column  headerText="Paking Type">
+                            <h:outputLabel value="#{parking.parkingType}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Available Parking">
+                            <h:outputText   value="#{parking.availParking}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Applicant Details">
+
+                <h:panelGrid id="applicantdetail" columns="8" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="applicantname"></h:outputLabel>
+                    <h:inputText id="applicantname" value="#{graphicalSearchBean.fbsApplicant.applicantName}" required="true" requiredMessage="Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="swd"></h:outputLabel>
+                    <h:inputText id="swd" value="#{graphicalSearchBean.fbsApplicant.SWD}" required="true" requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="nationality"></h:outputLabel>
+                    <h:inputText id="nationality" value="#{graphicalSearchBean.fbsApplicant.nationality}" required="true" requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="dob"></h:outputLabel>
+                    <p:calendar id="dob" value="#{graphicalSearchBean.fbsApplicant.dob}" required="true" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="profession"></h:outputLabel>
+                    <h:inputText id="profession" value="#{graphicalSearchBean.fbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="resadd"></h:outputLabel>
+                    <h:inputText id="resadd" value="#{graphicalSearchBean.fbsApplicant.resAdd}" required="true" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="offadd"></h:outputLabel>
+                    <h:inputText id="offadd" value="#{graphicalSearchBean.fbsApplicant.offAdd}" required="true" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="panno"></h:outputLabel>
+                    <h:inputText id="panno" value="#{graphicalSearchBean.fbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="dlno"></h:outputLabel>
+                    <h:inputText id="dlno" value="#{graphicalSearchBean.fbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="passno"></h:outputLabel>
+                    <h:inputText id="passno" value="#{graphicalSearchBean.fbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="telephone"></h:outputLabel>
+                    <h:inputText id="telephone" value="#{graphicalSearchBean.fbsApplicant.telephone}" required="true" requiredMessage="Telephone No. should Be In Digit"/>
+                    <h:outputLabel value="Mobile " for="mobile"></h:outputLabel>
+                    <h:inputText id="mobile" value="#{graphicalSearchBean.fbsApplicant.mobile}" required="true" requiredMessage="Mobile No. Should Be In Digit"/>
+                    <h:outputLabel value="FAX " for="fax"></h:outputLabel>
+                    <h:inputText id="fax" value="#{graphicalSearchBean.fbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="email"></h:outputLabel>
+                    <h:inputText id="email" value="#{graphicalSearchBean.fbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                </h:panelGrid>
+
+            </p:panel>
+            <p:panel header="CoApplicant Details">
+
+                <h:panelGrid id="coapplicantdetail" columns="8" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="coapplicantname"></h:outputLabel>
+                    <h:inputText id="coapplicantname" value="#{graphicalSearchBean.coFbsApplicant.applicantName}" required="true" requiredMessage="Co-Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="coswd"></h:outputLabel>
+                    <h:inputText id="coswd" value="#{graphicalSearchBean.coFbsApplicant.SWD}" required="true" requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="conationality"></h:outputLabel>
+                    <h:inputText id="conationality" value="#{graphicalSearchBean.coFbsApplicant.nationality}" required="true" requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="codob"></h:outputLabel>
+                    <p:calendar id="codob" value="#{graphicalSearchBean.coFbsApplicant.dob}" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="coprofession"></h:outputLabel>
+                    <h:inputText id="coprofession" value="#{graphicalSearchBean.coFbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="coresadd"></h:outputLabel>
+                    <h:inputText id="coresadd" value="#{graphicalSearchBean.coFbsApplicant.resAdd}" required="true" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="cooffadd"></h:outputLabel>
+                    <h:inputText id="cooffadd" value="#{graphicalSearchBean.coFbsApplicant.offAdd}" required="true" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="copanno"></h:outputLabel>
+                    <h:inputText id="copanno" value="#{graphicalSearchBean.coFbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="codlno"></h:outputLabel>
+                    <h:inputText id="codlno" value="#{graphicalSearchBean.coFbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="copassno"></h:outputLabel>
+                    <h:inputText id="copassno" value="#{graphicalSearchBean.coFbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="cotelephone"></h:outputLabel>
+                    <h:inputText id="cotelephone" value="#{graphicalSearchBean.coFbsApplicant.telephone}" required="true" requiredMessage="Telephone No. should Be In Digit"  maxlength="12"/>
+                    <h:outputLabel value="Mobile " for="comobile"></h:outputLabel>
+                    <h:inputText id="comobile" value="#{graphicalSearchBean.coFbsApplicant.mobile}" required="true" requiredMessage="Mobile No. Should Be In Digit"  maxlength="10"/>
+                    <h:outputLabel value="FAX " for="cofax"></h:outputLabel>
+                    <h:inputText id="cofax" value="#{graphicalSearchBean.coFbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="coemail"></h:outputLabel>
+                    <h:inputText id="coemail" value="#{graphicalSearchBean.coFbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                </h:panelGrid>
+
+
+            </p:panel>
+
+            <p:commandButton value="Book Flat" action="#{graphicalSearchBean.addProjectBooking()}"  update="growl,form"  />
+            <p:commandButton value="Reset" type="reset" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

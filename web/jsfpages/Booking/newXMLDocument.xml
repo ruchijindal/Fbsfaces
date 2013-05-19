@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<block block_id="3">
+    <floor floor_id="130">
+        <floor_number>0</floor_number>
+        <flat flat_id="13000">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="000"></flatno>
+
+        </flat>
+        <flat flat_id="13001">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="001"></flatno>
+        </flat>
+        <flat flat_id="13002">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="002"></flatno>
+        </flat>
+        <flat flat_id="13003">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="003"></flatno>
+        </flat>
+    </floor>
+    <floor floor_id="131">
+        <floor_number>1</floor_number>
+        <flat flat_id="13100">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="100"></flatno>
+        </flat>
+        <flat flat_id="13101">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="101"></flatno>
+        </flat>
+        <flat flat_id="13102">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="102"></flatno>
+        </flat>
+        <flat flat_id="13103">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="103"></flatno>
+        </flat>
+    </floor>
+    <floor floor_id="132">
+        <floor_number>2</floor_number>
+        <flat flat_id="13200">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="200"></flatno>
+        </flat>
+        <flat flat_id="13201">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="201"></flatno>
+        </flat>
+        <flat flat_id="13202">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="202"></flatno>
+        </flat>
+        <flat flat_id="13203">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="203"></flatno>
+        </flat>
+    </floor>
+    <floor floor_id="133">
+        <floor_number>3</floor_number>
+        <flat flat_id="13300">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="300"></flatno>
+        </flat>
+        <flat flat_id="13301">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="301"></flatno>
+        </flat>
+        <flat flat_id="13302">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="302"></flatno>
+        </flat>
+        <flat flat_id="13303">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="303"></flatno>
+        </flat>
+    </floor>
+    <floor floor_id="134">
+        <floor_number>4</floor_number>
+        <flat flat_id="13400">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="400"></flatno>
+        </flat>
+        <flat flat_id="13401">
+            <flattype flatTypeId="1"></flattype>
+            <flatno flatNo="401"></flatno>
+        </flat>
+        <flat flat_id="13402">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="402"></flatno>
+        </flat>
+        <flat flat_id="13403">
+            <flattype flatTypeId="3"></flattype>
+            <flatno flatNo="403"></flatno>
+        </flat>
+    </floor>
+</block>

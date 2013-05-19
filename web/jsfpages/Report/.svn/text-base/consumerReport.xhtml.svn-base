@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Consumer Report
+    </ui:define>
+
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="growl" showDetail="true" />
+            <p:panel header="Report Generation" />
+            <p:dashboard id="board" model="#{reportBean.model}" reorderListener="#{reportBean.handleReorder}" onReorderUpdate="growl" styleClass="dialog3">
+               
+     
+                <p:panel id="applicantfile" header="Consumer Report" styleClass="dialog1" style="width:350px;margin-top: 10px; margin-left: 20px;">
+                    
+                    <h:panelGrid columns="2" cellpadding="2">
+
+                        <h:outputLabel value="Project " for="selectproject"></h:outputLabel>
+                        <h:selectOneMenu id="selectproject" value="#{reportBean.fbsProjId}" style="width: 120px;">
+                            <f:selectItem itemLabel="Select Project" noSelectionOption="true" />
+                            <f:selectItems value="#{reportBean.projectList}" />
+                            <p:ajax update="form"  process="selectproject" event="change" listener="#{reportBean.populateBlocks()}" />
+                        </h:selectOneMenu>
+                        
+                        <h:outputLabel value="Block " for="selectblock"></h:outputLabel>
+                        <h:selectOneMenu id="selectblock" value="#{reportBean.fbsBlockId}" style="width: 120px;">
+                            <f:selectItem itemLabel=" Select Block " noSelectionOption="true"/>
+                            <f:selectItems value="#{reportBean.blockList}"/>
+                            <p:ajax update="form"  process="selectblock" event="change" listener="#{reportBean.populateFlats()}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Unit Code" for="selectunitcode"></h:outputLabel>
+                        <h:selectOneMenu id="selectunitcode" value="#{reportBean.fbsFlatId}" style="width: 120px;">
+                            <f:selectItem itemLabel="Select Flat Id" noSelectionOption="true" />
+                            <f:selectItems value="#{reportBean.flatNoList}" />
+                        </h:selectOneMenu>
+
+                        <p:commandButton value="Get Report" action="#{reportBean.reportServlet()}"  update="growl,form"  />
+                    </h:panelGrid>
+
+
+  </p:panel>
+
+
+                   <p:panel id="brokerwisereport" header="Broker Report" styleClass="dialog1" style="width:350px; margin-top: 20px; margin-left: 20px;" >
+                    <h:panelGrid columns="2" cellpadding="2" >
+                        <h:outputLabel value="Broker" for="selectBrokerId"></h:outputLabel>
+                        <h:selectOneMenu id="selectBrokerId" value="#{reportBean.fbsBroker.brokerId}"  style="width: 110px;" >
+                            <f:selectItem itemLabel="Select" noSelectionOption="true"  />
+                            <f:selectItems  value="#{reportBean.brokerList}"/>
+
+                             </h:selectOneMenu>
+
+                        <p:commandButton  value="Get Report" action="#{reportBean.genrateReceipt1()}" />
+                    </h:panelGrid>
+                   </p:panel>
+  
+                <p:panel id="panel" header="Dues Report"  styleClass="dialog1" style="width:350px;margin-left: 20px;margin-top: 10px;">
+                    <h:panelGrid columns="2" cellpadding="2" >
+                        <h:outputLabel value="Select Project  " for="selectproject1"></h:outputLabel>
+                   
+                        <h:selectOneMenu id="selectproject1" value="#{bulkManagedBean.projName}" >
+                            <f:selectItem itemLabel="Select Project" noSelectionOption="true"/>
+                            <f:selectItems value="#{bulkManagedBean.projects}"/>
+                        </h:selectOneMenu>
+                          </h:panelGrid>
+                        <h:selectOneRadio id="selectreporttype" value="#{bulkManagedBean.reporttype}">
+                            <f:selectItem id="a" itemLabel="With Intrest" itemValue="true"/>
+                            <f:selectItem id="b" itemLabel="Without Intrest" itemValue="false"/>
+                        </h:selectOneRadio>
+                        <h:outputLabel/>
+                       <p:commandButton value="Get Report" action="#{bulkManagedBean.dueReport}" title="bulk report" ></p:commandButton>
+                  
+                            <p:panel id="dueReport"  header="Due Report for Unit" styleClass="dialog1" style="height: 200px;width:350px;margin-top: 80px; margin-left: 0px;">
+                    <h:panelGrid columns="2" cellpadding="2" >
+
+                        <h:outputLabel value="Project " for="selectproject11"></h:outputLabel>
+                        <h:selectOneMenu id="selectproject11" value="#{reportBean.projIds}" style="width: 120px;">
+                            <f:selectItem itemLabel="Select Project" noSelectionOption="true" />
+                            <f:selectItems value="#{reportBean.projectList}" />
+                            <p:ajax update="form"  process="selectproject11" event="change" listener="#{reportBean.populateBlocks()}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Block " for="selectblock11"></h:outputLabel>
+                        <h:selectOneMenu id="selectblock11" value="#{reportBean.blockIds}" style="width: 120px;">
+                            <f:selectItem itemLabel=" Select Block " noSelectionOption="true"/>
+                            <f:selectItems value="#{reportBean.blockList}"/>
+                            <p:ajax update="form"  process="selectblock11" event="change" listener="#{reportBean.populateFlats()}" />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Unit Code" for="selectunitcode11"></h:outputLabel>
+                        <h:selectOneMenu id="selectunitcode11" value="#{reportBean.flatIds}" style="width: 120px;">
+                            <f:selectItem itemLabel="Select Flat" noSelectionOption="true" />
+                            <f:selectItems value="#{reportBean.flatNoList}" />
+                        </h:selectOneMenu>
+                             </h:panelGrid>
+                        <h:selectOneRadio id="selectreport" value="#{reportBean.reporttype}">
+                            <f:selectItem id="c" itemLabel="With Interest" itemValue="true" />
+                            <f:selectItem id="d" itemLabel="Without Interest" itemValue="false" />
+                        </h:selectOneRadio>
+                         
+                        <p:commandButton value="Get Report" action="#{reportBean.dueReport()}"  />
+               
+
+
+  </p:panel>
+                </p:panel>
+  
+ 
+            </p:dashboard>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

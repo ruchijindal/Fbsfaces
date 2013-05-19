@@ -1,0 +1,89 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <h:form>
+
+
+
+
+
+
+        <p:accordionPanel  autoHeight="false" activeIndex="#{loginBean.tab}"  event="click" dynamic="true" cache="true">
+            <p:tab title="Booking" rendered="#{loginBean.renderBooking}">
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(0)}" value="Quick Booking" url="/faces/jsfpages/Booking/quickBooking.xhtml" icon="/resources/images/update.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(0)}" value="Booking List" url="/faces/jsfpages/Booking/bookingList.xhtml" icon="/resources/images/update.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(0)}" value="Graphical Enquiry" onclick="#{graphicalSearchBean.populateProjects()}" url="/faces/jsfpages/Project/projectList.xhtml" icon="/resources/images/update.png"/>
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+            <p:tab title="Payment"  rendered="#{loginBean.renderPayment}">
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(1)}" value="Quick Payment" onclick="#{paymentBean.project()}" url="/faces/jsfpages/Payment/companyQuickPayment.xhtml" icon="/resources/images/update.png"/>
+                     <p:menuitem action="#{loginBean.tabSet(1)}" value="Search Payment" onclick="#{paymentDetailManagedBean.populatePaymentDetail()}" url="/faces/jsfpages/Payment/paymentList1.xhtml" icon="/resources/images/update.png"/>
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+            <p:tab title="Broker"  >
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(2)}" value="Broker Payments" url="/faces/jsfpages/Broker/brokerPayment.xhtml" update="messages" icon="/resources/images/update.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(2)}" value="Broker Bookings" url="/faces/jsfpages/Broker/brokerWiseBookings.xhtml" update="messages" icon="/resources/images/update.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(2)}" value="Broker Catagory" url="/faces/jsfpages/Broker/setBrokerCategory.xhtml" update="messages" icon="/resources/images/save.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(2)}" value="Add Broker" url="/faces/jsfpages/Broker/setBroker.xhtml" update="messages" icon="/resources/images/save.png"/>
+
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+            <p:tab title="Reports" >
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(3)}" value="Collection Reports" url="/faces/jsfpages/Report/collectionReport.xhtml" update="messages" ajax="true" icon="/resources/images/update.png"/>
+
+                        <p:menuitem action="#{loginBean.tabSet(3)}" value="Reports Generation" url="/faces/jsfpages/Report/consumerReport.xhtml" update="messages" ajax="true" icon="/resources/images/update.png"/>
+
+                        <p:menuitem action="#{loginBean.tabSet(3)}" value="Reports Archive" url="/faces/jsfpages/Report/reportArchieve.xhtml" update="messages" ajax="true" icon="/resources/images/update.png"/>
+                    </p:submenu>
+                </p:menu>
+
+            </p:tab>
+            <p:tab title="Company Settings"  rendered="#{loginBean.renderCompanySettings}">
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Add Bank" url="/faces/jsfpages/Company/addBank.xhtml" icon="/resources/images/add.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Create Project" url="/faces/jsfpages/Project/setProject.xhtml" icon="/resources/images/save.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Set Discount" url="/faces/jsfpages/Company/discountType.xhtml" icon="/resources/images/save.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Set Service Tax" url="/faces/jsfpages/Company/serviceTax.xhtml" icon="/resources/images/save.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Set Interest Rate" url="/faces/jsfpages/Company/interest.xhtml" icon="/resources/images/save.png"/>
+                        <p:menuitem action="#{loginBean.tabSet(4)}" value="Edit Company info"  url="/faces/jsfpages/Company/editCompany.xhtml" icon="/resources/images/mobile.png"/>
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+
+            <p:tab title="User Settings" rendered="#{loginBean.renderProjectSetting}">
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(5)}" value="Create User Role" url="/faces/jsfpages/User/setUserRole.xhtml" icon="/resources/images/add.png" />
+                        <p:menuitem action="#{loginBean.tabSet(5)}" value="Create User" onclick="#{userBean.createUser()}" url="/faces/jsfpages/User/setUser.xhtml" icon="/resources/images/add.png"/>
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+
+            <p:tab title="Loan Allotment"  rendered="#{loginBean.renderProjectSetting}">
+                <p:menu styleClass="sidebar-menu">
+                    <p:submenu>
+                        <p:menuitem action="#{loginBean.tabSet(6)}" value="Assign Loan" url="/faces/jsfpages/Company/loanInformation.xhtml" update="messages" icon="/resources/images/save.png"/>
+
+
+                    </p:submenu>
+                </p:menu>
+            </p:tab>
+
+        </p:accordionPanel>
+    </h:form>
+</ui:composition>

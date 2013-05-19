@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="title">
+        Broker Master
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <p:panel header="Broker Details">
+
+                <h:panelGrid  columns="4" cellpadding="10" >
+                     
+                    <h:outputLabel value="Broker Name :" for="brokerName"></h:outputLabel>
+                    <h:outputLabel id="brokerName" value="#{brokerBean.brokerInfo1.brName}"/>
+                    <h:outputLabel value="Category :" for="category"></h:outputLabel>
+                    <h:outputLabel id="category" value="#{brokerBean.brokerInfo1.categoryName}"/>
+                    <h:outputLabel value="Address :" for="address"></h:outputLabel>
+                    <h:outputLabel id="address" value="#{brokerBean.brokerInfo1.brAdd}"/>
+                    <h:outputLabel value="Mobile :" for="mobile"></h:outputLabel>
+                    <h:outputLabel id="mobile" value="#{brokerBean.brokerInfo1.brMobile}"/>
+                    <h:outputLabel value="Telephone :" for="telephone"></h:outputLabel>
+                    <h:outputLabel id="telephone" value="#{brokerBean.brokerInfo1.brPhone}"/>
+                    <h:outputLabel value="Email :" for="email"></h:outputLabel>
+                    <h:outputLabel id="email" value="#{brokerBean.brokerInfo1.brMail}"/>
+                    <h:outputLabel value="WebSite :" for="website"></h:outputLabel>
+                    <h:outputLabel id="website" value="#{brokerBean.brokerInfo1.brSite}"/>
+
+                    <h:outputLabel value="Commission Rate :" for="commission"></h:outputLabel>
+                    <h:outputLabel id="commission" value="#{brokerBean.brokerInfo1.comissionRate}%"/>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                </h:panelGrid>
+
+
+            </p:panel>
+            <br/>
+
+            <p:dataTable id="brokers" var="broker" value="#{brokerBean.brokerInfoList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" paginatorPosition="bottom"  >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Unit Wise Booking Details
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Project Name">
+                    <h:outputText value="#{broker.projectName}"/>
+                </p:column>
+
+                <p:column headerText="Block Name">
+                    <h:outputText value="#{broker.blockName}"/>
+                </p:column>
+
+                <p:column headerText="Unit Code" >
+                    <h:outputText value="#{broker.flatId}"/>
+                </p:column>
+
+                <p:column headerText="Flat Type">
+                    <h:outputText value="#{broker.flatSpecification}"/>
+                </p:column>
+
+                <p:column headerText="Commission(Rs.)">
+                    <h:outputText value="#{broker.commission}"/>
+                </p:column>
+
+                <p:column headerText="Payable Amt.">
+                    <h:outputText value="#{broker.payableAmount}"/>
+                </p:column>
+
+                <p:column headerText="Paid Amt.">
+                    <h:outputText value="#{broker.amount}"/>
+                </p:column>
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="4" footerText="Total" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.total}" />
+                        <p:column footerText="#{brokerBean.totalPayable}" />
+                        <p:column footerText="#{brokerBean.totalPaid}"/>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="6" footerText="Payable Outstanding Amount" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.totalpayoutstanding}" />
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="6" footerText="Total Outstanding Amount" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.totalOutstanding}" />
+                    </p:row>
+
+                </p:columnGroup>
+
+            </p:dataTable>
+            <br/>
+
+            <p:dataTable id="brokers1" var="brokerPayment" value="#{brokerBean.brokerPaymentList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" paginatorPosition="bottom"  >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Payment Details
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Unit Code">
+                    <h:outputText value="#{brokerPayment.fkFlatId}"/>
+                </p:column>
+
+                <p:column headerText="Payment Date">
+                    <h:outputText value="#{brokerPayment.paymentDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column headerText="Payment Mode" >
+                    <h:outputText value="#{brokerPayment.paymentMode}"/>
+                </p:column>
+
+                <p:column headerText="Cheque No. ">
+                    <h:outputText value="#{brokerPayment.chequeNo}"/>
+                </p:column>
+
+                <p:column headerText="Transaction Id ">
+                    <h:outputText value="#{brokerPayment.transactionId}"/>
+                </p:column>
+
+
+                <p:column headerText="Cheque Date">
+                    <h:outputText value="#{brokerPayment.chequeDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column headerText="Status.">
+                    <h:outputText value="#{brokerPayment.status}"/>
+                </p:column>
+
+                <p:column headerText="Amount">
+                    <h:outputText value="#{brokerPayment.amount}"/>
+                </p:column>
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="7" footerText="Total" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.brokerpaymentAmount}" />
+
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="7" footerText="Total Cleared Amount" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.clearedAmount}" />
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="7" footerText="Total Pending Amount" style="text-align:right"  />
+                        <p:column footerText="#{brokerBean.pendingAmount}" />
+                    </p:row>
+
+                </p:columnGroup>
+
+            </p:dataTable>
+            <br/>
+            <p:commandButton type="push" value="Broker Report" update="menubutton" action="#{brokerBean.genrateReceipt(brokerBean.brokerInfo1.brokerId)}"/>
+
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

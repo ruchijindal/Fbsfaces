@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:fc="http://www.fusioncharts.com">
+
+    <ui:define name="title">
+        Booking Chart
+    </ui:define>
+
+    <ui:define name="content"  >
+        <p:panel header="Booking Detail Charts"  >
+            
+            <h:panelGrid id="one" columns="2" cellpadding="5">             
+                <fc:render chartId="SimpleChart4" filename="../../resources/FusionCharts/MSColumn3D.swf" width="380" height="285" xml="#{blockDetailBean.blockWiseBookingXml}"/>
+                <fc:render chartId="SimpleChart2" filename="../../resources/FusionCharts/Column3D.swf" width="380" height="285" xml="#{blockDetailBean.lastFiveMonthBooking}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:panel id="two" header="Collection Detail Charts"  >
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid>
+
+                    <fc:render chartId="SimpleChart" filename="../../resources/FusionCharts/Pie3D.swf" width="380" height="285" xml="#{blockDetailBean.clearAmountPie}"/>
+                </h:panelGrid>
+                <fc:render chartId="SimpleChart1" filename="../../resources/FusionCharts/Column3D.swf" width="380" height="285" xml="#{blockDetailBean.weeklyCollection}"/>
+              
+            </h:panelGrid>
+            <h:panelGrid cellpadding="5" columns="6" style="padding-left: 420px;"  >
+                
+            </h:panelGrid>
+        </p:panel>
+    </ui:define>
+
+
+</ui:composition>

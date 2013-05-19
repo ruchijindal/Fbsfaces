@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Add Broker
+    </ui:define>
+
+
+    <ui:define name="content">
+      <h:form id="form1" >
+          <p:messages id="msgs" showDetail="false"/>
+           <p:panel header="Add Broker">
+               <h:panelGrid columns="4" cellpadding="3">
+                   <h:outputLabel value="Broker Name " for="txt_brName" ></h:outputLabel>
+              <h:inputText id="txt_brName"
+                           value="#{brokerBean.fbsBroker.brName}" required="true" requiredMessage="Broker Name should be entered" />
+
+              <h:outputLabel value="Broker Address " for="txt_brAdd"></h:outputLabel>
+              <h:inputText id="txt_brAdd"
+                           value="#{brokerBean.fbsBroker.brAdd}" required="true" requiredMessage="Broker Address should be entered"/>
+
+             <h:outputLabel value="Mobile " for="txt_brMobile"></h:outputLabel>
+              <h:inputText id="txt_brMobile"
+                           value="#{brokerBean.fbsBroker.brMobile}" required="true" requiredMessage="Minimum 10 digits should be entered">
+                  <f:validateLength maximum="10" minimum="10"/>
+              </h:inputText>
+
+              <h:outputLabel value="Office Phone " for="txt_brPhone"></h:outputLabel>
+              <h:inputText id="txt_brPhone"
+                           value="#{brokerBean.fbsBroker.brPhone}"  >
+                  <f:validateLength maximum="15" minimum="8"/>
+              </h:inputText>
+              <h:outputLabel value="Mail-ID " for="txt_brMail"></h:outputLabel>
+              <h:inputText id="txt_brMail"
+                           value="#{brokerBean.fbsBroker.brMail}" required="true" requiredMessage="Proper Email Id should be entered">
+                  <f:validator validatorId="checkvalidemail"/>
+              </h:inputText>
+              <h:outputLabel value="Website " for="txt_brSite"></h:outputLabel>
+              <h:inputText id="txt_brSite"
+                           value="#{brokerBean.fbsBroker.site}" required="true" requiredMessage="Authenticated website should be entered"/>
+
+              <h:outputLabel value="Select Category " for="selectcategory"></h:outputLabel>
+              <h:selectOneMenu id="selectcategory" value="#{brokerBean.fbsBroker.categoryId}" required="true" requiredMessage="Broker Category should be selected" >
+                            <f:selectItem itemLabel="Select Category" />
+                            <f:selectItems value="#{brokerBean.categoryList}"/>
+                            <p:ajax update="form"  process="selectcategory" event="change" listener="#{brokerBean.populate()}" />
+                        </h:selectOneMenu>
+          </h:panelGrid>
+               <br/>
+               <p:commandButton value="Add" action="#{brokerBean.addBroker}" update="form1,form2,msgs" ajax="false"/>
+              <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+               <p:ajaxStatus style="width:16px;height:16px;">
+				<f:facet name="start">
+					<h:graphicImage value="/resources/images/ajaxloading.gif" />
+				</f:facet>
+
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+
+
+      </p:panel>
+        </h:form>
+<br/>
+        <h:form id="form2">
+             <h:panelGrid columns="1">
+            <p:dataTable id="brokers" var="broker" value="#{brokerBean.brokerInfoList1}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{brokerBean.editBroker}"  paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                Broker Details
+                    </div>
+                </f:facet>
+                <p:column headerText="Broker Category">
+                     <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{broker.categoryName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu id="selectplan1" value="#{broker.categoryId}">
+
+                                <f:selectItems value="#{brokerBean.categoryList}"/>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+	      </p:column>
+
+                <p:column headerText="Broker Name" style="width: 150px">
+                  <p:cellEditor>
+                      <f:facet name="output">
+                          <h:outputText value="#{broker.brName}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brName}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+                  <p:column headerText="Address" style="width: 200px">
+                      <p:cellEditor>
+	      	      <f:facet name="output">
+                          <h:outputText value="#{broker.brAdd}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brAdd}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+                  <p:column headerText="Mobile" style="width: 100px">
+                      <p:cellEditor>
+	      	      <f:facet name="output">
+                          <h:outputText value="#{broker.brMobile}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brMobile}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+                 <p:column headerText="Telephone" style="width: 100px" >
+                     <p:cellEditor>
+	      	       <f:facet name="output">
+                           <h:outputText value="#{broker.brPhone}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brPhone}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+                 <p:column headerText="Mail-ID" style="width: 100px">
+                     <p:cellEditor>
+	      	       <f:facet name="output">
+                           <h:outputText value="#{broker.brMail}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brMail}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+                 <p:column headerText="Website" style="width: 100px">
+                     <p:cellEditor>
+	      	       <f:facet name="output">
+                           <h:outputText value="#{broker.brSite}"/>
+                      </f:facet>
+                      <f:facet name="input">
+                          <h:inputText value="#{broker.brSite}"/>
+                      </f:facet>
+                      </p:cellEditor>
+	      </p:column>
+
+                  <p:column headerText="Options">
+                      <p:rowEditor/>
+                      <p:commandLink action="#{brokerBean.delBroker(broker)}" onclick="confirmation.show()" >
+                          <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+
+                  </p:commandLink>
+                      </p:column>
+
+                       <p:column headerText="Details">
+                           <p:commandLink value="Show" action="#{brokerBean.findBroker(broker)}" update="form2">
+                    </p:commandLink>
+                </p:column>
+
+        </p:dataTable>
+             </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete Broker" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                     action="#{brokerBean.deleteBroker()}" >
+                   <p:collector value="#{broker}"
+                                     removeFrom="#{brokerBean.brokerList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+         </h:form>
+    </ui:define>
+
+
+</ui:composition>

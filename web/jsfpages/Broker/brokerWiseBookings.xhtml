@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Broker Wise Booking List
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" >
+            <p:panel header="Search Broker Wise Bookings" >
+                <h:panelGrid columns="8" cellpadding="5" >
+                    <h:outputLabel value="Broker" for="selectBrokerId"></h:outputLabel>
+                    <h:selectOneMenu id="selectBrokerId" value="#{brokerWiseBookingBean.fbsBroker.brokerId}"    >
+                        <f:selectItem itemLabel="Select"   />
+                        <f:selectItems  value="#{brokerWiseBookingBean.brokerList}"/>
+                        <p:ajax process="selectBrokerId" update="form" event="change" listener="#{brokerWiseBookingBean.populateProject()}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Project" for="selectProject"></h:outputLabel>
+                    <h:selectOneMenu id="selectProject" value="#{brokerWiseBookingBean.fbsProject.projId}" >
+                        <f:selectItem itemLabel="Select" />
+                        <f:selectItems  value="#{brokerWiseBookingBean.projectNameList}"/>
+                        <p:ajax process="selectProject" update="form" event="change" listener="#{brokerWiseBookingBean.populateBlock()}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Block" for="selectBlock"></h:outputLabel>
+                    <h:selectOneMenu id="selectBlock" value="#{brokerWiseBookingBean.fbsBlock1.blockId}" >
+                        <f:selectItem itemLabel="Select"  />
+                        <f:selectItems  value="#{brokerWiseBookingBean.blockNameList}"/>
+                        <p:ajax process="selectBlock" update="form" event="change" listener="#{brokerWiseBookingBean.populateFlat()}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Unit Code" for="selectFlat"></h:outputLabel>
+                    <h:selectOneMenu id="selectFlat" value="#{brokerWiseBookingBean.unitCode}" >
+                        <f:selectItem itemLabel="Select" />
+                        <f:selectItems  value="#{brokerWiseBookingBean.flatNumberList}"/>
+                        <p:ajax process="selectFlat" update="form" event="change" listener="#{brokerWiseBookingBean.populateBrokerDetailByFilter()}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Find" action="#{brokerWiseBookingBean.populateBrokerDetailByFilter()}" update="form,booking"/>
+                <p:commandButton value="Reset" styleClass="button-margin" action="#{brokerWiseBookingBean.reset()}" update="form,booking"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+            </p:panel>
+
+            <h:panelGrid columns="1">
+                <p:dataTable id="booking" var="broker" value="#{brokerWiseBookingBean.reBrokerInfoList}" paginator="true" rows="20"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,15,25"  paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Broker Wise Booking List
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Broker Name" sortBy="#{broker.brName}">
+                        <h:outputText value="#{broker.brName}" />
+                    </p:column>
+
+                    <p:column headerText="Registration no." sortBy="#{broker.registrationNo}">
+                        <h:outputText value="#{broker.registrationNo}" />
+                    </p:column>
+
+
+                    <p:column    headerText="Booking Date">
+                        <h:outputText value="#{broker.bookingDate}" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column    headerText="Project Name" style="width:120px">
+                        <h:outputText value="#{broker.projectName}" />
+                    </p:column>
+
+                    <p:column  headerText="Block Name">
+                        <h:outputText value="#{broker.blockName}" />
+                    </p:column>
+
+                    <p:column  headerText="Unit Code">
+                        <h:outputText value="#{broker.flatId}" />
+                    </p:column>
+
+                    <p:column headerText="Option">
+                        <h:commandLink value="Report"  style="color: green" action="#{brokerWiseBookingBean.genrateReceipt(broker)}">
+
+                        </h:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGrid>
+            <br/>
+            <br/>
+            <p:commandButton type="push" value="Broker Report" update="menubutton" action="#{brokerWiseBookingBean.genrateReceipt1()}"/>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

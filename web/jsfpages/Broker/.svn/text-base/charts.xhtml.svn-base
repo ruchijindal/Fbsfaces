@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/projectTemplate.xhtml">
+
+    <ui:define name="title">
+        Project DashBoard
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+
+            <h:panelGrid columns="1">
+                <p:dataTable id="blocks" var="block" value="#{blockDetailBean.flat}" rows="5" styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                        Block Details
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Block Name">
+                        <h:outputText value="#{block.blockName}"/>
+                    </p:column>
+
+                    <p:column  headerText="Total Flats">
+                        <h:outputText value="#{block.blockId}"/>
+                    </p:column>
+
+
+                    <p:column  headerText="Booked Flats">
+                        <h:outputText value="#{block.flatId}"/>
+                    </p:column>
+
+                    <p:column  headerText="Unbooked Flats">
+                        <h:outputText value="#{block.floorId}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{blockDetailBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.block()}" />
+                     </f:facet>
+
+                </p:dataTable>
+                <br/>
+
+                <p:dataTable id="bookings" var="book" value="#{bookingListBean.bookingList}" rows="5" styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                        Booking Details
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Reg. Number">
+                        <h:outputText value="#{book.regNo}"/>
+                    </p:column>
+
+                    <p:column  headerText="Booking Date">
+                        <h:outputText value="#{book.bookingdt}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column  headerText="Block Name">
+                        <h:outputText value="#{book.blockNo}"/>
+                    </p:column>
+
+                    <p:column  headerText="Flat No">
+                        <h:outputText value="#{book.flatNo}"/>
+                    </p:column>
+
+                    <p:column  headerText="Applicant Detail">
+                        <h:outputText value="#{book.applicantName}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{bookingListBean.viewStatus}" image="ui-icon ui-icon-search"  action="#{commonBean.booking()}"/>
+                     </f:facet>
+
+                </p:dataTable>
+
+                <br/>
+
+                <p:dataTable id="payments" var="payment" value="#{paymentBean.paymentList}" rows="5" styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                        Payment Details
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Unit Code">
+                        <h:outputText value="#{payment.unitCode}"/>
+                    </p:column>
+
+                    <p:column headerText="Payment Date">
+                        <h:outputText value="#{payment.paymentDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Paid Amount">
+                              <h:outputText value="#{payment.paidAmount}"/>
+                    </p:column>
+
+                    <p:column headerText="Payment Mode">
+                        <h:outputText value="#{payment.paymentMode}"/>
+                    </p:column>
+
+                    <p:column headerText="Payment Status">
+                        <h:outputText value="#{payment.chequeStatus}"/>
+                    </p:column>
+
+                    <p:column headerText="Authorise">
+                        <h:outputText value="#{payment.authorize}"/>
+                    </p:column>
+
+                    <p:column headerText="Authorised By">
+                        <h:outputText value="#{payment.authorizedBy}"/>
+                    </p:column>
+
+                    <p:column headerText="User Id">
+                        <h:outputText value="#{payment.userId}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="View" image="ui-icon ui-icon-search"  action="#{commonBean.payment()}"/>
+                     </f:facet>
+
+                </p:dataTable>
+
+                <br/>
+
+                <p:dataTable id="complaints" var="complaint" value="#{complaintBean.complaintList}" rows="5" styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                        Complaint Details
+                        </div>
+                    </f:facet>
+                    <p:column headerText="Complaint Id">
+                        <h:outputText value="#{complaint.complaintId}"/>
+                    </p:column>
+
+                    <p:column  headerText="Name">
+                        <h:outputText value="#{complaint.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Subject">
+                        <h:outputText value="#{complaint.subject}"/>
+                    </p:column>
+
+                    <p:column headerText="Complaint Date">
+                        <h:outputText value="#{complaint.complaintDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <h:outputText value="#{complaint.status}"/>
+                    </p:column>
+
+                    <p:column headerText="Registered By">
+                        <h:outputText value="#{complaint.registeredBy}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{complaintBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.complaint()}" />
+                     </f:facet>
+
+                </p:dataTable>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

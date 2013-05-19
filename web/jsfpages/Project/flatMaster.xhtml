@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Flat Master
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <h:panelGrid columns="1">
+                <p:breadCrumb>
+                    <p:menuitem value="" url="/faces/jsfpages/Dashboard/projectDashboard.xhtml" />
+                    <p:menuitem value="#{graphicalSearchBean.fbsProject.projName}" url="/faces/jsfpages/Project/projectList.xhtml" />
+                    <p:menuitem value="#{graphicalSearchBean.fbsBlock.blockName}" url="/faces/jsfpages/Project/blockList.xhtml" />
+                    <p:menuitem value="#{graphicalSearchBean.flatInfo.flatNo}" url="/faces/jsfpages/Project/flatList.xhtml" />
+                    <p:menuitem value="" url="#" />
+                </p:breadCrumb>
+            </h:panelGrid>
+
+            <br/>
+
+            <p:panel header="Unit Code -  #{graphicalSearchBean.flatInfo.flatId}">
+
+                <p:toolbar styleClass="ui-widget-header1">
+                    <p:toolbarGroup align="left">
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            <h:outputLabel/>
+                            <h:outputLabel/>
+                            <h:outputLabel value="Block Name " for="blockname"></h:outputLabel>
+                            <h:outputLabel id="blockname" value="#{graphicalSearchBean.fbsBlock.blockName}"/>
+                            <h:outputLabel value="Floor No. " for="floorno"></h:outputLabel>
+                            <h:outputLabel id="floorno" value="#{graphicalSearchBean.flatInfo.floorNo}"/>
+                            <h:outputLabel value="Flat No. " for="flatno"></h:outputLabel>
+                            <h:outputLabel id="flatno" value="#{graphicalSearchBean.flatInfo.flatNo}"/>
+                            <h:outputLabel value="Flat Type " for="flattype"></h:outputLabel>
+                            <h:outputLabel id="flattype" value="#{graphicalSearchBean.fbsFlatType.flatSpecification}"/>
+                            <h:outputLabel value="Flat SBA " for="flatsba"></h:outputLabel>
+                            <h:outputLabel id="flatsba" value="#{graphicalSearchBean.fbsFlatType.flatSba}"/>
+                            <h:outputLabel value="Flat BSP " for="flatbsp"></h:outputLabel>
+                            <h:outputLabel id="flatbsp" value="#{graphicalSearchBean.fbsFlatType.flatBsp}"/>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+
+                    <p:toolbarGroup align="right">
+                        <br/>
+                        <h:panelGrid columns="4">
+                            <p:panel styleClass="dialog2">
+                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/image2D"  alt="" />
+                            </p:panel>
+                            <p:panel></p:panel>
+                            <p:panel styleClass="dialog2">
+                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/image3D"  alt="" />
+                            </p:panel>
+                            <p:panel></p:panel>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+                </p:toolbar>
+  </p:panel>
+               
+                   
+            <p:panel header="Applicant Details" rendered="#{graphicalSearchBean.booked}">
+                            <p:toolbar styleClass="ui-widget-header1">
+                                <p:toolbarGroup align="left">
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel value="First Applicant Details" styleClass="flatMaster"  />
+                                        <h:outputLabel/><h:outputLabel/>
+
+                                        <c:if test="#{graphicalSearchBean.fbsApplicant.applicantFlag eq '1'}">
+                                            <h:panelGrid columns="2"  cellpadding="5" >
+                                               
+                                                <h:outputLabel value="Name " for="applicantname"></h:outputLabel>
+                                                <h:outputLabel id="applicantname" value="#{graphicalSearchBean.fbsApplicant.applicantName}" />
+                                                <h:outputLabel value="Mobile No. " for="mobileno"></h:outputLabel>
+                                                <h:outputLabel id="mobileno" value="#{graphicalSearchBean.fbsApplicant.mobile}" />
+                                                <h:outputLabel value="Email Id " for="emailid"></h:outputLabel>
+                                                <h:outputLabel id="emailid" value="#{graphicalSearchBean.fbsApplicant.email}"/>
+                                                <h:outputLabel value="Pan No. " for="panno"></h:outputLabel>
+                                                <h:outputLabel id="panno" value="#{graphicalSearchBean.fbsApplicant.panNo}" />
+                                                <h:outputLabel value="Address " for="address"></h:outputLabel>
+                                                <h:outputLabel id="address" value="#{graphicalSearchBean.fbsApplicant.resAdd}" />
+                                            </h:panelGrid>
+
+                                            <p:panel></p:panel>
+                                            <p:panel styleClass="dialog1">
+                                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/pic.jpg" height="140px"  width="110px" alt="" />
+                                            </p:panel>
+                                        </c:if>
+                                    </h:panelGrid>
+                                </p:toolbarGroup>
+                                
+                                <p:toolbarGroup align="right">
+                                    <h:panelGrid columns="6">
+                                        <h:outputLabel value="Co Applicant Details" styleClass="flatMaster" />
+                                        <h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/>
+                                       
+                                        <c:if test="#{graphicalSearchBean.coFbsApplicant.applicantFlag eq '2'}">
+                                            <p:panel>
+                                                <h:panelGrid columns="2"  cellpadding="5" >
+                                                    <h:outputLabel value="Name " for="coapplicantname"></h:outputLabel>
+                                                    <h:outputLabel id="coapplicantname" value="#{graphicalSearchBean.coFbsApplicant.applicantName}"/>
+                                                    <h:outputLabel value="Mobile No. " for="comobileno"></h:outputLabel>
+                                                    <h:outputLabel id="comobileno" value="#{graphicalSearchBean.coFbsApplicant.mobile}"/>
+                                                    <h:outputLabel value="Email Id " for="coemailid"></h:outputLabel>
+                                                    <h:outputLabel id="coemailid" value="#{graphicalSearchBean.coFbsApplicant.email}"/>
+                                                    <h:outputLabel value="Pan No. " for="copanno"></h:outputLabel>
+                                                    <h:outputLabel id="copanno" value="#{graphicalSearchBean.coFbsApplicant.panNo}"/>
+                                                    <h:outputLabel value="Address " for="coaddress"></h:outputLabel>
+                                                    <h:outputLabel id="coaddress" value="#{graphicalSearchBean.coFbsApplicant.resAdd}" />
+                                                </h:panelGrid>
+                                            </p:panel>
+                                            <p:panel></p:panel>
+                                            <p:panel styleClass="dialog1">
+                                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/pic.jpg" height="140px"  width="110px" alt="" />
+                                            </p:panel>
+                                            <p:panel></p:panel>
+                                            <p:panel></p:panel>
+                                            <p:panel></p:panel>
+                                        </c:if>
+                                    </h:panelGrid>
+                                </p:toolbarGroup>
+                            </p:toolbar>
+                        </p:panel>
+
+                        <p:dataTable id="payments" var="payment" value="#{graphicalSearchBean.fbsPaymentList}" paginator="true" rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rendered="#{graphicalSearchBean.booked}" >
+                            <f:facet name="header">
+                                <div class="facetheader">
+                                    Payment Details
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Receipt No.">
+                                <h:outputText value="#{payment.paymentId}"/>
+                            </p:column>
+
+                            <p:column headerText="Receipt Date">
+                                <h:outputText value="#{payment.paymentDate}"><f:convertDateTime type="date" pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Payment Mode">
+                                <h:outputText value="#{payment.paymentMode}"/>
+                            </p:column>
+                            <p:column headerText="Cheque No.">
+                                <h:outputText value="#{payment.chequeNo}"/>
+                            </p:column>
+
+                            <p:column headerText="Cheque Date">
+                                <h:outputText value="#{payment.chequeDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Bank Name">
+                                <h:outputText value="#{payment.drawnOn}"/>
+                            </p:column>
+
+
+                            <p:column headerText="Clearing Bank">
+                                <h:outputText value="#{paymentBean.findBankName(payment.clearingBankId)}"/>
+                            </p:column>
+
+                            <p:column headerText="Paid Amount">
+                                <h:outputText value="#{payment.paidAmount}"/>
+                            </p:column>
+
+                            <p:column headerText="Payment Status">
+                                <h:outputText value="#{payment.chequeStatus}"/>
+                            </p:column>
+
+                            <p:column headerText="Remark">
+                                <h:outputText value="#{payment.remark}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                        <br/><br/>
+                        <p:commandButton type="push" value="Applicant File" action="#{graphicalSearchBean.callServlet()}" update="menubutton"  rendered="#{graphicalSearchBean.booked}" />
+                        <p:commandButton type="push" value="Dues Letter" action="#{collectionBean.generateReceipt()}" update="menubutton"  rendered="#{graphicalSearchBean.booked}" style="margin-left: 10px;"/>
+
+                   
+                        <p:commandButton type="push" value="Booking" actionListener="#{graphicalSearchBean.forwardBooking()}" update="menubutton" rendered="#{graphicalSearchBean.unbooked}" />
+                   
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>

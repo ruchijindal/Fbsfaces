@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="title">
+        Complaint Details
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1"  >
+
+            <p:panel header="Add Complaint">
+                <h:panelGrid columns="4" cellpadding="4">
+
+                    <h:outputLabel value="Name " for="txt_name"></h:outputLabel>
+                    <h:inputText id="txt_name" value="#{complaintBean.fbsComplaint.name}" required="true"   requiredMessage=" Name Should Be Entered"/>
+
+                    <h:outputLabel value="Telephone " for="txt_tele"></h:outputLabel>
+                    <h:inputText id="txt_tele" value="#{complaintBean.fbsComplaint.phone}" required="true"   requiredMessage="Telephone No. Should Be Entered"/>
+
+                    <h:outputLabel value="Address " for="txt_address"></h:outputLabel>
+                    <h:inputText id="txt_address" value="#{complaintBean.fbsComplaint.address}" required="true" requiredMessage="Address Should Be Entered"/>
+
+                    <h:outputLabel value="Email " for="txt_email"></h:outputLabel>
+                    <h:inputText id="txt_email" value="#{complaintBean.fbsComplaint.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+
+                    <h:outputLabel value="Subject " for="txt_subject"></h:outputLabel>
+                    <h:inputText id="txt_subject" value="#{complaintBean.fbsComplaint.subject}" required="true" requiredMessage=" Subject Should Be Entered"/>
+
+
+                    <h:outputLabel value="Complaint Date " for="txt_complaintdate"></h:outputLabel>
+                    <p:calendar id="txt_complaintdate" value="#{complaintBean.fbsComplaint.complaintDt}" mode="popup"  required="true" requiredMessage=" Complaint Date should Be entered" pattern="dd-MM-yyyy" timeZone="IST"/>
+
+                </h:panelGrid>
+                <h:panelGrid columns="4" >
+                    <h:outputLabel value="Complaint " for="txt_complaint"></h:outputLabel>
+                    <h:inputTextarea id="txt_complaint" value="#{complaintBean.fbsComplaint.complaint}" rows="5" cols="55" />
+                </h:panelGrid>
+
+                <p:commandButton value="Add" action="#{complaintBean.addComplaint}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2"  >
+            <p:dataTable id="complaints" var="complaint" value="#{complaintBean.complaintList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{complaintBean.editComplaint}" selectionMode="single" paginatorPosition="bottom" styleClass=".ui-datatable th .ui-datatable-liner">
+
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Complaint Details
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Complaint Id">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{complaint.complaintId}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{complaint.complaintId}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column  headerText="Name">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{complaint.name}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{complaint.name}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Address">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.address}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.address}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column  headerText="Telephone">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{complaint.phone}"/></f:facet>
+                        <f:facet name="input"><h:inputText value="#{complaint.phone}"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Email">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.email}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.email}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Subject">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.subject}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.subject}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column  headerText="Complaint Date">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.complaintDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.complaintDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Complaint">
+                    <p:commandLink value="Complaint" onclick="dlg1.show();" update="form3" action="#{complaintBean.SetObject(complaint)}" />
+                </p:column>
+
+                <p:column headerText="Status">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.status}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.status}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+                <p:column headerText="Registered By">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{complaint.registeredBy}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{complaint.registeredBy}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>     
+
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{complaintBean.delComplaint(complaint)}" onclick="confirmation.show()">
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Complaint" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{complaintBean.deleteComplaint()}" >
+                    <p:collector value="#{complaint}" removeFrom="#{complaintBean.complaintList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+
+        <p:dialog id="dilog"   header="Complaint" widgetVar="dlg1" showEffect="scale" hideEffect="scale" height="150"  width="250"  styleClass="dialog1"   >
+            <h:form id="form3"  >
+
+                <br/>
+                <h:inputTextarea id="txt_complaint" value="#{complaintBean.complaints}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Edit" action="#{complaintBean.edit()}" update="form2" onclick="dlg1.hide();" />
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../resources/templates/companyTemplate.xhtml">
+
+    <ui:define name="title">
+        User Role setting
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1" >
+            <p:messages id="msgs"  showDetail="false" />
+            <p:panel header="Add User Role">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Role Name " for="txt_userrole"></h:outputLabel>
+                    <h:inputText id="txt_userrole" value="#{userRoleBean.fbsUser.roleName}" required="true" requiredMessage="Role Name Should be Enter." />
+
+                    <h:outputLabel value="Role Abrv " for="txt_abrv"></h:outputLabel>
+                    <h:inputText id="txt_abrv" value="#{userRoleBean.fbsUser.roleArv}" required="true" requiredMessage="Role Abbreviation Should be Enter."/>
+
+
+                </h:panelGrid>
+                <br/>
+                <p:panel header="Access Rights" >
+
+                    <h:selectManyCheckbox layout="pageDirection" value="#{userRoleBean.commandlist}" >
+
+                        <f:selectItem itemLabel="Booking" itemValue="Booking"  />
+                        <f:selectItem itemLabel="Booking Authorize" itemValue="Booking Authorize" />
+                        <f:selectItem itemLabel="Collection Report" itemValue="Collection Report" />
+                        <f:selectItem itemLabel="Company Settings" itemValue="Company Settings" />
+                        <f:selectItem itemLabel="Complaints" itemValue="Complaints" />
+                        <f:selectItem itemLabel="Consumer Report" itemValue="Consumer Report" />
+                        <f:selectItem itemLabel="Payment" itemValue="Payment" />
+                        <f:selectItem itemLabel="Payment Authorize" itemValue="Payment Authorize" />
+                        <f:selectItem itemLabel="Project Setting" itemValue="Project Setting" />
+                        <f:selectItem itemLabel="Resolve Complaints" itemValue="Resolve Complaints" />
+
+                    </h:selectManyCheckbox>
+
+                </p:panel>
+                <p:commandButton value="Add" action="#{userRoleBean.addUserRole()}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable id="userrole" var="role" value="#{userRoleBean.userRoleList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{userRoleBean.editUserRole}"  paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            User Role Details
+                        </div>
+                    </f:facet>
+                    <p:column  headerText="Role Name">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{role.roleName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{role.roleName}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column  headerText="Role Abrv">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{role.roleArv}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{role.roleArv}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options">
+                        <p:rowEditor/>
+                        <p:commandLink action="#{userRoleBean.deleteRole(role)}" onclick="confirmation.show()" >
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt="Delete"/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+                <p:confirmDialog message="Are you sure ?"
+                                 showEffect="bounce" hideEffect="explode"
+                                 header="Delete User Role" severity="alert" widgetVar="confirmation">
+
+                    <p:commandButton value="Yes Sure" update="msgs,form2" oncomplete="confirmation.hide()"
+                                     action="#{userRoleBean.deleteUserRole()}" >
+                        <p:collector value="#{role}"
+                                     removeFrom="#{userRoleBean.userRoleList}"/>
+                    </p:commandButton>
+                    <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+                </p:confirmDialog>
+            </h:panelGrid>
+        </h:form>
+
+
+    </ui:define>
+
+
+</ui:composition>

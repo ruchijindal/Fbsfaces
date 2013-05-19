@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:fc="http://www.fusioncharts.com">
+
+    <ui:define name="title">
+        Company Chart
+    </ui:define>
+
+    <ui:define name="content">
+        <p:panel id="cpanel1" header="Booking Detail Charts" rendered="#{companyDetailBean.temp}" >
+            <h:panelGrid id="one" columns="2" cellpadding="5">
+                <fc:render chartId="SimpleChart3" filename="../../resources/FusionCharts/MSColumn3D.swf" width="380" height="285" xml="#{companyDetailBean.projectWiseBookingXml}"/>
+               
+                <fc:render chartId="SimpleChart2" filename="../../resources/FusionCharts/Column3D.swf" width="380" height="285" xml="#{companyDetailBean.bankWiseCollection1}"/>
+
+            </h:panelGrid>
+         
+
+        </p:panel>
+        <p:panel id="two" header="Collection Detail Charts" rendered="#{companyDetailBean.temp}">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid>
+                    <fc:render chartId="SimpleChart" filename="../../resources/FusionCharts/Pie3D.swf" width="380" height="285" xml="#{companyDetailBean.clearAmountPie}"/>
+                </h:panelGrid>
+
+
+
+                <fc:render chartId="SimpleChart1" filename="../../resources/FusionCharts/Column3D.swf" width="380" height="285" xml="#{companyDetailBean.brokerWiseAmount}"/>
+            </h:panelGrid>
+           
+        </p:panel>
+    </ui:define>
+
+
+
+</ui:composition>

@@ -1,0 +1,191 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session
+END
+FbsComplaintFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsComplaintFacade.java
+END
+FbsBankFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBankFacade.java
+END
+FbsLoginFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsLoginFacade.java
+END
+FbsBrokerFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBrokerFacade.java
+END
+FbsPlcFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsPlcFacade.java
+END
+FbsPaymentFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsPaymentFacade.java
+END
+FbsChargeFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsChargeFacade.java
+END
+FbsPlannameFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsPlannameFacade.java
+END
+FbsApplicantFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsApplicantFacade.java
+END
+FbsReportFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsReportFacade.java
+END
+FbsFlatTypeFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsFlatTypeFacade.java
+END
+FbsLoanFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsLoanFacade.java
+END
+FbsParkingAllotFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsParkingAllotFacade.java
+END
+FbsBookingFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBookingFacade.java
+END
+FbsProjectFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsProjectFacade.java
+END
+AbstractFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/AbstractFacade.java
+END
+FbsUserFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsUserFacade.java
+END
+FbsInterestFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsInterestFacade.java
+END
+FbsPayplanFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsPayplanFacade.java
+END
+FbsDiscountFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsDiscountFacade.java
+END
+FbsBlockFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBlockFacade.java
+END
+FbsBookingTempFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBookingTempFacade.java
+END
+FbsDocsFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsDocsFacade.java
+END
+FbsServicetaxFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsServicetaxFacade.java
+END
+FbsChargesFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsChargesFacade.java
+END
+FbsCompanyFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsCompanyFacade.java
+END
+FbsBrokerCatFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBrokerCatFacade.java
+END
+FbsBrPaymentFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsBrPaymentFacade.java
+END
+FbsParkingTypeFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsParkingTypeFacade.java
+END
+FbsFacilityFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsFacilityFacade.java
+END
+FbsChequeFacade.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/session/FbsChequeFacade.java
+END

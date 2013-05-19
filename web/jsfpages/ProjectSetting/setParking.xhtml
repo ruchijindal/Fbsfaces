@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="title">
+        Parking Setting
+    </ui:define>
+
+
+
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1"  >
+
+            <p:panel header="Add Parking Type">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Parking Type " for="txt_parktype"></h:outputLabel>
+                    <h:inputText id="txt_parktype" value="#{parkingBean.fbsParkingType.parkingType}" required="true" requiredMessage="Parking Type should be entered"/>
+
+                    <h:outputLabel value="Parking Charge " for="int_charge"></h:outputLabel>
+                    <h:inputText id="int_charge" value="#{parkingBean.fbsParkingType.parkingCharge}" required="true" requiredMessage="Parking Charges should be entered"/>
+
+                    <h:outputLabel value=" No Of Parking " for="int_No"></h:outputLabel>
+                    <h:inputText id="int_No" value="#{parkingBean.fbsParkingType.noOfParking}" required="true" requiredMessage="Number of Parking should be entered"/>
+                </h:panelGrid>
+                <br/>
+
+                <p:commandButton value="Add" action="#{parkingBean.addParking()}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <p:dataTable var="parking" value="#{parkingBean.fbsParkingTypeList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{parkingBean.editParking}" selectionMode="single" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Parking Type Details
+                    </div>
+                </f:facet>
+                <p:column headerText="Parking Type">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{parking.parkingType}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{parking.parkingType}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Parking Charges">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{parking.parkingCharge}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{parking.parkingCharge}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="No Of Parking Slot">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{parking.noOfParking}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{parking.noOfParking}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{parkingBean.delRow(parking)}" onclick="confirmation.show()" >
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete User" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{parkingBean.deleteRow()}" >
+                    <p:collector value="#{parking}"
+                                 removeFrom="#{parkingBean.fbsParkingTypeList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>

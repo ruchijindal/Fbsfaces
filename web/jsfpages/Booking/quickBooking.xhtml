@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="title">
+        Quick Booking
+    </ui:define>
+    <ui:define name="content" >
+ 
+        <h:form id="form" >
+            
+            <p:messages id="msgs" showDetail="false"/>
+
+            <p:panel header="Flat Details" >
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <h:outputLabel value="Project " for="selectproject"></h:outputLabel>
+                        <h:selectOneMenu id="selectproject" value="#{quickBookingBean.fbsProject.projId}" style="width:100px;" required="true" requiredMessage="Project Should Be Selected">
+                            <f:selectItem itemLabel="Select"   />
+                            <f:selectItems value="#{quickBookingBean.projectList}" />
+                            <p:ajax update="form"  process="selectproject" event="change" listener="#{quickBookingBean.populateProjectCode()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Block " for="selectblock"></h:outputLabel>
+                        <h:selectOneMenu id="selectblock" value="#{quickBookingBean.fbsBlock.blockId}" style="width:100px;" required="true" requiredMessage="Block should Be Selected">
+                            <f:selectItem itemLabel="Select"  />
+                            <f:selectItems value="#{quickBookingBean.blockList}" />
+                            <p:ajax update="form"  process="selectblock" event="change" listener="#{quickBookingBean.populateFloors()}"  />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Floor " for="selectfloor"></h:outputLabel>
+                        <h:selectOneMenu id="selectfloor" value="#{quickBookingBean.floorName}" style="width:100px;" required="true" requiredMessage="Floor Should Be Selected">
+                            <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.floorList}"/>
+                            <p:ajax update="form"  process="selectfloor" event="change" listener="#{quickBookingBean.populateFlats()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Flat " for="selectflat"></h:outputLabel>
+                        <h:selectOneMenu id="selectflat" value="#{quickBookingBean.fbsBooking.flatId}" style="width:100px;" required="true" requiredMessage="Flat Should Be Selected" >
+                            <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.flatNoList}"/>
+                            <p:ajax update="form"  process="selectflat" event="change" listener="#{quickBookingBean.populateFlatSpecification()}" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+
+                    <p:dataTable id="flatspecification" var="fbsFlat" value="#{quickBookingBean.fbsFlatType}">
+                        <p:column  headerText="Project Code" >
+                            <h:outputLabel id="projectcode" value="#{quickBookingBean.projectCode()}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Flat Type">
+                            <h:outputText id="flattype" value="#{fbsFlat.flatSpecification}"/>
+                        </p:column>
+                        <p:column headerText="Flat SBA">
+                            <h:outputText id="flatsba" value="#{fbsFlat.flatSba}"/>
+                        </p:column>
+                        <p:column headerText="Flat BA">
+                            <h:outputText id="flatba" value="#{fbsFlat.flatBa}"/>
+                        </p:column>
+                        <p:column headerText="Flat CA">
+                            <h:outputText id="flatca" value="#{fbsFlat.flatCa}"/>
+                        </p:column>
+                        <p:column headerText="Flat BSP">
+                            <h:outputText id="flatbsp" value="#{fbsFlat.flatBsp}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                </h:panelGrid>
+            </p:panel>
+
+
+            <p:panel header="Other Details">
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel value="Booking Date " for="bookingdt"></h:outputLabel>
+
+                        <p:calendar   id="bookingdt" value="#{quickBookingBean.fbsBooking.bookingDt}" size="10" pattern="dd-MM-yyyy" timeZone="IST">
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></p:calendar>
+                        <h:outputLabel value="Payment Plan " for="selectpayplan"></h:outputLabel>
+                        <h:selectOneMenu id="selectpayplan" value="#{quickBookingBean.fbsBooking.planId}" style="width:100px;" required="true" requiredMessage="Payplan should Be Selected" >
+                            <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.plannameList}"/>
+                            <p:ajax update="form,payableamount"  process="selectpayplan" event="change"  />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Discount Type " for="discounttype"></h:outputLabel>
+                        <h:selectOneMenu id="discounttype" value="#{quickBookingBean.fbsDiscount.discountType}"  style="width:100px;" required="true" requiredMessage="Discount Type should Be selected">
+                            <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.discountList}"/>
+                            <p:ajax update="form,payableamount"  process="discounttype" event="change" listener="#{quickBookingBean.setDiscount()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Payable Amount " for="payableamount"></h:outputLabel>
+                        <h:outputText id="payableamount" value="#{quickBookingBean.calculateTotal()}" />
+                    </h:panelGrid>
+                    <p:dataTable id="flatplc" var="plccharge" value="#{quickBookingBean.fbsPlcinfo}">
+                        <p:column  headerText="PLC Name">
+                            <h:outputLabel value="#{plccharge.plcName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Rs./seq.ft.">
+                            <h:outputText  id="id_PlcCharge" value="#{plccharge.plcCharge}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:dataTable id="flatcharges" var="charge" value="#{quickBookingBean.fbsChargeList}">
+                        <p:column  headerText="Charge Name">
+                            <h:outputLabel value="#{charge.chargeName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Rs./seq.ft.">
+                            <h:outputText  id="id_#{charge.chargeName}" value="#{charge.amount}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Broker Details">
+
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <h:outputLabel value="Broker " for="selectbroker" style="margin-left: 10px;"></h:outputLabel>
+                    <h:selectOneMenu id="selectbroker" value="#{quickBookingBean.fbsBroker.brokerId}" style="width:100px;" required="true" requiredMessage="Broker Should Be Selected">
+                        <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                        <f:selectItems value="#{quickBookingBean.brokerList}"/>
+                        <p:ajax update="form"  process="selectbroker" event="change" listener="#{quickBookingBean.populateBrokerName()}" />
+                    </h:selectOneMenu>
+
+                    <p:dataTable id="brokerdetails" var="broker" value="#{quickBookingBean.fbsBroker}">
+                        <p:column  headerText="Broker Name" >
+                            <h:outputLabel id="brokername" value="#{broker.brName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Broker Commission">
+                            <h:outputText id="brokercomision" value="#{quickBookingBean.brokercom}"/>
+                        </p:column>
+                    </p:dataTable>
+
+
+
+
+                </h:panelGrid>
+
+
+            </p:panel>
+            <p:panel header="Parking Details" >
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="No. Of Parking " for="noofparking"></h:outputLabel>
+                        <h:selectOneMenu id="noofparking" value="#{quickBookingBean.noOfParking}" style="width:100px;" required="true" requiredMessage="Parking Should Be Selected">
+                            <f:selectItem itemLabel=" Select" noSelectionOption="true"/>
+                            <f:selectItem itemValue="0"/>
+                            <f:selectItem itemValue="1"/>
+                            <f:selectItem itemValue="2"/>
+                            <f:selectItem itemValue="3"/>
+                            <f:selectItem itemValue="4"/>
+                            <f:selectItem itemValue="5"/>
+                            <p:ajax update="form"  process="noofparking" event="change" listener="#{quickBookingBean.renderParking()}" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <h:outputLabel value= "Paking Type 1 " for="paking1" rendered="#{quickBookingBean.render1}"></h:outputLabel>
+                        <h:selectOneMenu id="paking1" value="#{quickBookingBean.parkingType1}" rendered="#{quickBookingBean.render1}" style="width:100px;">
+                            <f:selectItem itemValue="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.parkingTypeList}"/>
+
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 2 " for="paking2" rendered="#{quickBookingBean.render2}"></h:outputLabel>
+                        <h:selectOneMenu id="paking2" value="#{quickBookingBean.parkingType2}" rendered="#{quickBookingBean.render2}" style="width:100px;">
+                            <f:selectItem itemValue="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 3 " for="paking3" rendered="#{quickBookingBean.render3}"></h:outputLabel>
+                        <h:selectOneMenu id="paking3" value="#{quickBookingBean.parkingType3}" rendered="#{quickBookingBean.render3}" style="width:100px;">
+                            <f:selectItem itemValue="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 4 " for="paking4" rendered="#{quickBookingBean.render4}"></h:outputLabel>
+                        <h:selectOneMenu id="paking4" value="#{quickBookingBean.parkingType4}" rendered="#{quickBookingBean.render4}" style="width:100px;">
+                            <f:selectItem itemValue="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 5 " for="paking5" rendered="#{quickBookingBean.render5}"></h:outputLabel>
+                        <h:selectOneMenu id="paking5" value="#{quickBookingBean.parkingType5}" rendered="#{quickBookingBean.render5}"  style="width:100px;">
+                            <f:selectItem itemValue="Select" noSelectionOption="true"/>
+                            <f:selectItems value="#{quickBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <p:dataTable id="pakings" var="parking" value="#{quickBookingBean.parkingInfoList}">
+                        <p:column  headerText="Paking Type">
+                            <h:outputLabel value="#{parking.parkingType}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Available Parking">
+                            <h:outputText   value="#{parking.availParking}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Applicant Details">
+
+                <h:panelGrid id="applicantdetail" columns="6" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="applicantname" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputText id="applicantname" value="#{quickBookingBean.fbsApplicant.applicantName}" required="true" requiredMessage="Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="swd"></h:outputLabel>
+                    <h:inputText id="swd" value="#{quickBookingBean.fbsApplicant.SWD}" required="true"  requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="nationality"></h:outputLabel>
+                    <h:inputText id="nationality" value="#{quickBookingBean.fbsApplicant.nationality}" required="true" requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="dob" style="margin-left: 10px;"></h:outputLabel>
+                    <p:calendar id="dob" value="#{quickBookingBean.fbsApplicant.dob}" required="true" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="profession"></h:outputLabel>
+                    <h:inputText id="profession" value="#{quickBookingBean.fbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="resadd"></h:outputLabel>
+                    <h:inputTextarea id="resadd" value="#{quickBookingBean.fbsApplicant.resAdd}" required="true" style="width: 150px; height: 20px;" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="offadd" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputTextarea id="offadd" value="#{quickBookingBean.fbsApplicant.offAdd}" required="true" style="width: 150px; height: 20px;" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="panno"></h:outputLabel>
+                    <h:inputText id="panno" value="#{quickBookingBean.fbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="dlno"></h:outputLabel>
+                    <h:inputText id="dlno" value="#{quickBookingBean.fbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="passno" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputText id="passno" value="#{quickBookingBean.fbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="telephone"></h:outputLabel>
+                    <h:inputText id="telephone" value="#{quickBookingBean.fbsApplicant.telephone}" required="true" maxlength="12" requiredMessage="Telephone No. should Be In Digit"/>
+                    <h:outputLabel value="Mobile " for="mobile"></h:outputLabel>
+                    <h:inputText id="mobile" value="#{quickBookingBean.fbsApplicant.mobile}" required="true" maxlength="10" requiredMessage="Mobile No. Should Be In Digit"/>
+                    <h:outputLabel value="FAX " for="fax" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputText id="fax" value="#{quickBookingBean.fbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="email"></h:outputLabel>
+                    <h:inputText id="email" value="#{quickBookingBean.fbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                    
+                    
+                </h:panelGrid>
+
+            </p:panel>
+            <p:panel header="CoApplicant Details">
+
+                <h:panelGrid id="coapplicantdetail" columns="6" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="coapplicantname" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputText id="coapplicantname" value="#{quickBookingBean.coFbsApplicant.applicantName}" required="true" requiredMessage="Co-Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="coswd"></h:outputLabel>
+                    <h:inputText id="coswd" value="#{quickBookingBean.coFbsApplicant.SWD}" required="true" requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="conationality"></h:outputLabel>
+                    <h:inputText id="conationality" value="#{quickBookingBean.coFbsApplicant.nationality}" required="true"  requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="codob" style="margin-left: 10px;"></h:outputLabel>
+                    <p:calendar id="codob" value="#{quickBookingBean.coFbsApplicant.dob}" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="coprofession"></h:outputLabel>
+                    <h:inputText id="coprofession" value="#{quickBookingBean.coFbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="coresadd"></h:outputLabel>
+                    <h:inputTextarea id="coresadd" value="#{quickBookingBean.coFbsApplicant.resAdd}" required="true" style="width: 150px; height: 20px;" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="cooffadd" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputTextarea id="cooffadd" value="#{quickBookingBean.coFbsApplicant.offAdd}" required="true" style="width: 150px; height: 20px;" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="copanno"></h:outputLabel>
+                    <h:inputText id="copanno" value="#{quickBookingBean.coFbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="codlno"></h:outputLabel>
+                    <h:inputText id="codlno" value="#{quickBookingBean.coFbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="copassno" style="margin-left: 10px;" ></h:outputLabel>
+                    <h:inputText id="copassno" value="#{quickBookingBean.coFbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="cotelephone"></h:outputLabel>
+                    <h:inputText id="cotelephone" value="#{quickBookingBean.coFbsApplicant.telephone}" required="true" requiredMessage="Telephone No. should Be In Digit"  maxlength="12"/>
+                    <h:outputLabel value="Mobile " for="comobile"></h:outputLabel>
+                    <h:inputText id="comobile" value="#{quickBookingBean.coFbsApplicant.mobile}" required="true" requiredMessage="Mobile No. Should Be In Digit"  maxlength="10"/>
+                    <h:outputLabel value="FAX " for="cofax" style="margin-left: 10px;"></h:outputLabel>
+                    <h:inputText id="cofax" value="#{quickBookingBean.coFbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="coemail"></h:outputLabel>
+                    <h:inputText id="coemail" value="#{quickBookingBean.coFbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                    
+                   
+                </h:panelGrid>
+
+
+            </p:panel>
+            <br/>
+            <p:commandButton value="Book Flat" action="#{quickBookingBean.addBooking()}"  update="form,msgs"  style="margin-left: 20px;"/>
+            <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

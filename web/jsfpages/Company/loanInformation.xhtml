@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Loan Information
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <h:form id="form" >
+            <p:panel header="Add Loan Information" >
+                <h:panelGrid columns="2" style="margin-bottom:10px">
+                    <h:outputLabel value="Project " for="selectproject"></h:outputLabel>
+                    <h:selectOneMenu id="selectproject" value="#{loanInfoBean.fbsProject.projId}" style="width:100px;">
+                        <f:selectItem itemLabel ="Select" noSelectionOption="true" />
+                        <f:selectItems value="#{loanInfoBean.projectList}" />
+                        <p:ajax update="selectblock"  process="selectproject" event="change" listener="#{loanInfoBean.populateProjectCode}" />
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Block " for="selectblock"></h:outputLabel>
+                    <h:selectOneMenu id="selectblock" value="#{loanInfoBean.fbsBlock.blockId}" style="width:100px;">
+                        <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                        <f:selectItems value="#{loanInfoBean.blockList}" />
+                        <p:ajax update="selectfloor"  process="selectblock" event="change" listener="#{loanInfoBean.populateFloors}"  />
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Floor " for="selectfloor"></h:outputLabel>
+                    <h:selectOneMenu id="selectfloor" value="#{loanInfoBean.floorName}" style="width:100px;">
+                        <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                        <f:selectItems value="#{loanInfoBean.floorList}"/>
+                        <p:ajax update="selectflat"  process="selectfloor" event="change" listener="#{loanInfoBean.populateFlats()}" />
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Flat " for="selectflat"></h:outputLabel>
+                    <h:selectOneMenu id="selectflat" value="#{loanInfoBean.flatid}" style="width:100px;" >
+                        <f:selectItem itemLabel="Select" noSelectionOption="true"/>
+                        <f:selectItems value="#{loanInfoBean.flatNoList}"/>
+                        <p:ajax update="form" process="selectflat" listener="#{loanInfoBean.checkloaninfo}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="loandetails"  >
+                <h:panelGrid columns="4" style="margin-bottom:10px">
+                    <h:outputLabel value="Loan Applicant No." for="loanapplicantno"/>
+
+                    <h:inputText id="loanapplicantno" value="#{loanInfoBean.fbsLoan.loanAppnumber}"   />
+                    <h:outputLabel value="Loan Date" for="loandate"/>
+
+                    <p:calendar id="loandate" value="#{loanInfoBean.fbsLoan.loanDate}" pattern="dd-MM-yyyy" timeZone="IST" />
+
+                    <h:outputLabel value="Bank Name" for="bankname"/>
+
+                    <h:inputText id="bankname" value="#{loanInfoBean.fbsLoan.bankName}"   />
+                    <h:outputLabel value="Bank Address" for="bankAddress"/>
+
+                    <h:inputTextarea id="bankAddress" value="#{loanInfoBean.fbsLoan.bankAddress}"  style="width: 150px;"  />
+                    <h:outputLabel value="Loan Start from" for="loanstartfrom"/>
+
+                    <h:inputText id="loanstartfrom" value="#{loanInfoBean.fbsLoan.startFrom}"   />
+       
+            </h:panelGrid>
+            </p:panel>
+            <p:panel>
+                <p:commandButton value="Submit" action="#{loanInfoBean.addLoanInfo}"  update="form,form2,growl1,dilog"  style="margin-left: 20px;" ajax="false"  />
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;" ajax="false"  />
+
+
+            </p:panel>
+        </h:form>
+          <h:form id="form2"  >
+            <h:panelGrid columns="1"  >
+                <p:dataTable var="loan" value="#{loanInfoBean.fbsLoanList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{loanInfoBean.editLoan}"  paginatorPosition="bottom"  >
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Loan Details
+                        </div>
+                    </f:facet>
+ <p:column headerText="Unit Code" style="width:150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.unitCode}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{loan.unitCode}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Application Number" style="width:150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.loanAppnumber}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{loan.loanAppnumber}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                     <p:column headerText="Date" style="width:150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.loanDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">                                
+                                <p:calendar value="#{loan.loanDate}" pattern="dd-MM-yyyy" timeZone="IST"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Bank Name" style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.bankName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{loan.bankName}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Bank Address" style="width:250px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.bankAddress}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{loan.bankAddress}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Loan Start" style="width:250px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{loan.startFrom}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{loan.startFrom}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options">
+                        <p:rowEditor  />
+                        <p:commandLink action="#{loanInfoBean.deleteLoan(loan)}" update="form2" >
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+             
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>

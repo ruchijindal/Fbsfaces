@@ -1,0 +1,67 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <h:form>
+        <p:accordionPanel  autoHeight="false" activeIndex="#{loginBean.tab1}"  event="click" dynamic="true" cache="true">
+            <p:tab title="Enquiry" >
+
+            <p:menu>
+                <p:submenu>
+                    <p:menuitem action="#{loginBean.tabSet1(0)}" value="Search Flat" oncomplete="#{searchManagedBean.PopulateFlatsDetail()}" update="messages" icon="/resources/images/search.png" url="/faces/jsfpages/Project/searchFlat.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(0)}" value="Graphical Enquiry" onclick="#{graphicalSearchBean.populate()}"  update="messages" icon="/resources/images/picture.png" url="/faces/jsfpages/Project/blockList.xhtml"/>
+                </p:submenu>
+            </p:menu>
+         </p:tab>
+
+            <p:tab title="Booking" rendered="#{loginBean.renderBooking}">
+          <p:menu>
+                <p:submenu>
+                    <p:menuitem action="#{loginBean.tabSet1(1)}" value="Flat Booking" onclick="#{flatBookingBean.populate()}" update="messages" icon="/resources/images/save.png" url="/faces/jsfpages/Booking/flatBooking.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(1)}" value="Booking List" actionListener="#"  update="messages" icon="/resources/images/update.png" url="/faces/jsfpages/Booking/projectBookingList.xhtml"/>
+                </p:submenu>
+            </p:menu>
+        </p:tab>
+            <p:tab title="Payment" rendered="#{loginBean.renderPayment}">
+
+            <p:menu>
+                <p:submenu>
+                    <p:menuitem action="#{loginBean.tabSet1(2)}" value="Quick Payment"   update="messages" onclick="#{paymentBean.payment()}" icon="/resources/images/save.png" url="/faces/jsfpages/Payment/quickPayment.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(2)}" value="Search Payment" actionListener="#" onclick="#{paymentDetailManagedBean.populatePaymentDetail()}" update="messages" ajax="true" icon="/resources/images/update.png" url="/faces/jsfpages/Payment/paymentList.xhtml"/>
+                </p:submenu>
+            </p:menu>
+        </p:tab>
+
+        <p:tab title="Complaints">
+            <p:menu>
+                <p:submenu>
+                    <p:menuitem action="#{loginBean.tabSet1(3)}" value="Register New"  update="messages" icon="/resources/images/save.png" url="/faces/jsfpages/Complaint/complaint.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(3)}" value="Complaints List"  update="messages" icon="/resources/images/update.png" url="/faces/jsfpages/Complaint/complaintList.xhtml"/>
+                </p:submenu>
+            </p:menu>
+        </p:tab>
+
+
+
+
+        <p:tab title="ProjectSettings"   rendered="#{loginBean.renderProjectSetting}"  >
+            <p:menu>
+                <p:submenu>
+                    
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Flat Type" oncomplete="#{flatTypeBean.populate()}" update="messages" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setFlatType.xhtml" />
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Plan Name" oncomplete="#{planBean.populate()}" update="messages" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setPlanname.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Payment Plan" oncomplete="#{payplanBean.populate()}" update="messages" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setPayplan.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="PLC" oncomplete="#{plcBean.populate()}" update="messages" ajax="true" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setPlc.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Charges" oncomplete="#{chargeBean.populate()}" update="messages" ajax="true" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setCharges.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Parking Details" oncomplete="#{parkingBean.populateParking()}" update="messages" ajax="true" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setParking.xhtml"/>
+                    <p:menuitem action="#{loginBean.tabSet1(4)}" value="Blocks" oncomplete="#{blockBean.populate()}" update="messages" ajax="true" icon="/resources/images/add.png" url="/faces/jsfpages/ProjectSetting/setBlock.xhtml"/>
+                </p:submenu>
+            </p:menu>
+        </p:tab>
+
+            
+ </p:accordionPanel>
+    </h:form>
+</ui:composition>

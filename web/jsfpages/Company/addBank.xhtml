@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Add Bank
+    </ui:define>
+
+   
+
+    <ui:define name="content">
+
+        <h:form id="form1"  >
+            <p:messages id="msgs"  showDetail="false" />
+            <p:panel header="Add Bank">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Bank Name" for="txt_bankname"></h:outputLabel>
+                    <h:inputText id="txt_bankname" value="#{bankBean.fbsBank.bankName}" required="true" requiredMessage="Bank Name should be entered"/>
+
+                    <h:outputLabel value="Account No" for="txt_account"></h:outputLabel>
+                    <h:inputText id="txt_account" value="#{bankBean.fbsBank.accountNo}" required="true" requiredMessage="Account Number should be entered"/>
+
+                    <h:outputLabel value="Address" for="txt_address"></h:outputLabel>
+                    <h:inputText id="txt_address" value="#{bankBean.fbsBank.address}" required="true" requiredMessage="Address of Bank should be entered"/>
+                </h:panelGrid>
+                <br/>
+
+                <p:commandButton value="Add" action="#{bankBean.addBank()}" update="form1,form2,msgs" ajax="false" />
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable var="bank" value="#{bankBean.bankList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{bankBean.editBank}"  paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Bank Details
+                        </div>
+                    </f:facet>
+                    <p:column headerText="Bank Name" style="width:150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{bank.bankName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{bank.bankName}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="A/C Number" style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{bank.accountNo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{bank.accountNo}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Address" style="width:250px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{bank.address}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{bank.address}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options">
+                        <p:rowEditor/>
+                        <p:commandLink action="#{bankBean.bank(bank)}"  onclick="confirmation.show()">
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                            
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+             <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete Bank" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                     action="#{bankBean.deleteBank()}" >
+             <p:collector value="#{bank}"
+                                         removeFrom="#{bankBean.bankList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>

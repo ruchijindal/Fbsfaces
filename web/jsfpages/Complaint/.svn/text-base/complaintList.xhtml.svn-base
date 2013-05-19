@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Complaint List
+    </ui:define>
+
+
+
+    <ui:define name="content">
+
+        <h:form id="complaintListForm"  >
+
+            <p:panel id="panel" header="Search" >
+
+                <h:outputLabel value="Select Filters  " for="selectstatus"></h:outputLabel>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectstatus" value="#{complainedDetailBean.opStatus}">
+                    <f:selectItem itemValue="Select Status" noSelectionOption="true"/>
+                    <f:selectItems value="#{complainedDetailBean.status}"/>
+                    <p:ajax update="complaintListForm"  process="selectstatus" event="change" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:inputText id="text_Complaintid" value="#{complainedDetailBean.opComplaintId}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_Complaintid" value="Complaint Id" />
+                
+                &nbsp;&nbsp;<h:inputText id="text_name" value="#{complainedDetailBean.opName}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_name" value="Applicant Name" />
+                &nbsp;&nbsp;<h:inputText id="text_address" value="#{complainedDetailBean.opAddress}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_address" value="Address" />
+                &nbsp;&nbsp;<h:inputText id="text_email" value="#{complainedDetailBean.opEmail}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_email" value="Email" />
+                &nbsp;&nbsp;<h:inputText id="text_subject" value="#{complainedDetailBean.opSubject}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_subject" value="Subject" />
+                &nbsp;&nbsp;<h:inputText id="text_register" value="#{complainedDetailBean.opRegiterBy}"   >
+                    <p:ajax update="complaints,txt_startdate,txt_enddate"    event="keyup" listener="#{complainedDetailBean.populateComplaintListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_register" value="Register By" />
+                
+                
+
+                <br/><br/>
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{complainedDetailBean.opStartDate}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel><p:calendar id="txt_enddate" value="#{complainedDetailBean.opEndDate}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/><br/>
+                <p:commandButton value="Search" action="#{complainedDetailBean.populateComplaintListByFilter()}"
+                                 update="complaintListForm"/>
+                <p:commandButton value="Reset" style="margin-left: 5px" action="#{complainedDetailBean.reset()}"
+                                 update="complaintListForm"/>
+            </p:panel>
+            <p:dataTable id="complaints" var="complaint" value="#{complainedDetailBean.refComplaintList}" paginator="true" rows="20"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,15,25" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Complaint List
+                    </div>
+                </f:facet>
+                
+                <p:column sortBy="#{complaint.complaintId}"  headerText="Complaint Id"  >
+                    <h:outputText value="#{complaint.complaintId}"/>
+                </p:column>
+
+                <p:column  headerText="Name" sortBy="#{complaint.name}"  >
+                    <h:outputText value="#{complaint.name}"/>
+                </p:column>
+
+                <p:column headerText="Address" sortBy="#{complaint.address}"  >
+                    <h:outputText value="#{complaint.address}"/>
+                </p:column>
+
+                <p:column headerText="Email" sortBy="#{complaint.email}"  >
+                    <h:outputText value="#{complaint.email}"/>
+                </p:column>
+
+                <p:column headerText="Subject" sortBy="#{complaint.complaintDt}"   >
+                    <h:outputText value="#{complaint.subject}"/>
+                </p:column>
+
+                <p:column  sortBy="#{complaint.complaintDt}" headerText="Complaint Date"   >
+                    <h:outputText value="#{complaint.complaintDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column headerText="Complaint">
+                    <p:commandLink value="Complaint" onclick="dlg1.show();" update="form3" action="#{complaintBean.SetObject(complaint)}" />
+                </p:column>
+
+                <p:column headerText="Status" sortBy="#{complaint.status}"  >
+                    <h:outputText value="#{complaint.status}"/>
+                </p:column>
+
+
+                <p:column headerText="Registered By" sortBy="#{complaint.registeredBy}"  >
+                    <h:outputText value="#{complaint.registeredBy}"/>
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/excel.png" title="Export as ExcelSheet"/>
+                        <p:dataExporter type="xls" target="complaints" fileName="Search Result" />
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/pdf.png" title="Export as PDF"/>
+                        <p:dataExporter type="pdf" target="complaints" fileName="Search Result"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/csv.png" title="Export as CSV"/>
+                        <p:dataExporter type="csv" target="complaints" fileName="Search Result" />
+                    </h:commandLink>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+         <p:dialog id="dilog"   header="Complaint" widgetVar="dlg1" showEffect="scale" hideEffect="scale" height="150"  width="250"  styleClass="dialog1"   >
+            <h:form id="form3"  >
+
+                <br/>
+                <h:inputTextarea id="txt_complaint" value="#{complaintBean.complaints}"/>
+                <br/>
+                <br/>
+               
+            </h:form>
+        </p:dialog>
+    </ui:define>
+
+
+
+</ui:composition>

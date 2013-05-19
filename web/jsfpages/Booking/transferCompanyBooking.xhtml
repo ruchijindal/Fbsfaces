@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Transfer Booking
+    </ui:define>
+    <ui:define name="content" >
+        <p:growl id="growl" showDetail="false"/>
+        <h:form id="form" >
+      
+            <p:panel header="New Applicant Details">
+
+                <h:panelGrid id="applicantdetail" columns="8" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="applicantname"></h:outputLabel>
+                    <h:inputText id="applicantname" value="#{graphicalSearchBean.fbsApplicant.applicantName}" required="true"/>
+                    <h:outputLabel value="S/W/D " for="swd"></h:outputLabel>
+                    <h:inputText id="swd" value="#{graphicalSearchBean.fbsApplicant.SWD}" required="true"/>
+                    <h:outputLabel value="Nationality " for="nationality"></h:outputLabel>
+                    <h:inputText id="nationality" value="#{graphicalSearchBean.fbsApplicant.nationality}" required="true"/>
+                    <h:outputLabel value="DOB " for="dob"></h:outputLabel>
+                    <p:calendar id="dob" value="#{graphicalSearchBean.fbsApplicant.dob}" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="profession"></h:outputLabel>
+                    <h:inputText id="profession" value="#{graphicalSearchBean.fbsApplicant.profession}" required="true"/>
+                    <h:outputLabel value="Res. Address " for="resadd"></h:outputLabel>
+                    <h:inputText id="resadd" value="#{graphicalSearchBean.fbsApplicant.resAdd}" required="true"/>
+                    <h:outputLabel value="Off. Address " for="offadd"></h:outputLabel>
+                    <h:inputText id="offadd" value="#{graphicalSearchBean.fbsApplicant.offAdd}" required="true"/>
+                    <h:outputLabel value="PAN No. " for="panno"></h:outputLabel>
+                    <h:inputText id="panno" value="#{graphicalSearchBean.fbsApplicant.panNo}" required="true"/>
+                    <h:outputLabel value="DL No. " for="dlno"></h:outputLabel>
+                    <h:inputText id="dlno" value="#{graphicalSearchBean.fbsApplicant.dlNo}" required="true"/>
+                    <h:outputLabel value="Passport No. " for="passno"></h:outputLabel>
+                    <h:inputText id="passno" value="#{graphicalSearchBean.fbsApplicant.passportNo}" required="true"/>
+                    <h:outputLabel value="Telephone " for="telephone"></h:outputLabel>
+                    <h:inputText id="telephone" value="#{graphicalSearchBean.fbsApplicant.telephone}" required="true"/>
+                    <h:outputLabel value="Mobile " for="mobile"></h:outputLabel>
+                    <h:inputText id="mobile" value="#{graphicalSearchBean.fbsApplicant.mobile}" required="true"/>
+                    <h:outputLabel value="FAX " for="fax"></h:outputLabel>
+                    <h:inputText id="fax" value="#{graphicalSearchBean.fbsApplicant.fax}" required="true"/>
+                    <h:outputLabel value="Email " for="email"></h:outputLabel>
+                    <h:inputText id="email" value="#{graphicalSearchBean.fbsApplicant.email}" required="true"/>
+                </h:panelGrid>
+
+            </p:panel>
+            <p:panel header="New CoApplicant Details">
+
+                <h:panelGrid id="coapplicantdetail" columns="8" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="coapplicantname"></h:outputLabel>
+                    <h:inputText id="coapplicantname" value="#{graphicalSearchBean.coFbsApplicant.applicantName}" required="true"/>
+                    <h:outputLabel value="S/W/D " for="coswd"></h:outputLabel>
+                    <h:inputText id="coswd" value="#{graphicalSearchBean.coFbsApplicant.SWD}" required="true"/>
+                    <h:outputLabel value="Nationality " for="conationality"></h:outputLabel>
+                    <h:inputText id="conationality" value="#{graphicalSearchBean.coFbsApplicant.nationality}" required="true"/>
+                    <h:outputLabel value="DOB " for="codob"></h:outputLabel>
+                    <p:calendar id="codob" value="#{graphicalSearchBean.coFbsApplicant.dob}" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="coprofession"></h:outputLabel>
+                    <h:inputText id="coprofession" value="#{graphicalSearchBean.coFbsApplicant.profession}" required="true"/>
+                    <h:outputLabel value="Res. Address " for="coresadd"></h:outputLabel>
+                    <h:inputText id="coresadd" value="#{graphicalSearchBean.coFbsApplicant.resAdd}" required="true"/>
+                    <h:outputLabel value="Off. Address " for="cooffadd"></h:outputLabel>
+                    <h:inputText id="cooffadd" value="#{graphicalSearchBean.coFbsApplicant.offAdd}" required="true"/>
+                     <h:outputLabel value="PAN No. " for="copanno"></h:outputLabel>
+                     <h:inputText id="copanno" value="#{graphicalSearchBean.coFbsApplicant.panNo}" required="true"/>
+                    <h:outputLabel value="DL No. " for="codlno"></h:outputLabel>
+                    <h:inputText id="codlno" value="#{graphicalSearchBean.coFbsApplicant.dlNo}" required="true"/>
+                    <h:outputLabel value="Passport No. " for="copassno"></h:outputLabel>
+                    <h:inputText id="copassno" value="#{graphicalSearchBean.coFbsApplicant.passportNo}" required="true"/>
+                    <h:outputLabel value="Telephone " for="cotelephone"></h:outputLabel>
+                    <h:inputText id="cotelephone" value="#{graphicalSearchBean.coFbsApplicant.telephone}" required="true"/>
+                    <h:outputLabel value="Mobile " for="comobile"></h:outputLabel>
+                    <h:inputText id="comobile" value="#{graphicalSearchBean.coFbsApplicant.mobile}" required="true"/>
+                    <h:outputLabel value="FAX " for="cofax"></h:outputLabel>
+                    <h:inputText id="cofax" value="#{graphicalSearchBean.coFbsApplicant.fax}" required="true"/>
+                    <h:outputLabel value="Email " for="coemail"></h:outputLabel>
+                    <h:inputText id="coemail" value="#{graphicalSearchBean.coFbsApplicant.email}" required="true"/>
+                </h:panelGrid>
+
+
+            </p:panel>
+
+            <p:commandButton value="Transfer Flat" action="#{graphicalSearchBean.addViewBooking()}"  update="growl,form"  />
+           <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

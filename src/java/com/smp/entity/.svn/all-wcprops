@@ -1,0 +1,203 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity
+END
+FbsBroker.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBroker.java
+END
+FbsPlc.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsPlc.java
+END
+FbsPayment.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsPayment.java
+END
+FbsReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsReport.java
+END
+FbsApplicant.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsApplicant.java
+END
+FbsCharge.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsCharge.java
+END
+FbsPlanname.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsPlanname.java
+END
+FbsFlatType.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsFlatType.java
+END
+FbsPayBroker.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsPayBroker.java
+END
+FbsLoan.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsLoan.java
+END
+FbsParkingAllot.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsParkingAllot.java
+END
+FbsProject.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsProject.java
+END
+FbsUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsUser.java
+END
+FbsBooking.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBooking.java
+END
+FbsInterest.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsInterest.java
+END
+FbsParking.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsParking.java
+END
+FbsPayplan.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsPayplan.java
+END
+FbsDiscount.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsDiscount.java
+END
+FbsBookingTemp.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBookingTemp.java
+END
+FbsBlock.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBlock.java
+END
+FbsDocs.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsDocs.java
+END
+FbsFlat.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsFlat.java
+END
+FbsServicetax.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsServicetax.java
+END
+FbsCharges.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsCharges.java
+END
+FbsCompany.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsCompany.java
+END
+FbsBrokerCat.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBrokerCat.java
+END
+FbsBrPayment.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBrPayment.java
+END
+FbsParkingType.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsParkingType.java
+END
+FbsFacility.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsFacility.java
+END
+FbsCheque.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsCheque.java
+END
+FbsComplaint.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsComplaint.java
+END
+FbsBank.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsBank.java
+END
+FbsLogin.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/entity/FbsLogin.java
+END

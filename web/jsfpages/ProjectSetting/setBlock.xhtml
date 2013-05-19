@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../resources/templates/projectTemplate.xhtml">
+
+    <ui:define name="title">
+        Block Setting
+    </ui:define>
+    <ui:define name="sidebar">
+        <ui:include src="../common/sidebar.xhtml"></ui:include>
+    </ui:define>
+    <ui:define name="content">
+      <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form" >
+            <p:panel header="Add Block">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Block Name " for="txt_blockname"></h:outputLabel>
+                    <h:inputText id="txt_blockname"
+                                 value="#{blockBean.fbsBlock.blockName}" required="true" requiredMessage="Block Name should be entered"/>
+                    <h:outputLabel value= "No Of Floors " for="txt_nofloor"></h:outputLabel>
+                    <h:inputText id="txt_nofloor" value="#{blockBean.noOfFloor}" required="true" requiredMessage="Number of Floor should be entered" />
+                    <h:outputLabel value= "Flats Per Floor " for="txt_flatperfloor"></h:outputLabel>
+                    <h:selectOneMenu id="txt_flatperfloor" value="#{blockBean.i}" required="true" requiredMessage="Flat per Floor should be entered" >
+                        <f:selectItem itemValue="Select No" />
+                        <f:selectItem itemValue="0"/>
+                        <f:selectItem itemValue="1"/>
+                        <f:selectItem itemValue="2"/>
+                        <f:selectItem itemValue="3"/>
+                        <f:selectItem itemValue="4"/>
+                        <f:selectItem itemValue="5"/>
+                        <f:selectItem itemValue="6"/>
+                        <f:selectItem itemValue="7"/>
+                        <f:selectItem itemValue="8"/>
+                        <f:selectItem itemValue="9"/>
+                        <f:selectItem itemValue="10"/>
+                        <p:ajax update="selectflattypes"  process="txt_flatperfloor" event="change" listener="#{blockBean.renderForm()}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:panelGrid id="selectflattypes" columns="10" >
+                    <h:outputLabel value= "1st FlatType " for="floor0" rendered="#{blockBean.render0}"></h:outputLabel  >
+                    <h:selectOneMenu id="floor0" value="#{blockBean.flatType0}" rendered="#{blockBean.render0}"  >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "2nd FlatType " for="floor1" rendered="#{blockBean.render1}"></h:outputLabel>
+                    <h:selectOneMenu id="floor1" value="#{blockBean.flatType1}" rendered="#{blockBean.render1}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "3rd FlatType " for="floor2" rendered="#{blockBean.render2}"></h:outputLabel>
+                    <h:selectOneMenu id="floor2" value="#{blockBean.flatType2}" rendered="#{blockBean.render2}">
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "4th FlatType " for="floor3" rendered="#{blockBean.render3}"></h:outputLabel>
+                    <h:selectOneMenu id="floor3" value="#{blockBean.flatType3}" rendered="#{blockBean.render3}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "5th FlatType " for="floor4" rendered="#{blockBean.render4}"></h:outputLabel>
+                    <h:selectOneMenu id="floor4" value="#{blockBean.flatType4}" rendered="#{blockBean.render4}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "6th FlatType " for="floor5" rendered="#{blockBean.render5}"></h:outputLabel>
+                    <h:selectOneMenu id="floor5" value="#{blockBean.flatType5}" rendered="#{blockBean.render5}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "7th FlatType " for="floor6" rendered="#{blockBean.render6}"></h:outputLabel>
+                    <h:selectOneMenu id="floor6" value="#{blockBean.flatType6}" rendered="#{blockBean.render6}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "8th FlatType " for="floor7" rendered="#{blockBean.render7}"></h:outputLabel>
+                    <h:selectOneMenu id="floor7" value="#{blockBean.flatType7}" rendered="#{blockBean.render7}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "9th FlatType " for="floor8" rendered="#{blockBean.render8}"></h:outputLabel>
+                    <h:selectOneMenu id="floor8" value="#{blockBean.flatType8}" rendered="#{blockBean.render8}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value= "10th FlatType " for="floor9" rendered="#{blockBean.render9}"></h:outputLabel>
+                    <h:selectOneMenu id="floor9" value="#{blockBean.flatType9}" rendered="#{blockBean.render9}" >
+                        <f:selectItem itemValue="Select Flat Type" noSelectionOption="true"/>
+                        <f:selectItems value="#{blockBean.flatTypes}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br/>
+                
+                <p:commandButton value="Add" action="#{blockBean.addBlock}" update="form2,msgs" ajax="false" />
+                 <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value="" /></f:facet>
+                </p:ajaxStatus>
+            </p:panel>
+        </h:form>
+        <p:dialog  header="Edit Block" widgetVar="dlg1" resizable="true">
+            <h:form id="editform">
+
+                <h:panelGrid  columns="2" style="margin-bottom:10px">
+                    <h:outputLabel value="Block Name :" for="blockname"></h:outputLabel>
+                    <h:inputText id="blockname"
+                                 value="#{blockBean.blockInfo.blockName}" required="true"/>
+                    <h:outputLabel value= "No Of Floors :" for="nofloor"></h:outputLabel>
+                    <h:inputText id="nofloor" value="#{blockBean.blockInfo.noOfFloors}" />
+                    <h:outputLabel value= "Flats Per Floor :" for="flatperfloor"></h:outputLabel>
+                    <h:selectOneMenu id="flatperfloor" value="#{blockBean.blockInfo.noOfFlats}" >
+                        <f:selectItem itemValue="Select No" noSelectionOption="true"/>
+                        <f:selectItem itemValue="0"/>
+                        <f:selectItem itemValue="1"/>
+                        <f:selectItem itemValue="2"/>
+                        <f:selectItem itemValue="3"/>
+                        <f:selectItem itemValue="4"/>
+                        <f:selectItem itemValue="5"/>
+                        <f:selectItem itemValue="6"/>
+                        <f:selectItem itemValue="7"/>
+                        <f:selectItem itemValue="8"/>
+                        <f:selectItem itemValue="9"/>
+                        <f:selectItem itemValue="10"/>
+                        <p:ajax update="selectflattypes"  process="txt_flatperfloor" event="change" listener="#{blockBean.renderForm()}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <p:commandButton value="Update"  oncomplete="dlg1.hide();"/>
+            </h:form>
+        </p:dialog>
+        <h:form id="form2"  >
+            <p:dataTable id="blocks" var="block" rendered="#{blockBean.temp}"  value="#{blockBean.blockInfoList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{blockBean.editBlock}" selectionMode="single" paginatorPosition="bottom"  >
+                <f:facet name="header">
+                    <div class="facetheader">
+                    Block Details
+                    </div>
+                </f:facet>
+                <p:column sortBy="#{block.blockName}" headerText="Block Name">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{block.blockName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{block.blockName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column  headerText="No Of Floor">
+                    <h:outputText value="#{block.noOfFloors}"/>
+                </p:column>
+                <p:column  headerText="No Of Flats">
+                    <h:outputText value="#{block.noOfFlats}"/>
+                </p:column>
+                <p:column headerText="Options">
+                    <p:commandLink action="#{blockBean.deleteBlock(block)}" onclick="confirmation.show()" >
+                     <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                    </p:commandLink>
+         
+                    <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Flat Type" severity="alert" widgetVar="confirmation">
+
+                        <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()" ajax="false"
+                                 action="#{blockBean.deleteBlock(block)}" >
+                    <p:collector value="#{flatType}"
+                                 removeFrom="#{blockBean.blockList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+
+
+                    &nbsp;&nbsp; <p:commandLink value="Details" action="#{blockBean.editRow(block)}"  style="color:#004276" rendered="#{!block.status}">
+                    </p:commandLink> &nbsp;&nbsp; <p:commandLink value="Lock" action="#{blockBean.lockBlock(block)}" update="form2" style="color:#004276" rendered="#{!block.status}">
+                    </p:commandLink>
+                    &nbsp;&nbsp; <p:commandLink action="#{blockBean.deleteBlock(block)}"  update="form2" style="color:red" rendered="#{!block.status}">
+                        <p:collector value="#{block}"
+                                     removeFrom="#{blockBean.blockInfoList}" />
+                    </p:commandLink>
+                    <h:outputText value="Locked" rendered="#{block.status}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

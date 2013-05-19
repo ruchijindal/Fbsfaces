@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Flat List
+    </ui:define>
+
+
+
+    <ui:define name="content">
+          <h:panelGrid columns="1">
+            <p:breadCrumb>
+                <p:menuitem value="" url="/faces/jsfpages/Dashboard/projectDashboard.xhtml" />
+                <p:menuitem value="#{graphicalSearchBean.fbsProject.projName}" url="/faces/jsfpages/Project/projectList.xhtml" />
+                <p:menuitem value="#{graphicalSearchBean.fbsBlock.blockName}" url="/faces/jsfpages/Project/companyBlockList.xhtml" />
+                <p:menuitem value="" url="#" />
+            </p:breadCrumb>
+        </h:panelGrid>
+
+        <h:form styleClass="flatListing">
+            <c:set var="floorNo" value="0"/>
+            <c:forEach var="floor" items="#{graphicalSearchBean.floorList}">
+                <c:set var="floorNo" value="#{floorNo+1}"/>
+            </c:forEach>
+            <c:set var="floorNo" value="#{floorNo-1}"/>
+            <c:forEach var="floor" items="#{graphicalSearchBean.floorList}">
+                <c:if test="#{floorNo eq 0}">
+                    <c:set var="floorNumber" value="Ground"/>
+                </c:if>
+                <c:if test="#{floorNo eq 1}">
+                    <c:set var="floorNumber" value="#{floorNo}st"/>
+                </c:if>
+                <c:if test="#{floorNo eq 2}">
+                    <c:set var="floorNumber" value="#{floorNo}nd"/>
+                </c:if>
+                <c:if test="#{floorNo eq 3}">
+                    <c:set var="floorNumber" value="#{floorNo}rd"/>
+                </c:if>
+                <c:if test="#{floorNo >= 4}">
+                    <c:set var="floorNumber" value="#{floorNo}th"/>
+                </c:if>
+                <h:button value="#{floorNumber} Floor" styleClass="floor" />
+                <c:forEach var="flat" items="#{floor}">
+                    <p:commandLink action="#{flatMasterBean.forward(flat,'company')}">
+                        <h:button value="#{flat.flatNo}" styleClass="#{flat.status}" />
+                    </p:commandLink>
+                </c:forEach>
+                <c:set var="floorNo" value="#{floorNo-1}"/>
+                <br/>
+            </c:forEach>
+            <br/><br/>
+            <h:button  styleClass="booked"/>Booked <h:button  styleClass="unbooked" />Unbooked
+        </h:form> 
+    </ui:define>
+
+
+
+</ui:composition>

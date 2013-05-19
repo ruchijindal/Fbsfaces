@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Edit Block
+    </ui:define>
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="editform">
+            <p:panel header="Update Block Name">
+                <h:panelGrid  columns="3" style="margin-bottom:10px">
+                    <h:outputLabel value="Block Name :" for="blockname"></h:outputLabel>
+                    <h:inputText id="blockname"
+                                 value="#{blockBean.fbsBlock.blockName}" required="true" requiredMessage="Block Name should be entered"/>
+                    <p:commandButton value="Update"  update="editform,blockinfo,msgs" actionListener="#{blockBean.editBlockName(blockBean.fbsBlock)}"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        <h:form id="blockinfo">
+            <p:dataTable var="flat" value="#{blockBean.fbsFlatList1}" rowStyleClass="#{flat.floorNo mod 2 eq 0 ? 'rowStyle1' : 'rowStyle2'}"  rowEditListener="#{blockBean.editBlock}"
+                         paginator="true" rows="20"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="20,40,50" paginatorPosition="bottom" update="blockinfo" >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Floor Plan for Block  #{blockBean.fbsBlock.blockName}
+                    </div>
+                </f:facet>
+                <p:column headerText="Floor">
+
+                    <h:outputText value="#{flat.floorNo}"/>
+                </p:column>
+                <p:column headerText="Flat No">
+
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flat.flatNo}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flat.flatNo}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat Type">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flat.flatTypeSpecification}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{flat.flatTypeSpecification}" >
+                                <f:selectItems value="#{blockBean.flatTypes}"
+                                               var="flatType"
+                                               itemLabel="#{flatType}"
+                                               itemValue="#{flatType}"
+                                               />
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                 
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink value="Remove" action="#{blockBean.deleteFlat(flat)}" update="blockinfo">
+                        <p:collector value="#{flat}"
+                                     removeFrom="#{blockBean.fbsFlatList1}"/>
+                    </p:commandLink>
+                </p:column>
+                      <p:column headerText="PLC">
+                          <p:commandLink value="Add PLC" onclick="dlg2.show();" update="form3" action="#{blockBean.plc(flat)}" />
+                </p:column>
+
+        <p:column headerText="Selected PLC">
+
+            <h:outputText value="#{blockBean.findPlcName(flat.fbsPlsList)}"/>
+                </p:column>
+            </p:dataTable>
+             
+        </h:form>
+          <p:dialog id="dilog2"   header="PLC" widgetVar="dlg2" showEffect="scale" hideEffect="scale"  width="300"  styleClass="dialog1"   >
+            <h:form id="form3"  >
+
+
+                    <p:dataTable var="plc" value="#{blockBean.al}">
+
+                <p:column headerText="Selected PLC">
+
+                    <h:outputText value="#{plc.plcName}"/>
+                </p:column>
+                    </p:dataTable>
+
+                  
+<h:panelGrid columns="4" cellpadding="2">
+    <h4> Add/Update PLC</h4>
+                    <p:growl id="messages" showDetail="true" />
+                    <p:tree value="#{blockBean.root}" var="node"
+                            selectionMode="checkbox" selection="#{blockBean.selectedNodes}"
+                            propagateSelectionUp="true"
+                            propagateSelectionDown="true">
+
+                        <p:treeNode >
+                            <h:outputText value="&nbsp;#{node}" />
+                        </p:treeNode>
+                    </p:tree>
+    
+                </h:panelGrid>
+                <p:commandButton value="Add / Update" action="#{blockBean.add()}" update="editform" onclick="dlg2.hide();" />
+            </h:form>
+        </p:dialog>
+                    </ui:define>
+
+
+                    </ui:composition>

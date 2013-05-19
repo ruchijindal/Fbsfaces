@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Search
+    </ui:define>
+
+
+
+
+
+    <ui:define name="content">
+
+        <h:form id="searchForm">
+            <p:panel id="panel" header="Search" >
+
+                <h:outputLabel value="Select Filters  " for="selectblock"></h:outputLabel>
+                &nbsp;&nbsp;&nbsp;<h:selectOneMenu id="selectblock" value="#{searchManagedBean.opBlockName}">
+                    <f:selectItem itemValue="Select Block" noSelectionOption="true"/>
+                    <f:selectItems value="#{searchManagedBean.blockNames}"/>
+                    <p:ajax update="searchForm"  process="selectblock" event="change" listener="#{searchManagedBean.populateFloor()}" />
+                </h:selectOneMenu>
+
+                &nbsp;&nbsp;&nbsp;<h:selectOneMenu id="selectspecification" value="#{searchManagedBean.opFlatSpecification}">
+                    <f:selectItem itemValue="Select Specification" noSelectionOption="true"/>
+                    <f:selectItems value="#{searchManagedBean.flatTypes}"/>
+                    <p:ajax update="searchForm"  process="selectspecification" event="change" listener="#{searchManagedBean.populateFlatByFilter()}" />
+                </h:selectOneMenu>
+
+                &nbsp;&nbsp;<h:selectOneMenu id="selectfloor" value="#{searchManagedBean.opFloor}">
+                    <f:selectItem itemValue="Select Floor" noSelectionOption="true"/>
+                    <f:selectItems value="#{searchManagedBean.floorList}"/>
+                    <p:ajax update="searchForm"  process="selectfloor" event="change" listener="#{searchManagedBean.populateFlatByFilter()}"/>
+                </h:selectOneMenu>
+
+                &nbsp;&nbsp;<h:selectOneMenu id="selectstatus" value="#{searchManagedBean.opStatus}">
+                    <f:selectItem itemValue="Select Status" noSelectionOption="true"/>
+                    <f:selectItems value="#{searchManagedBean.status }"/>
+                    <p:ajax update="searchForm"  process="selectstatus" event="change" listener="#{searchManagedBean.populateFlatByFilter()}"/>
+                </h:selectOneMenu>
+
+                &nbsp;&nbsp;<h:inputText id="text" value="#{searchManagedBean.opApplicantName}"   >
+                    <p:ajax update="flat,txt_startdate,txt_enddate"    event="keyup" listener="#{searchManagedBean.populateFlatByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text" value="Applicant Name" />
+
+                <br/><br/>
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{searchManagedBean.opStartDate}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel><p:calendar id="txt_enddate" value="#{searchManagedBean.opEndDate}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/><br/>
+                <p:commandButton value="Search" action="#{searchManagedBean.populateFlatByFilter()}"
+                                 update="searchForm"/>
+                <p:commandButton value="Reset" style="margin-left: 5px" action="#{searchManagedBean.reset()}"
+                                 update="searchForm"/>
+            </p:panel>
+
+            <h:panelGrid columns="1">
+                <p:dataTable id="flat" var="flat" value="#{searchManagedBean.refFlat}"  paginatorPosition="bottom" paginator="true" rows="20"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,15,25" >
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Unit Search Results
+                        </div>
+                    </f:facet>
+                    <p:column headerText="Unit Name"  sortBy="#{flat.flatId}">
+                        <h:outputText value="#{flat.flatId}" />
+                    </p:column>
+
+
+                    <p:column id="block"  sortBy="#{flat.blockName}"
+                              headerText="Block Name"
+                              >
+                        <h:outputText value="#{flat.blockName}"/>
+                    </p:column>
+                    <p:column id="flattype"   sortBy="#{flat.flatTypeSpecification}"
+                              headerText="Flat Specification"
+                              >
+
+                        <h:outputText value="#{flat.flatTypeSpecification}" />
+                    </p:column>
+                    <p:column  id="floor" sortBy="#{flat.floorNo}"
+                               headerText="Floor No"
+                               >
+                        <h:outputText value="#{flat.floorNo}" />
+                    </p:column>
+                    <p:column id="status" sortBy="#{flat.status}"
+                              headerText="Status"
+                              >
+                        <h:outputText value="#{flat.status}" />
+                    </p:column>
+                    <p:column sortBy="#{flat.applicantName}"
+                              headerText="Applicant Name"
+                              >
+                        <h:outputText value="#{flat.applicantName}" />
+                    </p:column>
+                    <p:column   headerText="Booking Date"  sortBy="#{flat.bookDate}" >
+                        <h:outputText value="#{flat.bookDate}" rendered="#{!(flat.bookDate1 eq '')}" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                        </h:outputText>
+                        <h:outputText value="N/A" rendered="#{flat.bookDate1 eq ''}"></h:outputText>
+
+                    </p:column>
+                    <p:column headerText="Option">
+                        <h:commandLink value="Detail" action="#{flatMasterBean.searchFlat(flat.flatId)}" style="color: green">
+                        </h:commandLink>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/excel.png" title="Export as ExcelSheet"/>
+                            <p:dataExporter type="xls" target="flat" fileName="Search Result" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/pdf.png" title="Export as PDF"/>
+                            <p:dataExporter type="pdf" target="flat" fileName="Search Result"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/csv.png" title="Export as CSV"/>
+                            <p:dataExporter type="csv" target="flat" fileName="Search Result" />
+                        </h:commandLink>
+                    </f:facet>
+                </p:dataTable>
+            </h:panelGrid>
+
+
+        </h:form>
+
+    </ui:define>
+
+
+
+</ui:composition>

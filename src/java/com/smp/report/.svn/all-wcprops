@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report
+END
+BrokerWiseBookingReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/BrokerWiseBookingReport.java
+END
+CalculateCommision.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/CalculateCommision.java
+END
+BrokerPaymentReceipt.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/BrokerPaymentReceipt.java
+END
+BrokerDetails.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/BrokerDetails.java
+END
+Letter.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/Letter.java
+END
+BulkReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/BulkReport.java
+END
+ReportHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/ReportHelper.java
+END
+CollectionReports.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/CollectionReports.java
+END
+ChargesAndPlanDetails.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/ChargesAndPlanDetails.java
+END
+ApplicantDetails.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/ApplicantDetails.java
+END
+MasterBrokerReceipt.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/MasterBrokerReceipt.java
+END
+ReportArchieve1.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/ReportArchieve1.java
+END
+DueLetter.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/DueLetter.java
+END
+Report.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/Report.java
+END
+OutstandingAmount.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/OutstandingAmount.java
+END
+PaymentReceipt.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/projects/!svn/ver/24/FbsFaces/src/java/com/smp/report/PaymentReceipt.java
+END

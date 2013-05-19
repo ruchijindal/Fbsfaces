@@ -1,0 +1,33 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+    <h:form>
+        <p:toolbar style="">
+            <p:toolbarGroup align="left">
+                <p:commandButton type="push" title="Home" value="Company Home" actionListener="#{commonBean.forward()}" update="menubutton" />
+                <p:menuButton id="menubutton" value="#{commonBean.projectName}" >
+                    <c:forEach var="project" items="#{commonBean.fbsProjectList}">
+                        <p:menuitem value="#{project.projName}" actionListener="#{commonBean.projId(project.projId)}" update="menubutton" />
+                    </c:forEach>
+                </p:menuButton>
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right" >
+                <h:outputText value="Welcome " styleClass="bottom" ></h:outputText>
+                <h:outputText value="#{loginBean.fbsLogin.userName} "/>
+                <h:outputText value="#{loginBean.userRole}" styleClass="bottom"/>
+                <p:divider />
+                <p:commandButton type="push" title="logout" value="Logout" actionListener="#{loginBean.logout()}"/>
+                <p:divider />
+                <p:commandButton type="push" title="Copyright"  value="©" onclick="dlg.show()"/>
+                <p:dialog header="Copyright Information" widgetVar="dlg" showEffect="scale" hideEffect="scale" height="350"  width="400" styleClass="dialog1">
+                    <h:outputText  value="This site offers information on copyright policy, copyright clearance services, and copyright training and tutorials. If you have questions about using copyrighted materials, whether in e-reserves, on course management sites, on other sites, or in face-to-face classroom settings, we hope you'll find the answers you're looking for here. If you don't find the answers you need, contact us! ">
+                    </h:outputText>
+                </p:dialog>
+            </p:toolbarGroup>
+            <p:divider />
+        </p:toolbar>
+    </h:form>
+</ui:composition>

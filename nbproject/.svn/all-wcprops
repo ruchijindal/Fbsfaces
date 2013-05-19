@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/projects/!svn/ver/24/FbsFaces/nbproject
+END
+project.xml
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/projects/!svn/ver/24/FbsFaces/nbproject/project.xml
+END
+ant-deploy.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/projects/!svn/ver/24/FbsFaces/nbproject/ant-deploy.xml
+END
+faces-config.NavData
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/projects/!svn/ver/24/FbsFaces/nbproject/faces-config.NavData
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/projects/!svn/ver/24/FbsFaces/nbproject/project.properties
+END
+build-impl.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/projects/!svn/ver/24/FbsFaces/nbproject/build-impl.xml
+END
+genfiles.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/projects/!svn/ver/24/FbsFaces/nbproject/genfiles.properties
+END
+profiler-build-impl.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/projects/!svn/ver/24/FbsFaces/nbproject/profiler-build-impl.xml
+END

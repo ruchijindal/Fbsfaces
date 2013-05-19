@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:p="http://primefaces.prime.com.tr/ui"
+                 template="./../../resources/templates/companyTemplate.xhtml">
+
+    <ui:define name="title">
+        Project
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form1" >
+            <p:messages id="msgs" showDetail="false"/>
+            <p:panel header="Add Project">
+                <h:panelGrid columns="4" cellpadding="3">
+
+                    <h:outputLabel value="Project Name " for="txt_projectname"></h:outputLabel>
+                    <h:inputText id="txt_projectname" value="#{projectBean.fbsProject.projName}" required="true" requiredMessage="Project Name should be entered"/>
+
+                    <h:outputLabel value="Project Code " for="txt_projectcode"></h:outputLabel>
+                    <h:inputText id="txt_projectcode" value="#{projectBean.fbsProject.projCode}" required="true" requiredMessage="Project Code should be entered"/>
+
+                    <h:outputLabel value="Project Type " for="txt_projecttype"></h:outputLabel>
+                    <h:inputText id="txt_projecttype" value="#{projectBean.fbsProject.projType}" required="true" requiredMessage="Project Type should be entered"/>
+
+                    <h:outputLabel value="Address " for="txt_address"></h:outputLabel>
+                    <h:inputText id="txt_address" value="#{projectBean.fbsProject.address}" required="true" requiredMessage="Project Address should be entered"/>
+
+                    <h:outputLabel value="City " for="txt_city"></h:outputLabel>
+                    <h:inputText id="txt_city" value="#{projectBean.fbsProject.city}" required="true" requiredMessage="City should be entered"/>
+
+                    <h:outputLabel value="State " for="txt_state"></h:outputLabel>
+                    <h:inputText id="txt_state" value="#{projectBean.fbsProject.state}" required="true" requiredMessage="State should be entered"/>
+
+                    <h:outputLabel value="Start Date " for="txt_startdate"></h:outputLabel>
+                    <p:calendar id="txt_startdate" value="#{projectBean.fbsProject.startDt}" mode="popup" required="true" pattern="dd-MM-yyyy" requiredMessage="Start Date should be entered" timeZone="IST"/>
+
+                    <h:outputLabel value="Completion Date " for="txt_enddate"></h:outputLabel>
+                    <p:calendar id="txt_enddate" value="#{projectBean.fbsProject.endDt}" mode="popup" required="true"  pattern="dd-MM-yyyy" requiredMessage="Completion Date should be entered" timeZone="IST"/>
+
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Add" action="#{projectBean.addProject()}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable id="projects" var="project" value="#{projectBean.projectList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{projectBean.editProject}"  paginatorPosition="bottom" styleClass="ui-datatable-data td">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Project Details
+                        </div>
+                    </f:facet>
+                    <p:column  headerText="Project Name" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.projName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.projName}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column  headerText="Project Code" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.projCode}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.projCode}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Project Type" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.projType}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.projType}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Address"  style="width: 200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.address}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.address}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="City"  >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.city}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.city}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="State" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.state}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{project.state}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Start Date" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.startDt}" >
+                                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar   value="#{project.startDt}" mode="popup" timeZone="IST" pattern="dd-MM-yyyy"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Compeletion Date" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{project.endDt}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar   value="#{project.endDt}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options" >
+                        <p:rowEditor/>
+                        <p:commandLink  action="#{projectBean.delProject(project)}" onclick="confirmation.show()" >
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                            
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete User" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                          action="#{projectBean.deleteProject()}" >
+                <p:collector value="#{project}"
+                                         removeFrom="#{projectBean.projectList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

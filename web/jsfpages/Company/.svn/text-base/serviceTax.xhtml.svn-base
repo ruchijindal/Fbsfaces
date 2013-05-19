@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Service Tax
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1" >
+            <p:messages id="msgs" showDetail="false"/>
+            <p:panel header="Add Service Tax">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Start From " for="txt_stdt"></h:outputLabel>
+                    <p:calendar id="txt_stdt"
+                                value="#{serviceBean.fbsServicetax.stDate}" required="true" requiredMessage="Start Date should be entered" pattern="dd-MM-yyyy" timeZone="IST"/>
+
+
+                    <h:outputLabel value="End To " for="txt_enddt"></h:outputLabel>
+                    <p:calendar id="txt_enddt"
+                                value="#{serviceBean.fbsServicetax.endDate}" required="true" requiredMessage="End Date should be entered" pattern="dd-MM-yyyy" timeZone="IST"/>
+
+                    <h:outputLabel value="Service Tax (%) " for="txt_tax"></h:outputLabel>
+                    <h:inputText id="txt_tax"
+                                 value="#{serviceBean.fbsServicetax.servicetax}" required="true" requiredMessage="Service Tax percentage should be entered"/>
+                </h:panelGrid>
+                <br/>
+
+
+                <p:commandButton value="Add" action="#{serviceBean.addRow()}"   update="form1,form2,msgs"  ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable id="servicetax" var="tax" value="#{serviceBean.serviceList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{serviceBean.editServicetax}"  paginatorPosition="bottom" >
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Service Tax Details
+                        </div>
+                    </f:facet>
+                    <p:column sortBy="#{tax.stDate }" headerText=" Start Date"  style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{tax.stDate}" >
+                                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar   value="#{tax.stDate}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column sortBy="#{tax.endDate }" headerText=" End Date"  style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{tax.endDate}" >
+                                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                                </h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar   value="#{tax.endDate}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Service Tax (%)"  style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{tax.servicetax}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{tax.servicetax}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options"  style="width:200px">
+                        <p:rowEditor/>
+                        <p:commandLink  action="#{serviceBean.delRow(tax)}" onclick="confirmation.show()" >
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Service Tax" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{serviceBean.deleteRow()}" >
+                    <p:collector value="#{tax}"
+                                 removeFrom="#{serviceBean.serviceList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

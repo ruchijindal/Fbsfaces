@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Broker Report
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form" >
+            <p:panel header="Enter Broker Details" >
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:outputLabel value="Broker Id " for="selectBrokerId"></h:outputLabel>
+                    <h:selectOneMenu id="selectBrokerId" value="Select Broker Id" style="width: 80px;" >
+                        <f:selectItem itemValue="Select Broker ID"/>
+                        <f:selectItem itemValue="BR1"/>
+                        <f:selectItem itemValue="BR2"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Project" for="selectProject"></h:outputLabel>
+                    <h:selectOneMenu id="selectProject" value="Select Project" style="width: 80px;" >
+                        <f:selectItem itemValue="Select Project"/>
+                        <f:selectItem itemValue="Project 1"/>
+                        <f:selectItem itemValue="Project 2"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Block" for="selectBlock"></h:outputLabel>
+                    <h:selectOneMenu id="selectBlock" value="Select Block" style="width: 80px;" >
+                        <f:selectItem itemValue="Select Block"/>
+                        <f:selectItem itemValue="Block 1"/>
+                        <f:selectItem itemValue="Block 2"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Flat Number" for="selectFlat"></h:outputLabel>
+                    <h:selectOneMenu id="selectFlat" value="Select Flat" style="width: 80px;" >
+                        <f:selectItem itemValue="Select Flat"/>
+                        <f:selectItem itemValue="100"/>
+                        <f:selectItem itemValue="200"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+            </p:panel>
+        <br/><br/>
+        <p:commandButton value="Get Report" type="push" styleClass="button-margin"/>
+         </h:form>
+    </ui:define>
+
+</ui:composition>

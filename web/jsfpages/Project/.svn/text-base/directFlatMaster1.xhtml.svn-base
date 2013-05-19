@@ -1,0 +1,553 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Flat Master
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="form1">
+
+            <h:panelGrid columns="1">
+                <p:breadCrumb>
+                    <p:menuitem value="" url="/faces/jsfpages/Dashboard/projectDashboard.xhtml" />
+                    <p:menuitem value="#{flatMasterBean.fbsProject.projName}" url="/faces/jsfpages/Project/projectList.xhtml" />
+                    <p:menuitem value="#{flatMasterBean.fbsBlock1.blockName}" url="/faces/jsfpages/Project/blockList.xhtml" />
+                    <p:menuitem value="#{flatMasterBean.flatInfo.flatNo}" url="/faces/jsfpages/Project/flatList.xhtml" />
+                    <p:menuitem value="" url="#" />
+                </p:breadCrumb>
+            </h:panelGrid>
+
+            <br/>
+
+            <p:panel header="Unit Code -  #{flatMasterBean.flatInfo.flatId}">
+
+                <p:toolbar styleClass="ui-widget-header1">
+                    <p:toolbarGroup align="left">
+                        <h:panelGrid columns="2" cellpadding="5" >
+                            <h:outputLabel/>
+                            <h:outputLabel/>
+                            <h:outputLabel value="Block Name " for="blockname"></h:outputLabel>
+                            <h:outputLabel id="blockname" value="#{flatMasterBean.fbsBlock1.blockName}"/>
+                            <h:outputLabel value="Floor No. " for="floorno"></h:outputLabel>
+                            <h:outputLabel id="floorno" value="#{flatMasterBean.flatInfo.floorNo}"/>
+                            <h:outputLabel value="Flat No. " for="flatno"></h:outputLabel>
+                            <h:outputLabel id="flatno" value="#{flatMasterBean.flatInfo.flatNo}"/>
+                            <h:outputLabel value="Flat Type " for="flattype"></h:outputLabel>
+                            <h:outputLabel id="flattype" value="#{flatMasterBean.fbsFlatType.flatSpecification}"/>
+                            <h:outputLabel value="Flat SBA " for="flatsba"></h:outputLabel>
+                            <h:outputLabel id="flatsba" value="#{flatMasterBean.fbsFlatType.flatSba}"/>
+                            <h:outputLabel value="Flat BSP " for="flatbsp"></h:outputLabel>
+                            <h:outputLabel id="flatbsp" value="#{flatMasterBean.fbsFlatType.flatBsp}"/>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+
+                    <p:toolbarGroup align="right">
+                        <br/>
+                        <h:panelGrid columns="4">
+                            <p:panel styleClass="dialog2">
+                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/image2D"  alt="" />
+                            </p:panel>
+                            <p:panel></p:panel>
+                            <p:panel styleClass="dialog2">
+                                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/image3D"  alt="" />
+                            </p:panel>
+                            <p:panel></p:panel>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </p:panel>
+
+
+            <p:panel header="Applicant Details" rendered="#{flatMasterBean.booked}">
+                <p:toolbar styleClass="ui-widget-header1">
+                    <p:toolbarGroup align="left">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="First Applicant Details" styleClass="flatMaster"  />
+                            <h:outputLabel/><h:outputLabel/>
+
+                            <c:if test="#{flatMasterBean.fbsApplicant.applicantFlag eq '1'}">
+                                <h:panelGrid columns="2"  cellpadding="5" >
+
+                                    <h:outputLabel value="Name " for="applicantname"></h:outputLabel>
+                                    <h:outputLabel id="applicantname1" value="#{flatMasterBean.fbsApplicant.applicantName}" rendered="#{flatMasterBean.label}" />
+                                    <h:inputText id="applicantname"  value="#{flatMasterBean.fbsApplicant.applicantName}"  rendered="#{flatMasterBean.editdetail}" />
+
+                                    <h:outputLabel value="Mobile No. " for="mobileno"></h:outputLabel>
+                                    <h:outputLabel id="mobileno1"  value="#{flatMasterBean.fbsApplicant.mobile}"  rendered="#{flatMasterBean.label}" />
+                                    <h:inputText id="mobileno"  value="#{flatMasterBean.fbsApplicant.mobile}" rendered="#{flatMasterBean.editdetail}" />
+
+                                    <h:outputLabel value="Email Id " for="emailid"></h:outputLabel>
+                                    <h:outputLabel id="emailid1"  value="#{flatMasterBean.fbsApplicant.email}" rendered="#{flatMasterBean.label}" />
+                                    <h:inputText id="emailid"  value="#{flatMasterBean.fbsApplicant.email}" rendered="#{flatMasterBean.editdetail}" />
+
+
+                                    <h:outputLabel value="Pan No. " for="panno"></h:outputLabel>
+                                    <h:outputLabel id="panno1"  value="#{flatMasterBean.fbsApplicant.panNo}" rendered="#{flatMasterBean.label}" />
+                                    <h:inputText id="panno"  value="#{flatMasterBean.fbsApplicant.panNo}" rendered="#{flatMasterBean.editdetail}" />
+
+
+                                    <h:outputLabel value="Address " for="address"></h:outputLabel>
+                                    <h:outputLabel id="address1"  value="#{flatMasterBean.fbsApplicant.resAdd}" rendered="#{flatMasterBean.label}" />
+                                    <h:inputText id="address"  value="#{flatMasterBean.fbsApplicant.resAdd}"  rendered="#{flatMasterBean.editdetail}" />
+
+                                    <p:commandButton id="edit" type="push" value="Update"  actionListener="#{flatMasterBean.editDetails()}"  update="form1"  rendered="#{flatMasterBean.label}" style="margin-left: 10px;" />
+                                    <p:commandButton id="save" type="push" value="Save" disabled="#{flatMasterBean.disable}"   actionListener="#{flatMasterBean.editInformation(flatMasterBean.fbsApplicant)}"   update="form1"  rendered="#{flatMasterBean.editdetail}" style="margin-left: 10px;"  />
+
+                                </h:panelGrid>
+
+                                <p:panel></p:panel>
+                                <p:panel styleClass="dialog1">
+                                    <h:graphicImage url="#{flatMasterBean.uploadImageFirst()}" value="#{flatMasterBean.image_path}" height="140px"  width="110px" alt="" />
+                                </p:panel>
+                                <p:commandLink id="up22" type="push" value="Upload Image"  onclick="uploadimage.show();" action="#{flatMasterBean.enableDisable()}"  update="menubutton,save"  rendered="#{flatMasterBean.editdetail}" style="margin-left: 10px;" actionListener="#{flatMasterBean.putFlagtwo()}" />
+                            </c:if>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+
+
+
+                    <p:toolbarGroup align="right">
+                        <h:panelGrid columns="6">
+                            <h:outputLabel value="Co Applicant Details" styleClass="flatMaster" />
+                            <h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/><h:outputLabel/>
+
+                            <c:if test="#{flatMasterBean.coFbsApplicant.applicantFlag eq '2'}">
+                                <p:panel>
+                                    <h:panelGrid columns="2"  cellpadding="5" >
+                                        <h:outputLabel value="Name " for="coapplicantname"></h:outputLabel>
+                                        <h:outputLabel id="coapplicantname1"  value="#{flatMasterBean.coFbsApplicant.applicantName}" rendered="#{flatMasterBean.colabel}" />
+                                        <h:inputText id="coapplicantname"  value="#{flatMasterBean.coFbsApplicant.applicantName}" rendered="#{flatMasterBean.coeditdetail}" />
+
+                                        <h:outputLabel value="Mobile No. " for="comobileno"></h:outputLabel>
+                                        <h:outputLabel id="comobileno1"  value="#{flatMasterBean.coFbsApplicant.mobile}" rendered="#{flatMasterBean.colabel}" />
+                                        <h:inputText id="comobileno"  value="#{flatMasterBean.coFbsApplicant.mobile}" rendered="#{flatMasterBean.coeditdetail}" />
+
+                                        <h:outputLabel value="Email Id " for="coemailid"></h:outputLabel>
+                                        <h:outputLabel id="coemailid1"  value="#{flatMasterBean.coFbsApplicant.email}" rendered="#{flatMasterBean.colabel}"/>
+                                        <h:inputText id="coemailid"  value="#{flatMasterBean.coFbsApplicant.email}" rendered="#{flatMasterBean.coeditdetail}"/>
+
+
+                                        <h:outputLabel value="Pan No. " for="copanno"></h:outputLabel>
+                                        <h:outputLabel id="copanno1"  value="#{flatMasterBean.coFbsApplicant.panNo}" rendered="#{flatMasterBean.colabel}" />
+                                        <h:inputText id="copanno"  value="#{flatMasterBean.coFbsApplicant.panNo}" rendered="#{flatMasterBean.coeditdetail}" />
+
+
+                                        <h:outputLabel value="Address " for="coaddress"></h:outputLabel>
+                                        <h:outputLabel id="coaddress1"  value="#{flatMasterBean.coFbsApplicant.resAdd}"  rendered="#{flatMasterBean.colabel}"/>
+                                        <h:inputText id="coaddress"  value="#{flatMasterBean.coFbsApplicant.resAdd}"  rendered="#{flatMasterBean.coeditdetail}"/>
+
+                                        <p:commandButton id="coedit" type="push" value="Update"  actionListener="#{flatMasterBean.coeditDetails}"   update="form1"  rendered="#{flatMasterBean.colabel}" style="margin-left: 10px;"/>
+                                        <p:commandButton id="cosave" type="push" value="Save"  actionListener="#{flatMasterBean.editInformation(flatMasterBean.coFbsApplicant)}" disabled="#{flatMasterBean.disable}"   update="form1"  rendered="#{flatMasterBean.coeditdetail}" style="margin-left: 10px;"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:panel></p:panel>
+                                <p:panel styleClass="dialog1"  >
+                                    <!--<img src="#{flatMasterBean.uploadImage()}" height="140px"  width="112px" alt="" rendered="#{flatMasterBean.colabel}"   /> -->
+                                    <h:graphicImage url="#{flatMasterBean.uploadImage()}" value="#{flatMasterBean.uploadImage()}" alt="" height="140px" width="112px"  />
+                                </p:panel>
+                                <p:commandLink id="up2" type="push" value="Upload Image"  action="#{flatMasterBean.enableDisable()}"  onclick="uploadimage.show();"   update="menubutton,cosave"  rendered="#{flatMasterBean.coeditdetail}" style="margin-left: 10px;" actionListener="#{flatMasterBean.putFlagtwo()}" />
+
+
+                                <p:panel></p:panel>
+                                <p:panel></p:panel>
+                                <p:panel></p:panel>
+                            </c:if>
+                        </h:panelGrid>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </p:panel>
+
+            <p:dataTable id="payments" var="payment" value="#{flatMasterBean.fbsPaymentList}" paginator="true" rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rendered="#{flatMasterBean.booked}" >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Payment Details
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Receipt No.">
+                    <h:outputText value="#{payment.paymentId}"/>
+                </p:column>
+
+                <p:column headerText="Receipt Date">
+                    <h:outputText value="#{payment.paymentDate}"><f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column headerText="Mode">
+                    <h:outputText value="#{payment.paymentMode}"/>
+                </p:column>
+                <p:column headerText="Cheque No.">
+                    <h:outputText value="#{payment.chequeNo}"/>
+                </p:column>
+
+                <p:column headerText="Cheque Date">
+                    <h:outputText value="#{payment.chequeDate}"><f:convertDateTime pattern="dd/MM/yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column headerText="Bank Name">
+                    <h:outputText value="#{payment.drawnOn}"/>
+                </p:column>
+
+
+                <p:column headerText="Clearing Bank">
+                    <h:outputText value="#{paymentBean.findBankName(payment.clearingBankId)}"/>
+                </p:column>
+
+                <p:column headerText="Amount">
+                    <h:outputText value="#{payment.paidAmount}"/>
+                </p:column>
+
+                <p:column headerText="Status">
+                    <h:outputText value="#{payment.chequeStatus}"/>
+                </p:column>
+
+                <p:column headerText="Remark">
+                    <h:outputText value="#{payment.remark}"/>
+                </p:column>
+
+                <p:column headerText="Option" >
+                    <h:commandLink value="Reciept" action="#{paymentBean.genrateReceipt(payment)}" style="color: green">
+                    </h:commandLink>&nbsp;&nbsp;
+                </p:column>
+
+            </p:dataTable>
+            <br/><br/>
+
+            <p:dataTable  var="report" value="#{flatMasterBean.fbsReportList}" paginator="true" rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rendered="#{flatMasterBean.booked}" >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Report Details
+                    </div>
+                </f:facet>
+
+                <p:column   sortBy="#{report.id}"  headerText="Report Id">
+                    <h:outputText value="#{report.id}" />
+                </p:column>
+
+                <p:column headerText="Date">
+                    <h:outputText value="#{report.date}"> <f:convertDateTime pattern="dd/MM/yyyy" timeZone="IST"/></h:outputText>
+                </p:column>
+
+                <p:column  sortBy="#{report.recievedAmt}" headerText="Recieved Amt.">
+                    <h:outputText value="#{report.recievedAmt}"/>
+                </p:column>
+
+                <p:column headerText="Cur. Installment">
+                    <h:outputText value="#{report.curInstallment}"/>
+                </p:column>
+
+                <p:column headerText="Out Credit">
+                    <h:outputText value="#{report.outCredit}"/>
+                </p:column>
+
+                <p:column headerText="Amt Payable">
+                    <h:outputText value="#{report.amountPayable}"/>
+                </p:column>
+
+                <p:column headerText="Service Tax">
+                    <h:outputText value="#{report.serviceTax}"/>
+                </p:column>
+
+                <p:column headerText="Total Cost">
+                    <h:outputText value="#{report.totalCost}"/>
+                </p:column>
+
+                <p:column headerText="Remaining Amt">
+                    <h:outputText value="#{report.remainingAmt}"/>
+                </p:column>
+
+                <p:column headerText="Option"   style="width: 150px">
+
+                    <h:commandLink value="Report"  style="color: green" action="#{reportArchieveBean.genrateReceiptforReport1(report.id)}">
+                        </h:commandLink>
+                    </p:column>
+
+            </p:dataTable>
+ <br/><br/>
+
+
+            <p:dataTable id="documents" var="doc" value="#{flatMasterBean.fbsDocList}" paginator="true" rows="5"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rendered="#{flatMasterBean.booked}" >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Document Details
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Document Id">
+                    <h:outputText value="#{doc.docId}"/>
+                </p:column>
+
+                <p:column headerText="Document Name">
+                    <h:outputText value="#{doc.docName}"> </h:outputText>
+                </p:column>
+
+                <p:column headerText="Description">
+                    <h:outputText value="#{doc.description}"/>
+                </p:column>
+
+
+                <p:column headerText="Option" >
+                    <h:commandLink   action="#{flatMasterBean.handleFileUpload(doc)}" style="color: green">
+                        <p:graphicImage value="/resources/images/docview.png" alt="View" title="View"/>
+                    </h:commandLink>&nbsp;&nbsp;
+                    <p:commandLink  action="#{flatMasterBean.deleteDocument(doc)}" update="form1">
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt="Delete" title="Delete"/>
+                    </p:commandLink>
+
+                </p:column>
+
+            </p:dataTable>
+
+            <br/><br/>
+            <p:commandButton type="push" value="Consumer Report" action="#{graphicalSearchBean.callServlet()}" update="menubutton"  rendered="#{flatMasterBean.booked}" />
+            <p:commandButton type="push" value="Dues Report" onclick="dueletter.show();" update="menubutton"  rendered="#{flatMasterBean.booked}" style="margin-left: 10px;"/>
+            <p:commandButton type="push" value="Add Payment"  onclick="payment.show();"   update="menubutton"  rendered="#{flatMasterBean.booked}" style="margin-left: 10px;"/>
+            <p:commandButton type="push" value="Loan Detail" actionListener="#{flatMasterBean.loanStatus}" onclick="loan.show();"   update="dilog"  rendered="#{flatMasterBean.booked}" style="margin-left: 10px;"/>
+            <p:commandButton type="push" value="Upload File"  onclick="upload.show();"   update="menubutton"  rendered="#{flatMasterBean.booked}" style="margin-left: 10px;"/>
+
+            <p:commandButton type="push" value="Booking" actionListener="#{graphicalSearchBean.forwardBooking()}" update="menubutton,form1,payments" rendered="#{!flatMasterBean.booked}" />
+
+        </h:form>
+
+
+        <p:dialog  header="Loan Information" widgetVar="loan" showEffect="scale" draggable="false " closable="true" hideEffect="scale" height="325"  width="350"   styleClass="dialog1" >
+            <p:messages id="growl1" showDetail="false"/>
+            <h:form id="dilog">
+                <p:panel>
+                    <h:panelGrid columns="2" style="margin-bottom:10px">
+
+                        <h:outputLabel value="Unit Code" for="unitcodeid"/>
+                        <h:outputLabel id="unitcodeid1" value="#{flatMasterBean.flatInfo.flatId}" rendered="#{flatMasterBean.loaninfo}" />
+                        <h:inputText id="unitcodeid" value="#{flatMasterBean.flatInfo.flatId}" readonly="true" rendered="#{!flatMasterBean.loaninfo}" />
+                        <h:outputLabel value="Loan Applicant No." for="loanapplicantno"/>
+                        <h:outputLabel id="loanapplicantno1" value="#{flatMasterBean.fbsLoan.loanAppnumber}"  rendered="#{flatMasterBean.loaninfo}" />
+                        <h:inputText id="loanapplicantno" value="#{flatMasterBean.fbsLoan.loanAppnumber}" rendered="#{!flatMasterBean.loaninfo}"  />
+                        <h:outputLabel value="Loan Date" for="loandate"/>
+                        <h:outputLabel id="loandate1" value="#{flatMasterBean.fbsLoan.loanDate}" rendered="#{flatMasterBean.loaninfo}" >
+                            <f:convertDateTime pattern="dd-MMM-yyyy" timeZone="IST"/>
+                        </h:outputLabel>
+                        <p:calendar id="loandate" value="#{flatMasterBean.fbsLoan.loanDate}" rendered="#{!flatMasterBean.loaninfo}" />
+
+                        <h:outputLabel value="Bank Name" for="bankname"/>
+                        <h:outputLabel id="bankname1" value="#{flatMasterBean.fbsLoan.bankName}"  rendered="#{flatMasterBean.loaninfo}" />
+                        <h:inputText id="bankname" value="#{flatMasterBean.fbsLoan.bankName}" rendered="#{!flatMasterBean.loaninfo}"  />
+                        <h:outputLabel value="Bank Address" for="bankAddress"/>
+                        <h:outputText id="bankAddress1" value="#{flatMasterBean.fbsLoan.bankAddress}"  style="width: 150px;" rendered="#{flatMasterBean.loaninfo}" />
+                        <h:inputTextarea id="bankAddress" value="#{flatMasterBean.fbsLoan.bankAddress}"  style="width: 150px;" rendered="#{!flatMasterBean.loaninfo}" />
+                        <h:outputLabel value="Loan Start from" for="loanstartfrom"/>
+                        <h:outputLabel id="loanstartfrom1" value="#{flatMasterBean.fbsLoan.startFrom}" rendered="#{flatMasterBean.loaninfo}" />
+                        <h:inputText id="loanstartfrom" value="#{flatMasterBean.fbsLoan.startFrom}"  rendered="#{!flatMasterBean.loaninfo}" />
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel>
+                    <p:commandButton value="Submit" action="#{flatMasterBean.generateLoan()}"  update="form1,growl1,dilog"  style="margin-left: 20px;" ajax="false" rendered="#{!flatMasterBean.loaninfo}" />
+                    <p:commandButton value="Reset" type="reset" style="margin-left: 5px;" ajax="false" rendered="#{!flatMasterBean.loaninfo}" />
+                    <p:commandButton value="Update" action="#{flatMasterBean.editLoanInfo()}" style="margin-left: 5px;" update="dilog" rendered="#{flatMasterBean.loaninfo}" />
+
+                </p:panel>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog  header="Dues Letter" widgetVar="dueletter" resizable="true" width="250" styleClass="dialog1">
+
+            <h:form id="forml"  >
+
+                <h:outputLabel value="Dues Letter with Interest..." />
+
+                <p:commandButton value="Yes" action="#{collectionBean.withinterest}" update="form1,msgs,forml,payments" /><br/>
+<h:outputLabel value="OR" />
+
+                <p:commandButton value="Continue without Interest"  action="#{collectionBean.generateReceipt}" style="margin-left: 5px;" update="form1,msgs,forml,payments"  />
+
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </h:form>
+        </p:dialog>
+        <p:dialog  header="Direct Payment" widgetVar="payment" resizable="true" width="375" styleClass="dialog1">
+
+            <h:form id="form"  >
+
+
+                <h:panelGrid columns="2" cellpadding="3">
+
+                    <h:outputLabel value="Select Unit " ></h:outputLabel>
+                    <h:inputText value="#{flatMasterBean.flatInfo.flatId}" readonly="true"/>
+
+                    <h:outputLabel value="Payment Mode " for="txt_paymentmode"></h:outputLabel>
+                    <h:selectOneRadio id="txt_paymentmode" value="#{paymentBean.fbsPayment.paymentMode}" immediate="pay">
+                        <f:selectItem id="pay" itemLabel="Cash" itemValue="Cash"  noSelectionOption="true"  />
+                        <f:selectItem  itemLabel="Cheque" itemValue="Cheque"  />
+                        <f:selectItem  itemLabel="RTGS/NEFT" itemValue="NEFT"/>
+                        <p:ajax process="txt_paymentmode" update="form" event="change" listener="#{paymentBean.renderChequeDetails()}"/>
+                    </h:selectOneRadio>
+
+                    <h:outputLabel value="Payment Date " for="txt_paymentdate"></h:outputLabel>
+                    <p:calendar id="txt_paymentdate" value="#{paymentBean.fbsPayment.paymentDate}" mode="popup" required="true"/>
+
+                    <h:outputLabel value="Amount " for="txt_paidamount"></h:outputLabel>
+                    <h:inputText id="txt_paidamount" value="#{paymentBean.fbsPayment.paidAmount}" required="true"/>
+
+                    <h:outputLabel value="Cheque No " for="txt_chequeno" rendered="#{paymentBean.render}" ></h:outputLabel>
+                    <h:inputText id="txt_chequeno" value="#{paymentBean.chequeNo}" rendered="#{paymentBean.render}"  />
+
+                    <h:outputLabel value="Cheque Date " for="txt_chequedate" rendered="#{paymentBean.render}"></h:outputLabel>
+                    <p:calendar id="txt_chequedate" value="#{paymentBean.chequeDate}" mode="popup" rendered="#{paymentBean.render}" />
+
+                    <h:outputLabel value="Issue Bank " for="txt_drawnon" rendered="#{paymentBean.render}"></h:outputLabel>
+                    <h:inputText id="txt_drawnon" value="#{paymentBean.drawnOn}" rendered="#{paymentBean.render}" />
+
+                    <h:outputLabel value="TransactionID " for="txt_transactionId" rendered="#{paymentBean.render1}"></h:outputLabel>
+                    <h:inputText id="txt_transactionId" value="#{paymentBean.transactionId}" rendered="#{paymentBean.render1}"/>
+
+                    <h:outputLabel value="TransactionBank " for="txt_transactionBank" rendered="#{paymentBean.render1}"></h:outputLabel>
+                    <h:inputText id="txt_transactionBank" value="#{paymentBean.drawnOn}" rendered="#{paymentBean.render1}" />
+
+                    <h:outputLabel value="Remark " for="txt_remark"/>
+                    <h:inputTextarea id="txt_remark" value="#{paymentBean.fbsPayment.remark}" rows="3" cols="19" ></h:inputTextarea>
+                </h:panelGrid>
+
+                <br/>
+                <p:commandButton value="Add" action="#{paymentBean.addDirectPayment(flatMasterBean.fbsBlock1.blockId,flatMasterBean.flatInfo.flatId)}" update="form,form1,msgs,payments" />
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog  header="Edit Information" widgetVar="edit" resizable="true" width="320" styleClass="dialog1">
+
+            <h:form id="form2"  >
+
+
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel/>
+                    <h:inputHidden  id="txt_applicantid" value="#{flatMasterBean.fbsApplicant.applicantId}"/>
+
+                    <h:outputLabel value="Name"  for="txt_applicantname"></h:outputLabel>
+                    <h:inputText  id="txt_applicantname" value="#{flatMasterBean.fbsApplicant.applicantName}" readonly="true"/>
+
+                    <h:outputLabel value="Mobile No." for="txt_mobile"></h:outputLabel>
+                    <h:inputText id="txt_mobile" value="#{flatMasterBean.fbsApplicant.mobile}"   required="true"/>
+
+                    <h:outputLabel value="Email Id " for="txt_emailId"></h:outputLabel>
+                    <h:inputText id="txt_emailId" value="#{flatMasterBean.fbsApplicant.email}" required="true"/>
+
+                    <h:outputLabel value="Pan No " for="txt_pan" ></h:outputLabel>
+                    <h:inputText id="txt_pan" value="#{flatMasterBean.fbsApplicant.panNo}"    />
+
+                    <h:outputLabel value="Address" for="txt_add"  ></h:outputLabel>
+                    <h:inputText id="txt_add" value="#{flatMasterBean.fbsApplicant.resAdd}"  />
+
+                </h:panelGrid>
+
+                <br/>
+                <p:commandButton value="Add" action="#{paymentBean.editInformation(flatMasterBean.fbsApplicant)}" update="form2,form1" onclick="edit.hide();" />
+
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog  header="Edit Information" widgetVar="edit1" resizable="true" width="375" styleClass="dialog1">
+
+            <h:form id="form3"  >
+
+
+                <h:panelGrid columns="2" cellpadding="3">
+
+                    <h:inputHidden  id="txt_coapplicantid" value="#{flatMasterBean.coFbsApplicant.applicantId}"/>
+
+                    <h:outputLabel value="Name"  for="txt_coapplicantname"></h:outputLabel>
+                    <h:inputText  id="txt_coapplicantname" value="#{flatMasterBean.coFbsApplicant.applicantName}" readonly="true"/>
+
+                    <h:outputLabel value="Mobile No." for="txt_comobile"></h:outputLabel>
+                    <h:inputText id="txt_comobile" value="#{flatMasterBean.coFbsApplicant.mobile}"   required="true"/>
+
+                    <h:outputLabel value="Email Id " for="txt_coemailId"></h:outputLabel>
+                    <h:inputText id="txt_coemailId" value="#{flatMasterBean.coFbsApplicant.email}" required="true"/>
+
+                    <h:outputLabel value="Pan No " for="txt_copan" ></h:outputLabel>
+                    <h:inputText id="txt_copan" value="#{flatMasterBean.coFbsApplicant.panNo}"    />
+
+                    <h:outputLabel value="Address" for="txt_coadd"  ></h:outputLabel>
+                    <h:inputText id="txt_coadd" value="#{flatMasterBean.coFbsApplicant.resAdd}"  />
+
+                </h:panelGrid>
+
+                <br/>
+                <p:commandButton value="Add" action="#{paymentBean.editInformation(flatMasterBean.coFbsApplicant)}" update="form3,form1" onclick="edit1.hide();"/>
+
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog  header="Upload File" widgetVar="upload" resizable="true" width="425" styleClass="dialog1">
+
+            <form id="form4" action="/FbsFaces/UploadImage1?unitCode= #{flatMasterBean.flatInfo.flatId}" method="post" enctype="multipart/form-data"  >
+
+                <label>Document Name:</label>
+                <input name="docName" type="text" size="25"/><br/><br/>
+                <label>Description:</label>
+                <input name="desc" type="text" size="25" style="margin-left: 30px;"/><br/><br/>
+                <label>Select File:</label>
+                <input name="image" type="file" size="26" style="margin-left: 35px;"/><br/><br/>
+                <input type="submit" value="submit" style="margin-left: 25px;"/>
+                <br/>
+            </form>
+        </p:dialog  >
+        <p:dialog  header="Upload Image"  widgetVar="uploadimage" resizable="true" width="425" styleClass="dialog" closeListener="#{flatMasterBean.disDisable()}"  onHide="#{flatMasterBean.disDisable()}"  onShow="#{flatMasterBean.enableDisable()}" onCloseUpdate="form1"  >
+
+            <form id="form5" action="/FbsFaces/UploadImage1?unitCode= #{flatMasterBean.flatInfo.flatId}" method="post" enctype="multipart/form-data"   >
+
+                <label>Select File:</label>
+                <input name="image" type="file" size="26" style="margin-left: 35px;"/><br/><br/>
+
+                <input type="submit" value="submit" style="margin-left: 25px;"  />
+
+                <br/>
+            </form>
+        </p:dialog>
+
+
+    </ui:define>
+
+
+
+</ui:composition>

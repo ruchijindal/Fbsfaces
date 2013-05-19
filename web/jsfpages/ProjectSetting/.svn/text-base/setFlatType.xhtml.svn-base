@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../resources/templates/projectTemplate.xhtml">
+
+    <ui:define name="title">
+        Flat Type
+    </ui:define>
+
+
+
+    <ui:define name="sidebar">
+        <ui:include src="../common/sidebar.xhtml"></ui:include>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1" >
+
+            <p:panel header="Add Flat Type">
+                <h:panelGrid columns="4" cellpadding="3">
+                    <h:outputLabel value="Flat Type " for="txt_flattype"></h:outputLabel>
+                    <h:inputText id="txt_flattype" value="#{flatTypeBean.fbsFlatType.flatType}" required="true" requiredMessage="Flat Type should be entered."/>
+
+                    <h:outputLabel value="Specification " for="txt_specification"></h:outputLabel>
+                    <h:inputText id="txt_specification" value="#{flatTypeBean.fbsFlatType.flatSpecification}" required="true" requiredMessage="Flat specification should be entered"/>
+
+                    <h:outputLabel value="Flat SBA " for="txt_flatsba"></h:outputLabel>
+                    <h:inputText id="txt_flatsba" value="#{flatTypeBean.fbsFlatType.flatSba}" required="true" requiredMessage="Flat SBA should be entered"/>
+
+                    <h:outputLabel value="Flat BA " for="txt_flatba"></h:outputLabel>
+                    <h:inputText id="txt_flatba" value="#{flatTypeBean.fbsFlatType.flatBa}" required="true" requiredMessage="Flat BA should be entered"/>
+
+                    <h:outputLabel value="Flat CA " for="txt_flatca"></h:outputLabel>
+                    <h:inputText id="txt_flatca" value="#{flatTypeBean.fbsFlatType.flatCa}" required="true" requiredMessage="Flat CA should be entered"/>
+
+                    <h:outputLabel value="Flat BR " for="txt_flatbsp"></h:outputLabel>
+                    <h:inputText id="txt_flatbsp" value="#{flatTypeBean.fbsFlatType.flatBsp}" required="true" requiredMessage="Flat BR should be entered"/>
+
+                </h:panelGrid>
+                <br/>
+
+
+                <p:commandButton value="Add" action="#{flatTypeBean.addFlatType}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <p:dataTable id="flattypes" var="flatType" value="#{flatTypeBean.flatTypeList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{flatTypeBean.editFlatType}" selectionMode="single" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Flat Type Details
+                    </div>
+                </f:facet>
+                <p:column  headerText="Flat Type">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatType}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatType}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat Specification">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatSpecification}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatSpecification}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat SBA(sqft.)">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatSba}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatSba}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat BA(sqft.)" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatBa}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatBa}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat CA(sqft.)">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatCa}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatCa}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Flat BR(Rs/sqft.)">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{flatType.flatBsp}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{flatType.flatBsp}" size="10"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{flatTypeBean.delFlatType(flatType)}" onclick="confirmation.show()" >
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Flat Type" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{flatTypeBean.deleteFlatType()}" >
+                    <p:collector value="#{flatType}"
+                                 removeFrom="#{flatTypeBean.flatTypeList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+
+
+
+</ui:composition>

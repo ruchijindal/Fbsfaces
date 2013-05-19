@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Discount Type
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1" >
+            <p:messages id="msgs" showDetail="false"/>
+            <p:panel header="Add Discount Type">
+                <h:panelGrid columns="2" cellpadding="3">
+
+
+                    <h:outputLabel value="Discount Type " for="txt_distype"></h:outputLabel>
+                    <h:inputText id="txt_distype"
+                                 value="#{discountBean.fbsDiscount.discountType}" required="true" requiredMessage="Discount Type should be entered"/>
+
+                    <h:outputLabel value="Percentage " for="txt_percentage"></h:outputLabel>
+                    <h:inputText id="txt_percentage"
+                                 value="#{discountBean.fbsDiscount.percentage}" required="true" requiredMessage="Discount percenteage should be entered"/>
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Add" action="#{discountBean.addRow()}"   update="form1,form2,msgs" ajax="false" />
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable id="discount" var="dis" value="#{discountBean.discountList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{discountBean.editDiscount}"  paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Discount Type Details
+                        </div>
+                    </f:facet>
+                    <p:column headerText="Discount Type" style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{dis.discountType}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{dis.discountType}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Percentage"  style="width:200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{dis.percentage}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{dis.percentage}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Options"  style="width:200px">
+                        <p:rowEditor/>
+                        <p:commandLink action="#{discountBean.delRow(dis)}" onclick="confirmation.show()" >
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+
+                        </p:commandLink>
+
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Discount" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{discountBean.deleteRow()}" >
+                    <p:collector value="#{dis}"
+                                 removeFrom="#{discountBean.discountList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Payment Plan
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1"  >
+
+            <p:panel header="Add Payment Plan">
+                <h:panelGrid columns="2" cellpadding="3">
+
+                    <h:outputLabel value="Select Plan " for="selectplan"></h:outputLabel>
+                    <h:selectOneMenu id="selectplan" value="#{payplanBean.fbsPayplan.fkPlanId}" required="true" requiredMessage="Type of Plan should be selected">
+                        <f:selectItem itemLabel="Select Plan"/>
+                        <f:selectItems value="#{payplanBean.planList}"/>
+                        <p:ajax   process="selectplan" event="change" listener="#{payplanBean.populate()}" />
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Payment Description " for="txt_plandesc"></h:outputLabel>
+                    <h:inputText id="txt_plandesc" value="#{payplanBean.fbsPayplan.planDesc}" required="true" requiredMessage="Plan Description should be entered"/>
+
+                    <h:outputLabel value="Percentage " for="txt_percentage"></h:outputLabel>
+                    <h:inputText id="txt_percentage" value="#{payplanBean.fbsPayplan.percentage}" required="true" requiredMessage="Percenteage should be entered"/>
+
+                    <h:outputLabel value="Serial No " for="txt_serial"></h:outputLabel>
+                    <h:inputText id="txt_serial" value="#{payplanBean.fbsPayplan.serialNo}" required="true" requiredMessage="Serial Number should be entered"/>
+
+                    <h:outputLabel value="Due Date " for="txt_duedate"></h:outputLabel>
+                    <p:calendar id="txt_duedate" value="#{payplanBean.fbsPayplan.dueDate}" mode="popup" timeZone="IST" pattern="dd-MM-yyyy"/>
+                </h:panelGrid>
+
+                <br/>
+                <p:commandButton value="Add" action="#{payplanBean.addPayplan()}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <p:dataTable var="payPlan" value="#{payplanBean.payplanInfoList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{payplanBean.editPayplan}" selectionMode="single" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Payment Plan Details
+                    </div>
+                </f:facet>
+                <p:column headerText="Plan Name">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{payPlan.planName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu id="selectplan1" value="#{payPlan.fkPlanId}">
+                                
+                                <f:selectItems value="#{payplanBean.planList}"/>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Plan Description">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{payPlan.planDesc}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{payPlan.planDesc}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Percentage">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{payPlan.percentage}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{payPlan.percentage}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Serial No">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{payPlan.serialNo}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{payPlan.serialNo}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Due Date">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{payPlan.dueDate}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                            </h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:calendar id="editDueDate" value="#{payPlan.dueDate}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{payplanBean.delPayplan(payPlan)}" onclick="confirmation.show()">
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                        
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete User" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                     action="#{payplanBean.deletePayplan()}" >
+                  <p:collector value="#{payPlan}"
+                                     removeFrom="#{payplanBean.payplanList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

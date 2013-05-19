@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="jsfpages/Report/brokerReport.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="jsfpages/Broker/setBrokerCategory.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="jsfpages/Company/editCompany.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="jsfpages/Company/serviceTax.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="jsfpages/Company/loanInformation.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setFacility.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setBlock.xhtml" x="1186" y="369" zoom="true"/>
+        <Node id="jsfpages/Booking/bookingList.xhtml" x="411" y="650" zoom="true"/>
+        <Node id="jsfpages/Company/companychart.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setPlanname.xhtml" x="1212" y="300" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setPayplan.xhtml" x="1185" y="181" zoom="true"/>
+        <Node id="jsfpages/Company/interest.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="jsfpages/Broker/charts.xhtml" x="400" y="1350" zoom="true"/>
+        <Node id="jsfpages/Project/setProject.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setPayPlan.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="resources/templates/companyTemplate.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="jsfpages/Project/directFlatMaster.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="jsfpages/Report/consumerReport.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="jsfpages/Project/flatList.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="jsfpages/Project/projectList.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="jsfpages/Booking/companyBooking.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="jsfpages/common/c_sidebar.xhtml" x="1155" y="87" zoom="true"/>
+        <Node id="jsfpages/Booking/projectBookingList.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="jsfpages/Report/collectionReport.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="jsfpages/Broker/brokerWiseBookings.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="jsfpages/Payment/paymentList.xhtml" x="1277" y="233" zoom="true"/>
+        <Node id="jsfpages/Project/companyBlockList.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="jsfpages/Broker/brokerMaster.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="jsfpages/Payment/companyQuickPayment.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="jsfpages/Project/flatMaster.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="jsfpages/Report/reportArchieve.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="jsfpages/Project/companyFlatList.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/updateBlock.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="jsfpages/Project/companyFlatMaster.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="jsfpages/User/setUserRole.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setPlc.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="jsfpages/Project/blockList.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="jsfpages/common/sidebar.xhtml" x="71" y="369" zoom="true"/>
+        <Node id="jsfpages/Project/searchFlat.xhtml" x="727" y="370" zoom="true"/>
+        <Node id="jsfpages/common/bottom.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="jsfpages/common/errorPage.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="jsfpages/User/setUser.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="jsfpages/Project/bookFlatMaster.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setParking.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="jsfpages/Broker/brokerPayment.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="jsfpages/Dashboard/projectDashboard.xhtml" x="402" y="496" zoom="true"/>
+        <Node id="login.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="jsfpages/Booking/transferCompanyBooking.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="jsfpages/Complaint/complaint.xhtml" x="354" y="254" zoom="true"/>
+        <Node id="jsfpages/Booking/booking.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="jsfpages/Complaint/complaintList.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setCharges.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="jsfpages/ProjectSetting/setFlatType.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="jsfpages/Dashboard/companyDashboard.xhtml" x="740" y="223" zoom="true"/>
+        <Node id="jsfpages/Company/discountType.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="jsfpages/Broker/setBroker.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="jsfpages/Company/addBank.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="jsfpages/Booking/quickBooking.xhtml" x="471" y="332" zoom="true"/>
+        <Node id="resources/templates/projectTemplate.xhtml" x="664" y="82" zoom="true"/>
+        <Node id="jsfpages/common/top.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="jsfpages/Booking/flatBooking.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="jsfpages/Payment/quickPayment.xhtml" x="150" y="600" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

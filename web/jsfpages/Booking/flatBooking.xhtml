@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Flat Booking
+    </ui:define>
+    <ui:define name="content" >
+       <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form" prependId="false">
+            <p:panel header="Flat Details" >
+                <h:panelGrid columns="2" cellpadding="5" >
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <h:outputLabel value="Project Name" for="projName"></h:outputLabel>
+                        <h:inputText id="projName" size="10" readonly="true" value="#{flatBookingBean.fbsProject.projName}" />
+                        <h:outputLabel value="Select Block " for="selectblock"></h:outputLabel>
+                        <h:selectOneMenu id="selectblock" value="#{flatBookingBean.fbsBlock.blockId}" required="true" requiredMessage="Block should be selected">
+                            <f:selectItem itemLabel=" Select Block " noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.blockList}"/>
+                            <p:ajax update="form"  process="selectblock" event="change" listener="#{flatBookingBean.populateFloors()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Select Floor " for="selectfloor"></h:outputLabel>
+                        <h:selectOneMenu id="selectfloor" value="#{flatBookingBean.floorName}" required="true" requiredMessage="Floor Should Be Selected">
+                            <f:selectItem itemLabel=" Select Floor " noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.floorList}"/>
+                            <p:ajax update="form"  process="selectfloor" event="change" listener="#{flatBookingBean.populateFlats()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Select Flat " for="selectflat"></h:outputLabel>
+                        <h:selectOneMenu id="selectflat" value="#{flatBookingBean.fbsBooking.flatId}" required="true" requiredMessage="Flat Should Be Selected">
+                            <f:selectItem itemLabel=" Select Flat  " noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.flatNoList}"/>
+                            <p:ajax update="form,msgs"  process="selectflat" event="change" listener="#{flatBookingBean.populateFlatSpecification()}" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+
+                    <p:dataTable id="flatspecification" var="fbsFlat" value="#{flatBookingBean.fbsFlatType}">
+                        <p:column  headerText="Project Code" >
+                            <h:outputLabel id="projectcode" value="#{flatBookingBean.projectCode()}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Flat Type">
+                            <h:outputText id="flattype" value="#{fbsFlat.flatSpecification}"/>
+                        </p:column>
+                        <p:column headerText="Flat SBA">
+                            <h:outputText id="flatsba" value="#{fbsFlat.flatSba}"/>
+                        </p:column>
+                        <p:column headerText="Flat BA">
+                            <h:outputText id="flatba" value="#{fbsFlat.flatBa}"/>
+                        </p:column>
+                        <p:column headerText="Flat CA">
+                            <h:outputText id="flatca" value="#{fbsFlat.flatCa}"/>
+                        </p:column>
+                        <p:column headerText="Flat BSP">
+                            <h:outputText id="flatbsp" value="#{fbsFlat.flatBsp}"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                </h:panelGrid>
+            </p:panel>
+
+
+            <p:panel header="Other Details">
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="Booking Date " for="bookingdt"></h:outputLabel>
+
+                        <p:calendar id="bookingdt" value="#{flatBookingBean.fbsBooking.bookingDt}" pattern="dd-MM-yyyy" timeZone="IST">
+                        </p:calendar>
+
+                        <h:outputLabel value="Select Payment Plan " for="selectpayplan"></h:outputLabel>
+                        <h:selectOneMenu id="selectpayplan" value="#{flatBookingBean.fbsBooking.planId}" required="true" requiredMessage="PayPlan should Be Selected"  >
+                            <f:selectItem itemLabel="Select Plan" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.plannameList}"/>
+                            <p:ajax update="form"  process="selectpayplan" event="change"  />
+                        </h:selectOneMenu>
+
+                        <h:outputLabel value="Discount Type " for="discounttype"></h:outputLabel>
+                        <h:selectOneMenu id="discounttype" value="#{flatBookingBean.fbsDiscount.discountType}" required="true" requiredMessage="Discount type should Be Selected"  >
+                            <f:selectItem itemLabel="Select Discount" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.discountList}"/>
+                            <p:ajax update="form"  process="discounttype" event="change" listener="#{flatBookingBean.setDiscount()}" />
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Payable Amount " for="payableamount"></h:outputLabel>
+                        <h:inputText id="payableamount" value="#{flatBookingBean.payableAmount}" size="10" readonly="true" required="true" requiredMessage="Payable Amount should Be entered" />
+                    </h:panelGrid>
+                    <p:dataTable id="flatplc" var="plccharge" value="#{flatBookingBean.fbsPlcinfo}">
+                        <p:column  headerText="PLC Name">
+                            <h:outputLabel value="#{plccharge.plcName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Rs./seq.ft.">
+                            <h:outputText  id="id_PlcCharge" value="#{plccharge.plcCharge}"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:dataTable id="flatcharges" var="charge" value="#{flatBookingBean.fbsChargeList}">
+                        <p:column  headerText="Charge Name">
+                            <h:outputLabel value="#{charge.chargeName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Charge Value">
+                            <h:outputText  id="id_#{charge.chargeName}" value="#{charge.amount}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Broker Details">
+
+                <h:panelGrid columns="6" cellpadding="5">
+
+                    <h:outputLabel value="Select Broker" for="selectbroker"></h:outputLabel>
+                    <h:selectOneMenu id="selectbroker" value="#{flatBookingBean.fbsBroker.brokerId}" style="width: 100px;" required="true" requiredMessage="Broker should Be Selected"  >
+                        <f:selectItem itemLabel="SelectBroker" noSelectionOption="true"/>
+                        <f:selectItems value="#{flatBookingBean.brokerList}"/>
+                        <p:ajax update="form"  process="selectbroker" event="change" listener="#{flatBookingBean.populateBrokerName()}" />
+                    </h:selectOneMenu>
+
+                    <p:dataTable id="brokerdetails" var="broker" value="#{flatBookingBean.fbsBroker}">
+                        <p:column  headerText="Broker Name" >
+                            <h:outputLabel id="brokername" value="#{broker.brName}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Broker Commission">
+                            <h:outputText id="brokercomision" value="#{flatBookingBean.commission()}"/>
+                        </p:column>
+                    </p:dataTable>
+
+
+
+
+                </h:panelGrid>
+
+
+            </p:panel>
+            <p:panel header="Parking Details" >
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel value="No. Of Parking " for="noofparking"></h:outputLabel>
+                        <h:selectOneMenu id="noofparking" value="#{flatBookingBean.noOfParking}" style="width: 100px;" required="true" requiredMessage="No. Of Parking should Be Selected"  >
+                            <f:selectItem itemValue="Select No" noSelectionOption="true"/>
+                            <f:selectItem itemValue="0"/>
+                            <f:selectItem itemValue="1"/>
+                            <f:selectItem itemValue="2"/>
+                            <f:selectItem itemValue="3"/>
+                            <f:selectItem itemValue="4"/>
+                            <f:selectItem itemValue="5"/>
+                            <p:ajax update="form"  process="noofparking" event="change" listener="#{flatBookingBean.renderParking()}" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="4" cellpadding="5" >
+                        <h:outputLabel value= "Paking Type 1 " for="paking1" rendered="#{flatBookingBean.render1}"></h:outputLabel>
+                        <h:selectOneMenu id="paking1" value="#{flatBookingBean.parkingType1}" rendered="#{flatBookingBean.render1}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.parkingTypeList}"/>
+
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 2 " for="paking2" rendered="#{flatBookingBean.render2}"></h:outputLabel>
+                        <h:selectOneMenu id="paking2" value="#{flatBookingBean.parkingType2}" rendered="#{flatBookingBean.render2}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 3 " for="paking3" rendered="#{flatBookingBean.render3}"></h:outputLabel>
+                        <h:selectOneMenu id="paking3" value="#{flatBookingBean.parkingType3}" rendered="#{flatBookingBean.render3}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 4 " for="paking4" rendered="#{flatBookingBean.render4}"></h:outputLabel>
+                        <h:selectOneMenu id="paking4" value="#{flatBookingBean.parkingType4}" rendered="#{flatBookingBean.render4}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value= "Paking Type 5 " for="paking5" rendered="#{flatBookingBean.render5}"></h:outputLabel>
+                        <h:selectOneMenu id="paking5" value="#{flatBookingBean.parkingType5}" rendered="#{flatBookingBean.render5}" >
+                            <f:selectItem itemValue="Select Parking Type" noSelectionOption="true"/>
+                            <f:selectItems value="#{flatBookingBean.parkingTypeList}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <p:dataTable id="pakings" var="parking" value="#{flatBookingBean.parkingInfoList}">
+                        <p:column  headerText="Paking Type">
+                            <h:outputLabel value="#{parking.parkingType}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Available Parking">
+                            <h:outputText   value="#{parking.availParking}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel header="Applicant Details">
+
+                <h:panelGrid id="applicantdetail" columns="6" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="applicantname"></h:outputLabel>
+                    <h:inputText id="applicantname" value="#{flatBookingBean.fbsApplicant.applicantName}" required="true" requiredMessage="Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="swd"></h:outputLabel>
+                    <h:inputText id="swd" value="#{flatBookingBean.fbsApplicant.SWD}" required="true" requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="nationality"></h:outputLabel>
+                    <h:inputText id="nationality" value="#{flatBookingBean.fbsApplicant.nationality}" required="true" requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="dob"></h:outputLabel>
+                    <p:calendar id="dob" value="#{flatBookingBean.fbsApplicant.dob}"  required="true" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="profession"></h:outputLabel>
+                    <h:inputText id="profession" value="#{flatBookingBean.fbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="resadd"></h:outputLabel>
+                    <h:inputText id="resadd" value="#{flatBookingBean.fbsApplicant.resAdd}" required="true" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="offadd"></h:outputLabel>
+                    <h:inputText id="offadd" value="#{flatBookingBean.fbsApplicant.offAdd}" required="true" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="panno"></h:outputLabel>
+                    <h:inputText id="panno" value="#{flatBookingBean.fbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="dlno"></h:outputLabel>
+                    <h:inputText id="dlno" value="#{flatBookingBean.fbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="passno"></h:outputLabel>
+                    <h:inputText id="passno" value="#{flatBookingBean.fbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="telephone"></h:outputLabel>
+                    <h:inputText id="telephone" value="#{flatBookingBean.fbsApplicant.telephone}" required="true" requiredMessage="Telephone No. should Be In Digit"/>
+                    <h:outputLabel value="Mobile " for="mobile"></h:outputLabel>
+                    <h:inputText id="mobile" value="#{flatBookingBean.fbsApplicant.mobile}" required="true" requiredMessage="Mobile No. Should Be In Digit"/>
+                    <h:outputLabel value="FAX " for="fax"></h:outputLabel>
+                    <h:inputText id="fax" value="#{flatBookingBean.fbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="email"></h:outputLabel>
+                    <h:inputText id="email" value="#{flatBookingBean.fbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                </h:panelGrid>
+
+            </p:panel>
+            <p:panel header="CoApplicant Details">
+
+                <h:panelGrid id="coapplicantdetail" columns="6" cellpadding="5">
+                    <h:outputLabel value="Applicant Name " for="coapplicantname"></h:outputLabel>
+                    <h:inputText id="coapplicantname" value="#{flatBookingBean.coFbsApplicant.applicantName}" required="true" requiredMessage="Applicant Name Should Be Entered"/>
+                    <h:outputLabel value="S/W/D " for="coswd"></h:outputLabel>
+                    <h:inputText id="coswd" value="#{flatBookingBean.coFbsApplicant.SWD}" required="true" requiredMessage="S/W/D Should Be Entered"/>
+                    <h:outputLabel value="Nationality " for="conationality"></h:outputLabel>
+                    <h:inputText id="conationality" value="#{flatBookingBean.coFbsApplicant.nationality}" required="true" requiredMessage="Nationality should Be Entered"/>
+                    <h:outputLabel value="DOB " for="codob"></h:outputLabel>
+                    <p:calendar id="codob" value="#{flatBookingBean.coFbsApplicant.dob}" requiredMessage="DOB Should Be Entered" pattern="dd-MM-yyyy" timeZone="IST">
+                    <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </p:calendar>
+                    <h:outputLabel value="Profession " for="coprofession"></h:outputLabel>
+                    <h:inputText id="coprofession" value="#{flatBookingBean.coFbsApplicant.profession}" required="true" requiredMessage="Profession Should Be Entered"/>
+                    <h:outputLabel value="Res. Address " for="coresadd"></h:outputLabel>
+                    <h:inputText id="coresadd" value="#{flatBookingBean.coFbsApplicant.resAdd}" required="true" requiredMessage="Res Address Should Be Entered"/>
+                    <h:outputLabel value="Off. Address " for="cooffadd"></h:outputLabel>
+                    <h:inputText id="cooffadd" value="#{flatBookingBean.coFbsApplicant.offAdd}" required="true" requiredMessage="Office Address Should Be Entered"/>
+                    <h:outputLabel value="PAN No. " for="copanno"></h:outputLabel>
+                    <h:inputText id="copanno" value="#{flatBookingBean.coFbsApplicant.panNo}" required="true" requiredMessage="Pan No. Should Be Entered"/>
+                    <h:outputLabel value="DL No. " for="codlno"></h:outputLabel>
+                    <h:inputText id="codlno" value="#{flatBookingBean.coFbsApplicant.dlNo}" required="true" requiredMessage="DL No. Should Be Entered"/>
+                    <h:outputLabel value="Passport No. " for="copassno"></h:outputLabel>
+                    <h:inputText id="copassno" value="#{flatBookingBean.coFbsApplicant.passportNo}" required="true" requiredMessage="Passport No. Should Be Entered"/>
+                    <h:outputLabel value="Telephone " for="cotelephone"></h:outputLabel>
+                    <h:inputText id="cotelephone" value="#{flatBookingBean.coFbsApplicant.telephone}" required="true" requiredMessage="Telephone No. should Be In Digit"/>
+                    <h:outputLabel value="Mobile " for="comobile"></h:outputLabel>
+                    <h:inputText id="comobile" value="#{flatBookingBean.coFbsApplicant.mobile}" required="true" requiredMessage="Mobile No. Should Be In Digit"/>
+                    <h:outputLabel value="FAX " for="cofax"></h:outputLabel>
+                    <h:inputText id="cofax" value="#{flatBookingBean.coFbsApplicant.fax}" required="true" requiredMessage="FAX Should Be Enter"/>
+                    <h:outputLabel value="Email " for="coemail"></h:outputLabel>
+                    <h:inputText id="coemail" value="#{flatBookingBean.coFbsApplicant.email}" required="true" requiredMessage="EmailId Should Be Enter in Proper Format Like abs@gmail.com"/>
+                </h:panelGrid>
+
+
+            </p:panel>
+
+            <p:commandButton value="Book Flat" action="#{flatBookingBean.addBooking()}"  update="msgs,form" />
+            <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

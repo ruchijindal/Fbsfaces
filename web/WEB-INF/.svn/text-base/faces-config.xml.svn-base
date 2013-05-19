@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+        <validator>
+        <validator-id>FBS.EmailValidator</validator-id>
+        <validator-class>com.smp.validate.EmailValidator</validator-class>
+    </validator>
+      <validator>
+        <validator-id>FBS.MobileNumberValidator</validator-id>
+        <validator-class>com.smp.validate.MobileNumberValidator</validator-class>
+    </validator>
+
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-outcome>/login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setFlatType</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setFlatType.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setBlock</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setBlock.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setCharge</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setCharges.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setPayPlan</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setPayPlan.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setPlc</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setPlc.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/setFacility</from-outcome>
+            <to-view-id>/jsfpages/ProjectSetting/setFacility.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>/companyDashboard</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+
+        <validator>
+            <validator-id>checkvalidemail</validator-id>
+            <validator-class> com.smp.fbs.Validation</validator-class>
+              </validator>
+    </navigation-rule>
+</faces-config>

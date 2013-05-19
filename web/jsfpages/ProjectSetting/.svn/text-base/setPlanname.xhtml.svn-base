@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+    <ui:define name="title">
+        Plan Name
+    </ui:define>
+
+    
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1"  >
+
+            <p:panel header="Add Plan Name">
+                <h:panelGrid columns="2" cellpadding="3">
+
+                    <h:outputLabel value="Plan Name " for="txt_planname"></h:outputLabel>
+                    <h:inputText id="txt_planname" value="#{planBean.fbsPlanname.planName}" required="true" requiredMessage="Plan Name should be entered"/>
+                    <h:outputLabel value="Full Name " for="txt_fullname"></h:outputLabel>
+                    <h:inputText id="txt_fullname" value="#{planBean.fbsPlanname.fullName}" required="true" requiredMessage="Full Name should be entered"/>
+                    <h:outputLabel value="Plan Discount " for="txt_plandiscount"></h:outputLabel>
+                    <h:inputText id="txt_plandiscount" value="#{planBean.fbsPlanname.discount}" required="true" requiredMessage="Plan Discount should be entered"/>
+
+                   
+                </h:panelGrid>
+                <br/>
+
+                    
+
+                    <p:commandButton value="Add" action="#{planBean.addPlanname}" update="form1,form2,msgs" ajax="false"/>
+                     <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                    <p:ajaxStatus style="width:16px;height:16px;">
+                        <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+
+                        <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                    </p:ajaxStatus>
+
+               
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <p:dataTable var="planName" value="#{planBean.plannameList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{planBean.editPlanname}" selectionMode="single" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                    Plan Name Details
+                    </div>
+                </f:facet>
+            <p:column headerText="Plan Name">
+                <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{planName.planName}"/>
+                </f:facet>
+                     <f:facet name="input">
+                    <h:inputText value="#{planName.planName}"/>
+                </f:facet>
+                </p:cellEditor>
+            </p:column  >
+             <p:column headerText="Full Name">
+                <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{planName.fullName}"/>
+                </f:facet>
+                     <f:facet name="input">
+                         <h:inputText value="#{planName.fullName}"/>
+                </f:facet>
+                </p:cellEditor>
+            </p:column  >
+            <p:column headerText="Plan Discount" style="width: 300px">
+                <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{planName.discount}"/>
+                </f:facet>
+                     <f:facet name="input">
+                         <h:inputText value="#{planName.discount}"/>
+                </f:facet>
+                </p:cellEditor>
+            </p:column>
+                
+            <p:column headerText="Options">
+                      <p:rowEditor/>
+                      <p:commandLink  action="#{planBean.delPlanname(planName)}" onclick="confirmation.show()">
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                  </p:commandLink>
+         </p:column>
+        </p:dataTable>
+             <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete User" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                     action="#{planBean.deletePlanname()}" >
+                  <p:collector value="#{planName}"
+                                     removeFrom="#{planBean.plannameList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

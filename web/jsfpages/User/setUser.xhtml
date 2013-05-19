@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../resources/templates/companyTemplate.xhtml">
+
+    <ui:define name="title">
+        Add User
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1" >
+            <p:messages id="msgs"  showDetail="false" />
+            <p:panel header="Add User">
+                <h:panelGrid columns="4" cellpadding="3">
+
+                    <h:outputLabel value="Select Role" for="selectrole"></h:outputLabel>
+                    <h:selectOneMenu  id="selectrole" value="#{userBean.fbsLogin.userRole}" required="true" requiredMessage="User Role should be selected">
+                        <f:selectItem itemLabel="Select Role"/>
+
+                        <f:selectItems  value="#{userBean.roleName}"/>
+                        <p:ajax process="selectrole" update="form1" event="change" listener="#{userBean.populate()}"/>
+
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Created By " for="txt_createdby"></h:outputLabel>
+                    <h:inputText id="txt_createdby" value="#{userBean.fbsLogin.createdBy}" required="true" requiredMessage="Created By should be entered."/>
+
+                    <h:outputLabel value="Name " for="txt_username"></h:outputLabel>
+                    <h:inputText id="txt_username" value="#{userBean.fbsLogin.userName}" required="true" requiredMessage="Username should be entered."/>
+
+                    <h:outputLabel value="User Id " for="txt_userid"></h:outputLabel>
+                    <h:inputText id="txt_userid" value="#{userBean.fbsLogin.userId}" required="true" requiredMessage="UserID should be entered."/>
+
+                    <h:outputLabel value="Password " for="txt_password"></h:outputLabel>
+                    <h:inputSecret id="txt_password" value="#{userBean.fbsLogin.password}" required="true" requiredMessage="Password should be entered." ></h:inputSecret>
+
+                    <h:outputLabel value="Confirm Password " for="txt_cpassword" ></h:outputLabel>
+                    <h:inputSecret id="txt_cpassword" value="#{userBean.confirmPassword}" required="false"/>
+
+                    <h:outputLabel value="Telephone " for="txt_telephone"></h:outputLabel>
+                    <h:inputText id="txt_telephone" value="#{userBean.fbsLogin.telPhone}" required="true" requiredMessage="Maximum 15 digits should be entered."/>
+
+                    <h:outputLabel value="Mobile " for="txt_mobile"></h:outputLabel>
+                    <h:inputText id="txt_mobile" value="#{userBean.fbsLogin.mobile}" required="true" requiredMessage="Maximum 10 digits should be entered.">
+
+                    </h:inputText>
+
+                    <h:outputLabel value="Email " for="txt_email"></h:outputLabel>
+                    <h:inputText id="txt_email" value="#{userBean.fbsLogin.email}" required="true" requiredMessage="Valid Email Id should be entered.">
+                        <f:validator validatorId="FBS.EmailValidator" />
+                    </h:inputText>
+
+                    <h:outputLabel value="Website " for="txt_website"></h:outputLabel>
+                    <h:inputText id="txt_website" value="#{userBean.fbsLogin.website}" required="true" requiredMessage="Authenticated Website should be entered."/>
+
+                    <h:outputLabel value="Address " for="txt_address"></h:outputLabel>
+                    <h:inputTextarea id="txt_address" value="#{userBean.fbsLogin.address}" rows="3" cols="18" required="true" requiredMessage="Address should be entered."/>
+                </h:panelGrid>
+                <br/>
+
+                <p:commandButton value="Add" action="#{userBean.addUser()}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+
+        <h:form id="form2">
+            <h:panelGrid columns="1">
+                <p:dataTable id="users" var="user" value="#{userBean.userList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{userBean.editUser}"  paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            User Details
+                        </div>
+                    </f:facet>
+                    <p:column  headerText="User Id" style="width: 100px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.userId}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:outputText value="#{user.userId}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column  headerText="Name" style="width: 150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.userName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.userName}" size="15"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="User Role">
+                        <h:outputText value="#{userBean.findUserAbb(user.userRole)}"/>
+
+                    </p:column>
+                    <p:column headerText="Created By">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.createdBy}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.createdBy}" size="10"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Telephone" style="width: 100px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.telPhone}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.telPhone}" size="10"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Mobile" style="width: 100px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.mobile}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.mobile}" size="10"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Address" style="width: 200px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.address}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.address}" size="10"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Email" style="width: 150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.email}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.email}" size="15"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Website" style="width: 150px">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{user.website}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{user.website}" size="15"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Options">
+                        <p:rowEditor/>
+                        <p:commandLink  action="#{userBean.user(user)}" onclick="confirmation.show()">
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete User" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{userBean.deleteUser()}" >
+                    <p:collector value="#{user}"
+                                 removeFrom="#{userBean.userList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+
+
+    </ui:define>
+
+
+
+</ui:composition>
+

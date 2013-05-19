@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Report Archive
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="ReportArchieve">
+            <p:panel id="panel" header="Search" >
+
+               
+
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{reportArchieveBean.opStartDate1}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel>
+                <p:calendar id="txt_enddate" value="#{reportArchieveBean.opEndDate1}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/> &nbsp; &nbsp;
+
+                
+
+                <br/><br/>
+
+                <p:commandButton value="Search" action="#{reportArchieveBean.showResult()}"
+                                 update="report,ReportArchieve"/>
+                <p:commandButton value="Reset" style="margin-left: 5px" action="#{reportArchieveBean.reset()}"
+                                 update="report,ReportArchieve"/>
+            </p:panel>
+            <h:panelGrid columns="1">
+
+                <p:dataTable id="report" var="archieve" value="#{reportArchieveBean.refReportList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"  paginatorPosition="bottom" >
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Report Details
+                        </div>
+                    </f:facet>
+
+                    <p:column  headerText="ReportId"  style="width: 150px" >
+
+                        <h:outputText value="#{archieve.id}"/>
+
+                    </p:column>
+
+
+                    <p:column  headerText="RegNo"  style="width: 150px" >
+
+                        <h:outputText value="#{archieve.regNumber}"/>
+
+                    </p:column>
+
+                    <p:column  headerText="Date"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.date}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+
+                    </p:column>
+
+                    <p:column  headerText="Recieved Amt."  style="width: 150px" >
+
+                        <h:outputText value="#{archieve.recievedAmt}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Current Installment" sortBy="#{archieve.curInstallment}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.curInstallment}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Out Credit" sortBy="#{archieve.outCredit}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.outCredit}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Amt Payable" sortBy="#{archieve.amountPayable}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.amountPayable}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Service Tax" sortBy="#{archieve.serviceTax}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.serviceTax}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Total Cost" sortBy="#{archieve.totalCost}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.totalCost}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Remaining Amt." sortBy="#{archieve.remainingAmt}"  style="width: 150px">
+
+                        <h:outputText value="#{archieve.remainingAmt}"/>
+
+                    </p:column>
+                    <p:column headerText="Option"   style="width: 150px">
+
+                        <h:commandLink value="Report"  style="color: green" action="#{reportArchieveBean.genrateReceiptforReport1(archieve.id)}">
+                        </h:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGrid>
+
+
+
+
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>
+

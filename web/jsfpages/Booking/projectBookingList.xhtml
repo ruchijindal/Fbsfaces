@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/projectTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="title">
+        Booking List
+    </ui:define>
+
+
+
+    <ui:define name="content">
+
+        <h:form id="projectBookingListForm">
+            <p:panel id="panel" header="Search" >
+
+                <h:outputLabel value="Select Filters  " for="selectblock"></h:outputLabel>
+                &nbsp;&nbsp;&nbsp;<h:selectOneMenu id="selectblock" value="#{projectBookingListBean.blockName}">
+                    <f:selectItem itemValue="Select Block" noSelectionOption="true"/>
+                    <f:selectItems value="#{projectBookingListBean.blockNames}"/>
+                    <p:ajax update="projectBookingListForm"  process="selectblock" event="change" listener="#{projectBookingListBean.populateFloor()}" />
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectfloor" value="#{projectBookingListBean.floorNO}">
+                    <f:selectItem itemValue="Select Floor" noSelectionOption="true"/>
+                    <f:selectItems value="#{projectBookingListBean.floorList}"/>
+                    <p:ajax update="projectBookingListForm"  process="selectfloor" event="change" listener="#{projectBookingListBean.populateFlats()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectflat" value="#{projectBookingListBean.flatNO}">
+                    <f:selectItem itemValue="Select Flat" noSelectionOption="true"/>
+                    <f:selectItems value="#{projectBookingListBean.flatNoList}"/>
+                    <p:ajax update="projectBookingListForm"  process="selectflat" event="change" listener="#{projectBookingListBean. populateBookingDetailByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:inputText id="text" value="#{projectBookingListBean.name}"   >
+                    <p:ajax update="booking,txt_startdate,txt_enddate"    event="keyup" listener="#{projectBookingListBean.populateFlats()}"/>
+                </h:inputText>
+                <p:watermark for="text" value="Applicant Name" />
+
+                <br/><br/>
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{projectBookingListBean.startDate}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel><p:calendar id="txt_enddate" value="#{projectBookingListBean.endDate}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/><br/>
+                <p:commandButton value="Search" action="#{projectBookingListBean.populateBookingDetailByFilter()}"
+                                 update="projectBookingListForm"/>
+                <p:commandButton value="Reset" style="margin-left: 5px" action="#{projectBookingListBean.reset()}"
+                                 update="projectBookingListForm"/>
+            </p:panel>
+            <h:panelGrid columns="1">
+                <p:dataTable id="booking" var="book" value="#{projectBookingListBean.refBookingList}" paginator="true" rows="20"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,15,25"  rowSelectListener="#{flatMasterBean.PopulateBlockwise}" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Booking List
+                        </div>
+                    </f:facet>
+                    <p:column sortBy="#{book.regNumber}"
+                              headerText="Registration no.">
+                        <h:outputText value="#{book.regNumber}" />
+                    </p:column>
+
+
+                    <p:column sortBy="#{book.bookingDt}"
+                              headerText="Booking Date">
+
+                        <h:outputText value="#{book.bookingDt}" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{book.blockNo}"
+                              headerText="Block Name">
+
+
+                        <h:outputText value="#{book.blockNo}"/>
+                    </p:column>
+                    <p:column sortBy="#{book.floorNo}"
+                              headerText="Floor No."
+                              >
+
+                        <h:outputText value="#{book.floorNo}"/>
+                    </p:column>
+                    <p:column sortBy="#{book.flatNo}"
+                              headerText="Flat No."  >
+
+                        <h:outputText value="#{book.flatNo}"/>
+                    </p:column>
+                    <p:column sortBy="#{book.applicantName}"
+                              headerText="Applicant Name"  >
+
+                        <h:outputText value="#{book.applicantName}">
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Option">
+                        <h:commandLink value="Detail" action="#{flatMasterBean.BookingList(book.flatId)}" style="color: green">
+
+                        </h:commandLink>&nbsp;&nbsp;
+                        <h:commandLink value="Transfer" action="#{graphicalSearchBean.transferBooking(book)}" style="color: red">
+
+                        </h:commandLink>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/excel.png" title="Export as ExcelSheet"/>
+                            <p:dataExporter type="xls" target="booking" fileName="Search Result" />
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/pdf.png" title="Export as PDF"/>
+                            <p:dataExporter type="pdf" target="booking" fileName="Search Result"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage value="/resources/images/csv.png" title="Export as CSV"/>
+                            <p:dataExporter type="csv" target="booking" fileName="Search Result" />
+                        </h:commandLink>
+                    </f:facet>
+                </p:dataTable>
+            </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+
+
+
+</ui:composition>

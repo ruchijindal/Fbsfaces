@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+    <ui:define name="title">
+        Set Broker Category
+    </ui:define>
+
+   
+    <ui:define name="content">
+        <h:form id="addCategoryForm"  >
+            <p:messages id="msgs"  showDetail="false" />
+            <p:panel header="Add Broker Category">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="Category Name" for="txt_catName"></h:outputLabel>
+                    <h:inputText id="txt_catName" value="#{brokerCategoryBean.fbsBrokerCat.categoryName}" required="true" requiredMessage="Category Name should be entered"/>
+
+                    <h:outputLabel value="Broker Commission" for="txt_brCommission"></h:outputLabel>
+                    <h:inputText id="txt_brCommission" value="#{brokerCategoryBean.fbsBrokerCat.commission}" required="true" requiredMessage="Broker Commision should be entered" />
+
+                    <h:outputLabel value="Percentage of BSP" for="txt_bsp_percent"></h:outputLabel>
+                    <h:inputText id="txt_bsp_percent" value="#{brokerCategoryBean.fbsBrokerCat.bspPercent}" required="true"  requiredMessage="Percentage of BSP should be entered"/>
+
+
+                    <h:outputLabel value="Percentage of Brokerage" for="txt_br_percent"></h:outputLabel>
+                    <h:inputText id="txt_br_percent" value="#{brokerCategoryBean.fbsBrokerCat.brokerPercent}" required="true" requiredMessage="Percentage of Brokerage should be entered"/>
+
+
+                    
+                </h:panelGrid>
+                <br/>
+
+                <p:commandButton value="Add" action="#{brokerCategoryBean.addBrokerCategory()}" update="addCategoryForm,categoryListForm,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="categoryListForm">
+              <h:panelGrid columns="1">
+            <p:dataTable var="brCategory" value="#{brokerCategoryBean.brokerCatList}"  paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{brokerCategoryBean.editBrokerCategory}" paginatorPosition="bottom">
+                <f:facet name="header">
+                    <div class="facetheader">
+                    Broker Category Details
+                    </div>
+                </f:facet>
+                <p:column headerText="Category Name" style="width: 150px">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{brCategory.categoryName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{brCategory.categoryName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Broker Commission">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{brCategory.commission}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{brCategory.commission}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Percentage of BSP">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{brCategory.bspPercent}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{brCategory.bspPercent}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Percentage of Brokerage">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{brCategory.brokerPercent}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{brCategory.brokerPercent}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+               
+
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{brokerCategoryBean.delBrokerCategory(brCategory)}" onclick="confirmation.show()">
+                         <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                        
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+              </h:panelGrid>
+            <p:confirmDialog message="Are you sure ?"
+                 showEffect="bounce" hideEffect="explode"
+                 header="Delete Broker category" severity="alert" widgetVar="confirmation">
+
+         <p:commandButton value="Yes Sure" update="messages,categoryListForm" oncomplete="confirmation.hide()"
+                     action="#{brokerCategoryBean.deleteBrokerCategory(brCategory)}" >
+                 <p:collector value="#{brCategory}"
+                                     removeFrom="#{brokerCategoryBean.brokerCatList}"/>
+         </p:commandButton>
+         <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+     </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+
+</ui:composition>

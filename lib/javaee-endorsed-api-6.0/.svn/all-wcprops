@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/projects/!svn/ver/24/FbsFaces/lib/javaee-endorsed-api-6.0
+END
+webservices-api-osgi.jar
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/projects/!svn/ver/24/FbsFaces/lib/javaee-endorsed-api-6.0/webservices-api-osgi.jar
+END
+jaxb-api-osgi.jar
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/24/FbsFaces/lib/javaee-endorsed-api-6.0/jaxb-api-osgi.jar
+END
+javax.annotation.jar
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/projects/!svn/ver/24/FbsFaces/lib/javaee-endorsed-api-6.0/javax.annotation.jar
+END

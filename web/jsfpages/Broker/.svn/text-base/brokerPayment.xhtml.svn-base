@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="title">
+        Payment Details
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1"  >
+
+            <p:panel header="Add Broker Payment">
+                <h:panelGrid columns="2" cellpadding="3">
+
+                    <h:outputLabel value="Select Broker" for="txt_broker"></h:outputLabel>
+                    <h:selectOneMenu  id="txt_broker" value="#{brokerPaymentBean.brokerId}" style="width: 150px;" required="true" requiredMessage="Broker Should Be Selected">
+                        <f:selectItem itemLabel="Select"  />
+                        <f:selectItems  value="#{brokerPaymentBean.brokerNameList}"/>
+                        <p:ajax process="txt_broker" update="form1,msgs" event="change" listener="#{brokerPaymentBean.populateFlats()}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Select Unit " for="txt_unit"></h:outputLabel>
+                    <h:selectOneMenu  id="txt_unit" value="#{brokerPaymentBean.flatId}" style="width: 150px;" required="true" requiredMessage="Unit should Be Selected">
+                        <f:selectItem itemLabel="Select"  />
+                        <f:selectItems  value="#{brokerPaymentBean.unitNameList}"/>
+                        <p:ajax process="txt_unit" update="form1,msgs" event="change" listener="#{brokerPaymentBean.showAmount()}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Payment Mode " for="txt_paymentmode"></h:outputLabel>
+                    <h:selectOneRadio id="txt_paymentmode" value="#{brokerPaymentBean.fbsBrPayment.paymentMode}" required="true" requiredMessage="Payment Mode Should Be Selected" >
+                        <f:selectItem id="pay" itemLabel="Cash" itemValue="Cash"     />
+                        <f:selectItem  itemLabel="Cheque"  itemValue="Cheque" />
+                        <f:selectItem  itemLabel="RTGS/NEFT" itemValue="NEFT" />
+                        <p:ajax process="txt_paymentmode" update="form1" event="change" listener="#{brokerPaymentBean.renderChequeDetails()}"/>
+                    </h:selectOneRadio>
+
+                    <h:outputLabel value="Payment Date " for="txt_paymentdate"></h:outputLabel>
+                    <p:calendar id="txt_paymentdate" value="#{brokerPaymentBean.fbsBrPayment.paymentDate}" mode="popup" pattern="dd-MM-yyyy" required="true" requiredMessage="Date Should Be Choose" timeZone="IST"/>
+
+                    <h:outputLabel value="Amount " for="txt_paidamount"></h:outputLabel>
+                    <h:inputText id="txt_paidamount" value="#{brokerPaymentBean.fbsBrPayment.amount}" required="true" requiredMessage="Amount Should Be Enter" />
+                 
+                    <h:outputLabel value="Cheque No " for="txt_chequeno" rendered="#{brokerPaymentBean.render}" ></h:outputLabel>
+                    <h:inputText id="txt_chequeno" value="#{brokerPaymentBean.chequeNo}" rendered="#{brokerPaymentBean.render}" required="true" requiredMessage="Cheque No. Should Be Enter" />
+
+                    <h:outputLabel value="Cheque Date " for="txt_chequedate" rendered="#{brokerPaymentBean.render}"></h:outputLabel>
+                    <p:calendar id="txt_chequedate" value="#{brokerPaymentBean.chequeDate}" mode="popup"  pattern="dd-MM-yyyy" rendered="#{brokerPaymentBean.render}" required="true" requiredMessage="Cheque Date Should Be Enter" timeZone="IST"/>
+
+                    <h:outputLabel value="Bank Name " for="txt_drawnon" rendered="#{brokerPaymentBean.render}"></h:outputLabel>
+                    <h:inputText id="txt_drawnon" value="#{brokerPaymentBean.drawnOn}" rendered="#{brokerPaymentBean.render}" required="true" requiredMessage="Bank Name Should Be Enter" />
+
+                    <h:outputLabel value="TransactionID " for="txt_transactionId" rendered="#{brokerPaymentBean.render1}"></h:outputLabel>
+                    <h:inputText id="txt_transactionId" value="#{brokerPaymentBean.transactionId}" rendered="#{brokerPaymentBean.render1}" required="true" requiredMessage="TransactionId Should Be Enter"/>
+
+                    <h:outputLabel value="TransactionBank " for="txt_transactionBank" rendered="#{brokerPaymentBean.render1}"></h:outputLabel>
+                    <h:inputText id="txt_transactionBank" value="#{brokerPaymentBean.drawnOn}" rendered="#{brokerPaymentBean.render1}" required="true" requiredMessage="Transaction Bank should Be Enter"/>
+
+                    <h:outputLabel value="Remark " for="txt_remark"/>
+                    <h:inputTextarea id="txt_remark" value="#{brokerPaymentBean.fbsBrPayment.remark}" rows="3" cols="18" required="true" requiredMessage="Remark Should Be enter"></h:inputTextarea>
+                </h:panelGrid>
+
+                <br/>
+                <p:commandButton value="Add" action="#{brokerPaymentBean.paymentvalidate(brokerPaymentBean.fbsBrPayment.amount)}" update="form2,form1,msgs" ajax="false" />
+                <p:commandButton value="Reset" style="margin-left: 5px;"   action="#{brokerPaymentBean.reset()}" immediate="true"
+                                 update="form2,form1,msgs,txt_broker,txt_unit,txt_paymentmode,pay,txt_paymentdate,txt_paidamount,txt_chequeno,txt_chequedate,txt_drawnon,txt_transactionId,txt_transactionBank,txt_remark" />
+
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start"><h:graphicImage value="/resources/images/ajaxloading.gif" /></f:facet>
+                    <f:facet name="complete"><h:outputText value=" " /></f:facet>
+                </p:ajaxStatus>
+
+            </p:panel>
+        </h:form>
+        <p:dialog  header="Payment Receipt" widgetVar="receipt" resizable="true" height="300" width="450">
+            <table>
+                <tr>
+                    <td>
+
+                    </td>
+
+                </tr>
+            </table>
+            <h:form id="paymentreceipt">
+
+                <h:outputLabel value="#{loginBean.companyName}"/><br/>
+                <h:outputText value="#{loginBean.fbsLogin.address}"/><br/>
+                <h:outputText value="#{loginBean.fbsLogin.city}"/><br/>
+                <h:outputText value="Mobile: #{loginBean.fbsLogin.mobile}"/><br/>
+                <h:outputText value="Email: #{loginBean.fbsLogin.email}"/><br/>
+                <h:outputLink id="lnk" value="#" >
+                    <p:printer target="paymentreceipt" />
+                    <p:commandButton value="Print" image="ui-icon ui-icon-print"   oncomplete="receipt.hide();"/>
+                </h:outputLink>
+            </h:form>
+        </p:dialog>
+        <h:form id="form2"  >
+            <h:panelGrid columns="1">
+                <p:dataTable id="payments" var="payment" value="#{brokerPaymentBean.paymentList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15" rowEditListener="#{brokerPaymentBean.editBrokerPayment}"   paginatorPosition="bottom" >
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                            Broker Payment Details
+                        </div>
+                    </f:facet>
+                    <p:column  headerText="Receipt No." >
+
+                        <h:outputText value="#{payment.paymentId}" />
+
+                    </p:column>
+
+                    <p:column  headerText="Broker Name">
+
+                        <h:outputText value="#{brokerPaymentBean.findBrokerName(payment.brokerId)}"/>
+
+                    </p:column>
+                    <p:column  headerText="Unit Code" >
+
+                        <h:outputText value="#{payment.fkFlatId}"/>
+
+                    </p:column>
+
+                    <p:column  headerText="Payment Date">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{payment.paymentDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText></f:facet>
+                            <f:facet name="input"><p:calendar value="#{payment.paymentDate}" pattern="dd-MM-yyyy" timeZone="IST"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="Payment Mode" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.paymentMode}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{payment.paymentMode}" size="8"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Amount" >
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.amount}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{payment.amount}" size="8"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="Cheque No">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.chequeNo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{payment.chequeNo}" size="8"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="Cheque Date">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.chequeDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{payment.chequeDate}" pattern="dd-MM-yyyy" timeZone="IST"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Trans.Id">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.transactionId}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{payment.transactionId}" size="8"/>
+                            </f:facet>
+                            <h:outputText value="Resistance to PrimeFaces is futile!" />     </p:cellEditor>
+                    </p:column>
+
+
+                    <p:column headerText="Bank Name">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.drawnOn}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{payment.drawnOn}" size="8"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="Clearing Date">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{payment.clearingDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:calendar value="#{payment.clearingDt}" pattern="dd-MM-yyyy" timeZone="IST"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+
+
+                    <p:column headerText="Clearing Bank">
+                        <h:outputText value="#{payment.clearingBank}"/>
+                    </p:column>
+
+                    <p:column  headerText="Status">
+
+                        <h:outputText value="#{payment.status}"/>
+
+                    </p:column>
+
+                    <p:column headerText="Authorize">
+                        <p:commandLink value="Authorize" onclick="dlg1.show();" action="#{brokerPaymentBean.SetObject(payment)}" disabled="#{brokerPaymentBean.setDisableAuthrize(payment.paymentMode,payment.status)}" />
+                    </p:column>
+
+                    <p:column headerText="Authorized By">
+
+                        <h:outputText value="#{payment.authorizedBy}"/>
+
+
+                    </p:column>
+
+                    <p:column headerText="User Id">
+                        <h:outputText value="#{payment.userId}"/>
+                    </p:column>
+
+                    <p:column headerText="Remark">
+                        <p:commandLink value="Remark" onclick="dlg2.show();" update="form3" action="#{brokerPaymentBean.SetObj(payment)}" />
+                    </p:column>
+
+                    <p:column headerText="Options">
+                        <p:rowEditor />
+                        <p:commandLink  action="#{brokerPaymentBean.payment(payment)}" onclick="confirmation.show()">
+                            <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="Receipt">
+                        <p:commandLink value="Receipt" action="#{brokerPaymentBean.genrateReceipt(payment)}" update="form2">
+
+                        </p:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+           
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete Payement" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{brokerPaymentBean.deleteBrokerPayment}" >
+                    <p:collector value="#{payment}" removeFrom="#{brokerPaymentBean.paymentList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+                 </h:panelGrid>
+        </h:form>
+
+
+        <p:dialog id="dilog"   header="Authorized" widgetVar="dlg1" showEffect="scale" hideEffect="scale" height="200"  width="300"  styleClass="dialog1"   >
+            <h:form  >
+                <h:outputLabel value="Clear Date"  for="txt_clrdate"  />
+                <br/>
+                <p:calendar id="txt_clrdate" value="#{brokerPaymentBean.clearingDate}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/>
+                <br/>
+
+                <h:outputLabel value="Clearing Bank" for="txt_clearingbank"/>
+                <br/>            
+                <h:inputText id="txt_clearingbank" value="#{brokerPaymentBean.clearingBank}" required="true"/>
+                <br/>
+                <br/>
+
+                <h:outputLabel value="Payment Status" for="txt_status"/>
+                <br/>
+                <h:selectOneMenu id="txt_status" value="#{brokerPaymentBean.status}" >
+                    <f:selectItem itemValue="Select Status" noSelectionOption="true"/>
+                    <f:selectItem itemValue="Pending"/>
+                    <f:selectItem itemValue="Cleared"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;&nbsp;<p:commandButton value="Add" action="#{brokerPaymentBean.putStatus( )}" update="form2" onclick="dlg1.hide();" />
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dilog2"   header="Remark" widgetVar="dlg2" showEffect="scale" hideEffect="scale" height="200"  width="300"  styleClass="dialog1" position="right"  >
+            <h:form id="form3"  >
+
+                <br/>
+                <h:inputTextarea id="txt_remark" value="#{brokerPaymentBean.remark}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Edit" action="#{brokerPaymentBean.edit()}" update="form2" onclick="dlg2.hide();" />
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

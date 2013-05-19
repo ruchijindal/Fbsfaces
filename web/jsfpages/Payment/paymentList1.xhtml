@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Payment List
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <h:form id="paymentListForm">
+            <p:panel id="panel" header="Search" >
+
+                <h:outputLabel value="Select Filters  " for="selectstatus"></h:outputLabel>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectstatus" value="#{paymentDetailManagedBean.opStatus}">
+                    <f:selectItem itemValue="Select Status" noSelectionOption="true"/>
+                    <f:selectItems value="#{paymentDetailManagedBean.statusOption}"/>
+                    <p:ajax update="payments"  process="selectstatus" event="change" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="Paymentmode" value="#{paymentDetailManagedBean.opPayMode}">
+                    <f:selectItem itemValue="Payment Mode" noSelectionOption="true"/>
+                    <f:selectItems value="#{paymentDetailManagedBean.paymentMode}"/>
+                    <p:ajax update="paymentListForm"  process="Paymentmode" event="change" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="clearingbank" value="#{paymentDetailManagedBean.opClrBank}">
+                    <f:selectItem itemValue="Clearing Bank" noSelectionOption="true"/>
+                    <f:selectItems value="#{paymentDetailManagedBean.clrBankOption1}"/>
+                    <p:ajax update="paymentListForm"  process="clearingbank" event="change" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:inputText id="text_unitcode" value="#{paymentDetailManagedBean.opUnitCode}" size="15">
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_unitcode" value="Unite Code/Flat No" />
+
+                &nbsp;&nbsp;<h:inputText id="text_Transacno" value="#{paymentDetailManagedBean.opTrascId}" size="20"  >
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_Transacno" value="Cheque No/Transaction Id" />
+                &nbsp;&nbsp;<h:inputText id="text_ammount" value="#{paymentDetailManagedBean.opAmmount}"  size="15" >
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_ammount" value="Amount" />
+                &nbsp;&nbsp;<h:inputText id="text_bankname" value="#{paymentDetailManagedBean.opBankName}"  size="15" >
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_bankname" value="Bank Name" />
+                &nbsp;&nbsp;<h:inputText id="text_Authrizeby" value="#{paymentDetailManagedBean.opAuthorizeBy}"  size="15" >
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_Authrizeby" value="Authorized By" />
+                &nbsp;&nbsp;<h:inputText id="text_recievedBy" value="#{paymentDetailManagedBean.opRecievedBy}" size="15"  >
+                    <p:ajax update="payments,txt_startdate,txt_enddate"    event="keyup" listener="#{paymentDetailManagedBean.populatePaymentListByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text_recievedBy" value="Recieved By" />
+                <br/><br/>
+                <h:outputLabel value="Apply Date Filter On:  " for="txt_date"></h:outputLabel>
+                <br/>
+                <h:selectOneRadio id="txt_date" value="#{paymentDetailManagedBean.dateMode}" >
+                    <f:selectItem id="pay" itemLabel="Payment Date" itemValue="paydate" />
+                    <f:selectItem  itemLabel="Cheque Date" itemValue="chqdate"  />
+                    <f:selectItem  itemLabel="Clearing Date" itemValue="clrdate"/>
+                </h:selectOneRadio>
+                <br/>
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{paymentDetailManagedBean.opStartDate}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel><p:calendar id="txt_enddate" value="#{paymentDetailManagedBean.opEndDate}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/><br/>
+                <p:commandButton value="Search" action="#{paymentDetailManagedBean.populatePaymentListByFilter()}"
+                                 update="paymentListForm"/>
+                <p:commandButton value="Reset" style="margin-left: 5px" action="#{paymentDetailManagedBean.reset()}"
+                                 update="paymentListForm"/>
+            </p:panel>
+
+            <p:dataTable id="payments" var="payment" value="#{paymentDetailManagedBean.refPaymentList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{paymentBean.editPayment}" selectionMode="single" paginatorPosition="bottom" rowSelectListener="#{flatMasterBean.Populate}">
+
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Payment Details
+                    </div>
+                </f:facet>
+                <p:column  headerText="Unit Code" sortBy="#{payment.unitCode}"  >
+
+                    <h:outputText value="#{payment.unitCode}"/>
+
+
+                </p:column>
+
+                <p:column  headerText="Payment Date" >
+
+                    <h:outputText value="#{payment.paymentDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+
+                </p:column>
+
+                <p:column  headerText="Payment Mode">
+
+                    <h:outputText value="#{payment.paymentMode}"/>
+
+                </p:column>
+
+                <p:column headerText="Amount" sortBy="#{payment.paidAmount}">
+
+                    <h:outputText value="#{payment.paidAmount}"/>
+
+                </p:column>
+
+
+
+                <p:column  headerText="Cheque No" sortBy="#{payment.chequeNo}">
+
+                    <h:outputText value="#{payment.chequeNo}"/>
+
+                </p:column>
+
+                <p:column  headerText="Cheque Date" sortBy="#{payment.chequeDate}">
+
+                    <h:outputText value="#{payment.chequeDate}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+
+                </p:column>
+
+
+                <p:column headerText="Transaction Id" sortBy="#{payment.transactionId}">
+
+                    <h:outputText value="#{payment.transactionId}"/>
+
+                </p:column>
+
+
+                <p:column headerText="Bank Name">
+
+                    <h:outputText value="#{payment.drawnOn}"/>
+
+                </p:column>
+
+                <p:column  headerText="Clearing Date" sortBy="#{payment.clearingDt}">
+
+                    <h:outputText value="#{payment.clearingDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+
+                </p:column>
+
+
+
+                <p:column headerText="Clearing Bank">
+                    <h:outputText value="#{paymentBean.findBankName(payment.clearingBankId)}"/>
+                </p:column>
+
+                <p:column  headerText="Status">
+
+                    <h:outputText value="#{payment.chequeStatus}"/>
+
+                </p:column>
+
+                <!--                <p:column headerText="Authorize" >
+                                    <p:commandLink value="Authorize" onclick="dlg1.show();" action="#{paymentBean.SetObject(payment)}" disabled="#{paymentBean.setDisableAuthrize(payment.paymentMode,payment.chequeStatus)}" />
+                                </p:column>
+
+                                <p:column headerText="Authorized By" sortBy="#{payment.authorizedBy}">
+
+                                    <h:outputText value="#{payment.authorizedBy}"/>
+
+
+                                </p:column>
+
+                                <p:column headerText="Recieved By" sortBy="#{payment.userId}">
+                                    <h:outputText value="#{payment.userId}"/>
+                                </p:column>
+
+                                <p:column headerText="Remark">
+                                    <h:outputText value="#{payment.remark}"/>
+
+                                </p:column>-->
+
+            </p:dataTable>
+            <p:commandButton type="push" value="Get PDF" action="#{paymentBean.callServlet(paymentDetailManagedBean.refPaymentList)}" update="menubutton" style="margin-left: 600px"  />
+
+        </h:form>
+        <p:dialog id="dilog"   header="Authorized" widgetVar="dlg1" showEffect="scale" hideEffect="scale" height="200"  width="300"  styleClass="dialog1"   >
+            <h:form  >
+                <h:outputLabel value="Clear Date:"  for="txt_clrdate"  />
+                <br/>
+
+                <p:calendar id="txt_clrdate" value="#{paymentBean.clearingDate}" mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/>
+                <br/>
+                <h:outputLabel value="Clearing Bank:"  for="txt_clrbank"  />
+                <br/>
+                <h:selectOneMenu id="txt_clrbank" value="#{paymentBean.clearingBankId}">
+                    <f:selectItem itemValue="Select"  noSelectionOption="true"/>
+                    <f:selectItems  value="#{paymentBean.bankNames}"/>
+                </h:selectOneMenu>
+                <br/>
+                <br/>
+                <h:outputLabel value="Payment Status" for="txt_status"/>
+                <br/>
+
+                <h:selectOneMenu id="txt_status" value="#{paymentBean.status}" >
+                    <f:selectItem itemValue="Select Status" noSelectionOption="true"/>
+                    <f:selectItem itemValue="Pending"/>
+                    <f:selectItem itemValue="Cleared"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;&nbsp;<p:commandButton value="Add" action="#{paymentBean.putStatus()}" update="paymentListForm" onclick="dlg1.hide();" />
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:define>
+
+
+
+</ui:composition>

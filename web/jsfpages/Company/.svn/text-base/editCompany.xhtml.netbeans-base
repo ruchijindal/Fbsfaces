@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+    <ui:define name="title">
+        Edit Company
+    </ui:define>
+
+    
+
+    <ui:define name="content">
+         <h:form id="form2">
+             <p:messages id="msgs" showDetail="false" />
+           <p:panel header="Update Company Details">
+
+
+         <h:panelGrid columns="2" cellpadding="5" >
+                         <h:outputLabel value="Company Id " for="companyid"></h:outputLabel>
+                         <h:inputText id="companyid" value="#{companyBean.fbsCompany.companyId}" size="20" readonly="true"/>
+                        <h:outputLabel value="Company Name " for="companyname"></h:outputLabel>
+                        <h:inputText id="companyname" value="#{companyBean.fbsCompany.companyName}" size="20"/>
+                         <h:outputLabel value="Company Abvr " for="companyabvr"></h:outputLabel>
+                         <h:inputText id="companyabvr" value="#{companyBean.fbsCompany.companyAbrv}" size="20"/>
+                         <h:outputLabel value="Address" for="address"></h:outputLabel>
+                         <h:inputText id="address" value="#{companyBean.fbsCompany.address}" size="20"/>
+                         <h:outputLabel value="Telephone No. " for="telephoneno"></h:outputLabel>
+                         <h:inputText id="telephoneno" value="#{companyBean.fbsCompany.telNumber}" size="20"/>
+                          <h:outputLabel value="Mobile " for="mobile"></h:outputLabel>
+                          <h:inputText id="mobile" value="#{companyBean.fbsCompany.mobile}" size="20"/>
+                        <h:outputLabel value="Email " for="email"></h:outputLabel>
+                        <h:inputText id="email" value="#{companyBean.fbsCompany.email}" size="20"/>
+                        <h:outputLabel value="Website " for="website"></h:outputLabel>
+                        <h:inputText id="website" value="#{companyBean.fbsCompany.website}" size="20"/>
+                        <p:commandButton value="Update" action="#{companyBean.editCompany()}"  update="form2,msgs"/>
+                       </h:panelGrid>
+    </p:panel>
+        </h:form>
+    </ui:define>
+
+
+    
+
+</ui:composition>

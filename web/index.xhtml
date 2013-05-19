@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+
+    <h:head>
+        <title>FBS Login</title>
+         <link href="${facesContext.externalContext.requestContextPath}/resources/css/default.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body onload="dlg.show()">
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="top" position="top" height="56" gutter="0">
+                <div id="header-text" class="ui-widget-header" align="center">
+                     <p:graphicImage url="/resources/images/realestate.png"/>
+                </div>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" >
+                <p:growl id="growl"  showDetail="true"/>
+
+	<h:form >
+            <p:dialog id="dialog" header="Login" widgetVar="dlg" closable="false" draggable="false" resizable="false" styleClass="dialog1">
+            <h:panelGrid columns="2" cellpadding="5" >
+			<h:outputLabel for="username" value="Username* " />
+                        <h:inputText value="#{loginBean.fbsLogin.userId}" id="username" required="true" label="username" />
+
+			<h:outputLabel for="password" value="Password* " />
+                        <h:inputSecret value="#{loginBean.fbsLogin.password}" id="password" required="true" label="password" />
+			<f:facet name="footer">
+                            <p:commandButton  value="Login" update="growl" actionListener="#{loginBean.validateUser()}" oncomplete="" />
+			</f:facet>
+		</h:panelGrid>
+            </p:dialog>
+	</h:form>
+            </p:layoutUnit>
+            
+            <p:layoutUnit id="bottom" position="bottom" height="40" gutter="0">
+
+
+            </p:layoutUnit>
+
+        </p:layout>
+    </h:body>
+</html>
+

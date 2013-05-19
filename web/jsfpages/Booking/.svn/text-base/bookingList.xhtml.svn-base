@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../../resources/templates/companyTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="title">
+        Booking List
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="bookingListform">
+            <p:panel id="panel" header="Search" >
+                <h:outputLabel value="Select Filters  " for="selectproject"></h:outputLabel>
+                &nbsp;&nbsp;&nbsp;<h:selectOneMenu id="selectproject" value="#{bookingListBean.projName}" >
+                    <f:selectItem itemValue="Select Project" noSelectionOption="true"/>
+                    <f:selectItems value="#{bookingListBean.projectOption}"/>
+                    <p:ajax update="bookingListform,selectblock,txt_startdate,txt_enddate"  process="selectproject" event="change" listener="#{bookingListBean.populateBlock()}" />
+                </h:selectOneMenu>
+                &nbsp;&nbsp;&nbsp;<h:selectOneMenu id="selectblock" value="#{bookingListBean.blockName}">
+                    <f:selectItem itemValue="Select Block" noSelectionOption="true"/>
+                    <f:selectItems value="#{bookingListBean.blockNameOption}"/>
+                    <p:ajax update="bookingListform,selectfloor,txt_startdate,txt_enddate"  process="selectblock" event="change" listener="#{ bookingListBean.populateFloor()}" />
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectfloor" value="#{bookingListBean.floorNO}">
+                    <f:selectItem itemValue="Select Floor" noSelectionOption="true"/>
+                    <f:selectItems value="#{bookingListBean.floorList}"/>
+                    <p:ajax update="bookingListform,selectflat,txt_startdate,txt_enddate"  process="selectfloor" event="change" listener="#{bookingListBean.populateFlats()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:selectOneMenu id="selectflat" value="#{bookingListBean.flatNO}">
+                    <f:selectItem itemValue="Select Flat" noSelectionOption="true"/>
+                    <f:selectItems value="#{bookingListBean.flatNoList}"/>
+                    <p:ajax update="bookingListForm,booking,txt_startdate,txt_enddate"  process="selectflat" event="change" listener="#{bookingListBean.populateBookingDetailByFilter()}"/>
+                </h:selectOneMenu>
+                &nbsp;&nbsp;<h:inputText id="text" value="#{bookingListBean.name}"   >
+                    <p:ajax update="booking,txt_startdate,txt_enddate"  process="text"  event="keyup" listener="#{bookingListBean.populateBookingDetailByFilter()}"/>
+                </h:inputText>
+                <p:watermark for="text" value="Applicant Name" />
+                <br/><br/>
+                <h:outputLabel value="Date Between  " for="txt_startdate"> </h:outputLabel>
+                <p:calendar id="txt_startdate" value="#{bookingListBean.startDate}"   mode="popup" pattern="dd-MM-yyyy" timeZone="IST" />
+                <h:outputLabel value="- " for="txt_enddate">
+                </h:outputLabel><p:calendar id="txt_enddate" value="#{bookingListBean.endDate}"  mode="popup" pattern="dd-MM-yyyy" timeZone="IST"/>
+                <br/><br/>
+                <p:commandButton value="Search" action="#{bookingListBean.populateBookingDetailByFilter()}"
+                                 update="bookingListForm,booking,txt_startdate,txt_enddate"/>
+                <p:commandButton value="Reset" style=" margin-left: 5px" action="#{bookingListBean.reset()}"
+                                 update="bookingListForm,booking,txt_startdate,txt_enddate,selectproject,selectblock,selectfloor,selectflat,text"/>
+            </p:panel>
+             <h:panelGrid columns="1">
+            <p:dataTable id="booking" var="book" value="#{bookingListBean.refBookingList}" paginator="true" rows="20"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,15,25"   paginatorPosition="bottom">
+
+                <f:facet name="header">
+                    <div class="facetheader">
+                        Booking List
+                    </div>
+                </f:facet>
+
+                <p:column headerText="Registration no.">
+                    <h:outputText value="#{book.regNo}"/>
+                </p:column>
+                <p:column   sortBy="#{book.bookingdt}" headerText="Booking Date">
+                    <h:outputText value="#{book.bookingdt}" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column   sortBy="#{book.projectName}" headerText="Project Name"  style="width:120px">
+                    <h:outputText value="#{book.projectName}" />
+                </p:column>
+
+                <p:column sortBy="#{book.blockNo}" headerText="Block Name">
+                    <h:outputText value="#{book.blockNo}" />
+                </p:column>
+
+                <p:column sortBy="#{book.floorNo}" headerText="Floor No.">
+                    <h:outputText value="#{book.floorNo}" />
+                </p:column>
+
+                <p:column sortBy="#{book.flatId}" headerText="Flat No.">
+                    <h:outputText value="#{book.flatId}" />
+                </p:column>
+
+                <p:column sortBy="#{book.applicantName}" headerText="Applicant Name"  style="width:150px">
+                    <h:outputText value="#{book.applicantName}"/>
+                </p:column>
+                <p:column headerText="Option" >
+                    <h:commandLink value="Detail" action="#{flatMasterBean.BookingList(book.flatId)}" style="color: green">
+
+                    </h:commandLink>&nbsp;&nbsp;
+                    <h:commandLink value="Transfer" action="#{graphicalSearchBean.transferBooking(book)}" style="color: red">
+
+                    </h:commandLink>
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/excel.png" title="Export as ExcelSheet"/>
+                        <p:dataExporter type="xls" target="booking" fileName="Search Result" />
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/pdf.png" title="Export as PDF"/>
+                        <p:dataExporter type="pdf" target="booking" fileName="Search Result"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage value="/resources/images/csv.png" title="Export as CSV"/>
+                        <p:dataExporter type="csv" target="booking" fileName="Search Result" />
+                    </h:commandLink>
+                </f:facet>
+            </p:dataTable>
+             </h:panelGrid>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

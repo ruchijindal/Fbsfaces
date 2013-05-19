@@ -1,0 +1,185 @@
+
+
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="./../../resources/templates/companyTemplate.xhtml">
+
+    <ui:define name="title">
+        Company DashBoard
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+
+            <h:panelGrid columns="1">
+
+                <p:dataTable id="projects" var="project" value="#{projectBean.projectList}"  rows="5" styleClass="ui-datatable-data td   ui-widget-content .ui-state-default">
+
+                    <f:facet name="header">
+                        <div class="facetheader">
+                        Project Details
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Project Name">
+                        <h:outputText value="#{project.projName}"/>
+                    </p:column>
+
+                    <p:column headerText="Project Type">
+                        <h:outputText value="#{project.projType}"/>
+                    </p:column>
+
+                    <p:column headerText="Address">
+                        <h:outputText value="#{project.address}"/>
+                    </p:column>
+
+                    <p:column headerText="State">
+                        <h:outputText value="#{project.state}"/>
+                    </p:column>
+
+                    <p:column headerText="City">
+                        <h:outputText value="#{project.city}"/>
+                    </p:column>
+
+                    <p:column headerText="Start Date">
+                        <h:outputText value="#{project.startDt}" ><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Compeletion Date">
+                        <h:outputText value="#{project.endDt}"><f:convertDateTime pattern="dd-MM-yyyy" timeZone="IST"/></h:outputText>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{projectBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.project()}" />
+                     </f:facet>
+
+                </p:dataTable>
+
+                <br/>
+
+                <p:dataTable id="users" var="user" value="#{userBean.userList}"   rows="5"
+                               styleClass="ui-datatable-data td  ui-widget-content .ui-state-default" >
+
+                    <f:facet name="header">
+                         <div class="facetheader">
+                        User Details
+                         </div>
+                    </f:facet>
+
+                    <p:column  headerText="User Name">
+                        <h:outputText value="#{user.userName}"/>
+                    </p:column>
+
+                    <p:column headerText="User Role">
+                        <h:outputText value="#{user.userRole}"/>
+                    </p:column>
+
+                    <p:column headerText="Created By">
+                        <h:outputText value="#{user.createdBy}"/>
+                    </p:column>
+
+                    <p:column headerText="Telephone" >
+                        <h:outputText value="#{user.telPhone}"/>
+                    </p:column>
+
+                    <p:column headerText="Mobile">
+                        <h:outputText value="#{user.mobile}"/>
+                    </p:column>
+
+                    <p:column headerText="Address">
+                        <h:outputText value="#{user.address}"/>
+                    </p:column>
+
+                    <p:column headerText="Email">
+                        <h:outputText value="#{user.email}"/>
+                    </p:column>
+
+                    <p:column headerText="Website">
+                        <h:outputText value="#{user.website}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{userBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.user()}" />
+                     </f:facet>
+
+                </p:dataTable>
+
+                <br/>
+
+                <p:dataTable id="brokers" var="broker" value="#{brokerBean.brokerList}" rows="5" styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+
+                    <f:facet name="header">
+                         <div class="facetheader">
+                        Broker Details
+                         </div>
+                    </f:facet>
+
+                    <p:column headerText="Broker Name">
+                        <h:outputText value="#{broker.brName}"/>
+                    </p:column>
+
+                    <p:column headerText="Address">
+                        <h:outputText value="#{broker.brAdd}"/>
+                    </p:column>
+
+                    <p:column headerText="Mobile">
+                        <h:outputText value="#{broker.brMobile}"/>
+                    </p:column>
+
+                    <p:column headerText="Telephone" >
+                        <h:outputText value="#{broker.brPhone}"/>
+                    </p:column>
+
+                    <p:column headerText="Mail-ID">
+                        <h:outputText value="#{broker.brMail}"/>
+                    </p:column>
+
+                    <p:column headerText="Website">
+                        <h:outputText value="#{broker.site}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{brokerBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.broker()}" />
+                     </f:facet>
+
+                </p:dataTable>
+
+                <br/>
+
+                <p:dataTable var="bank" value="#{bankBean.bankList}"  rows="5"  styleClass="ui-datatable-data td  ui-widget-content .ui-state-default">
+
+                    <f:facet name="header">
+                         <div class="facetheader">
+                        Bank Details
+                         </div>
+                    </f:facet>
+
+                    <p:column headerText="Bank Name">
+                        <h:outputText value="#{bank.bankName}"/>
+                    </p:column>
+
+                    <p:column headerText="A/C Number">
+                        <h:outputText value="#{bank.accountNo}"/>
+                    </p:column>
+
+                    <p:column headerText="Address">
+                        <h:outputText value="#{bank.address}"/>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="#{bankBean.viewStatus}" image="ui-icon ui-icon-search" action="#{commonBean.bank()}" />
+                     </f:facet>
+
+                </p:dataTable>
+
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

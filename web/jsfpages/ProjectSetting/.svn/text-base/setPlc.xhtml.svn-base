@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../resources/templates/projectTemplate.xhtml">
+
+    <ui:define name="title">
+        PLC Settings
+    </ui:define>
+
+
+
+    <ui:define name="sidebar">
+        <ui:include src="../common/sidebar.xhtml"></ui:include>
+    </ui:define>
+
+    <ui:define name="content">
+        <p:messages id="msgs" showDetail="false"/>
+        <h:form id="form1" >
+
+            <p:panel header="Add PLC">
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:outputLabel value="PLC Name " for="txt_plcname"></h:outputLabel>
+                    <h:inputText id="txt_plcname" value="#{plcBean.fbsPlc.plcName}" required="true" requiredMessage="PLC Name should be entered"/>
+
+                    <h:outputLabel value="Charge (Rs/SqFt)" for="txt_charge"></h:outputLabel>
+                    <h:inputText id="txt_charge" value="#{plcBean.fbsPlc.plcCharge}" required="true" requiredMessage="PLC Charges should be entered"/>
+
+                </h:panelGrid>
+                <br/>
+                <p:commandButton value="Add" action="#{plcBean.addPlc}" update="form1,form2,msgs" ajax="false"/>
+                <p:commandButton value="Reset" type="reset" style="margin-left: 5px;"/>
+                <p:ajaxStatus style="width:16px;height:16px;">
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajaxloading.gif" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
+
+
+            </p:panel>
+        </h:form>
+        <br/>
+        <h:form id="form2">
+            <p:dataTable id="plcs" var="plc" value="#{plcBean.plcList}" paginator="true" rows="10"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" rowEditListener="#{plcBean.editPlc}" selectionMode="single" paginatorPosition="bottom" >
+                <f:facet name="header">
+                    <div class="facetheader">
+                        PLC Details
+                    </div>
+                </f:facet>
+                <p:column headerText="Plc Name">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{plc.plcName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{plc.plcName}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Charge(Rs./SqFt.)">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{plc.plcCharge}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{plc.plcCharge}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Options">
+                    <p:rowEditor/>
+                    <p:commandLink  action="#{plcBean.delPlc(plc)}" onclick="confirmation.show()">
+                        <p:graphicImage value="/resources/images/Delete-32.png" alt=""/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <p:confirmDialog message="Are you sure ?"
+                             showEffect="bounce" hideEffect="explode"
+                             header="Delete User" severity="alert" widgetVar="confirmation">
+
+                <p:commandButton value="Yes Sure" update="messages,form2" oncomplete="confirmation.hide()"
+                                 action="#{plcBean.deletePlc()}" >
+                    <p:collector value="#{plc}"
+                                 removeFrom="#{plcBean.plcList}"/>
+                </p:commandButton>
+                <p:commandButton value="Not Yet" onclick="confirmation.hide()" type="button" />
+
+            </p:confirmDialog>
+        </h:form>
+
+
+    </ui:define>
+
+
+
+</ui:composition>
+
